@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="presenter.ClientPresenter">>
+   <children>
+      <HBox layoutY="29.0" prefHeight="36.0" prefWidth="600.0">
+         <children>
+            <ToolBar prefHeight="40.0" prefWidth="605.0">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="234.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="290.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="346.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="402.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="458.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="524.0" layoutY="20.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="534.0" layoutY="30.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="544.0" layoutY="40.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="554.0" layoutY="50.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="564.0" layoutY="60.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="574.0" layoutY="70.0" mnemonicParsing="false" text="Button" />
+                  <Button layoutX="584.0" layoutY="80.0" mnemonicParsing="false" text="Button" />
+                  <Slider />
+              </items>
+            </ToolBar>
+         </children>
+      </HBox>
+      <MenuBar layoutY="2.0" prefHeight="27.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Editor">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Neu" />
+                  <MenuItem mnemonicParsing="false" text="Öffnen" />
+                  <MenuItem mnemonicParsing="false" text="Beenden" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Spielfläche">
+            <items>
+                  <Menu mnemonicParsing="false" text="Speichern als">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="XML" />
+                        <MenuItem mnemonicParsing="false" text="JAXB" />
+                        <MenuItem mnemonicParsing="false" text="Serialisieren" />
+
+                     </items>
+
+                      <MenuItem mnemonicParsing="false" text="Größe des Spielfeldes ändern">
+                      <graphic>
+                          <Separator prefWidth="200.0" />
+                      </graphic>
+                  </MenuItem>
+                      <MenuItem mnemonicParsing="false" text="Spielfigur platzieren" />
+                      <MenuItem mnemonicParsing="false" text="Hindernis platzieren" />
+                      <MenuItem mnemonicParsing="false" text="Trinken platzieren" />
+                      <MenuItem mnemonicParsing="false" text="Inhalt einer Kachel löschen" />
+                  </Menu>
+                  <MenuItem mnemonicParsing="false" text="Laden" />
+                  <MenuItem mnemonicParsing="false" text="Als Bild speichern" />
+                  <MenuItem mnemonicParsing="false" text="Größe des Spielfeldes ändern">
+                     <graphic>
+                        <Separator prefWidth="200.0" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Spielfigur platzieren" />
+                  <MenuItem mnemonicParsing="false" text="Hindernis platzieren" />
+                  <MenuItem mnemonicParsing="false" text="Trinken platzieren" />
+                  <MenuItem mnemonicParsing="false" text="Inhalt einer Kachel löschen" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Spielfigur">
+            <items>
+              <MenuItem mnemonicParsing="false" text="gehe nach oben" />
+                  <MenuItem mnemonicParsing="false" text="gehe nach unten" />
+                  <MenuItem mnemonicParsing="false" text="gehe nach links" />
+                  <MenuItem mnemonicParsing="false" text="gehe nach rechts" />
+                  <Menu mnemonicParsing="false" text="nimm Gegenstand">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Katze" />
+                        <MenuItem mnemonicParsing="false" text="Trinken" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="leg Gegenstand ab">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Katze" />
+                        <MenuItem mnemonicParsing="false" text="Trinken" />
+                     </items>
+                  </Menu>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Simulation">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Start/Fortsetzen" />
+                  <MenuItem mnemonicParsing="false" text="Pause" />
+                  <MenuItem mnemonicParsing="false" text="Stopp" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <SplitPane dividerPositions="0.5" layoutY="65.0" prefHeight="308.0" prefWidth="600.0">
+         <items>
+            <TextArea prefHeight="200.0" prefWidth="200.0" />
+            <Pane prefHeight="200.0" prefWidth="200.0" />
+         </items>
+      </SplitPane>
+      <Label layoutY="370.0" prefHeight="26.0" prefWidth="600.0" text="Hallo" />
+   </children>
+</AnchorPane>
