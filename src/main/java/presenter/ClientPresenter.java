@@ -16,7 +16,7 @@ public class ClientPresenter extends Application {
 
 
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/ClientView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ClientView.fxml"));
         stage.setScene(new Scene(root, 200, 200));
         stage.show();
 
