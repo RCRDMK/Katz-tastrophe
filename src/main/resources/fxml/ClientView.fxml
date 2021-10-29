@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
 
-
-<?import javafx.scene.control.Slider?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Editor">
+          <Menu text="Editor">
             <items>
-              <MenuItem mnemonicParsing="false" text="Neu" />
+              <MenuItem mnemonicParsing="false" text="Neu">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
                   <MenuItem mnemonicParsing="false" text="Öffnen" />
                   <MenuItem mnemonicParsing="false" text="Beenden" />
             </items>
@@ -32,6 +27,9 @@
                         <MenuItem mnemonicParsing="false" text="JAXB" />
                         <MenuItem mnemonicParsing="false" text="Serialisieren" />
                      </items>
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="S" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator>
                   </Menu>
               <MenuItem mnemonicParsing="false" text="Größe des Spielfeldes ändern" />
                   <MenuItem mnemonicParsing="false" text="Spielfigur platzieren" />
@@ -47,7 +45,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Spielfigur">
             <items>
-              <MenuItem mnemonicParsing="false" text="gehe nach oben" />
+              <MenuItem mnemonicParsing="false" text="gehe nach oben">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="W" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
                   <MenuItem mnemonicParsing="false" text="gehe nach unten" />
                   <MenuItem mnemonicParsing="false" text="gehe nach links" />
                   <MenuItem mnemonicParsing="false" text="gehe nach rechts" />
@@ -67,15 +68,31 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Simulation">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Start/Fortsetzen" />
-                  <MenuItem mnemonicParsing="false" text="Pause" />
-                  <MenuItem mnemonicParsing="false" text="Stopp" />
+                  <MenuItem mnemonicParsing="false" text="Start/Fortsetzen">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F11" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Pause">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="SPACE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Stopp">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F12" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
                </items>
             </Menu>
         </menus>
       </MenuBar>
       <ToolBar layoutY="28.0" prefHeight="40.0" prefWidth="600.0">
         <items>
+            <Button>
+                <graphic>
+                    <ImageView>
+                        <Image url="@../pictures/protag.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
           <Button mnemonicParsing="false" text="Button" />
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
             <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
@@ -97,7 +114,7 @@
             <Slider />
         </items>
       </ToolBar>
-      <SplitPane dividerPositions="0.5" layoutX="-2.0" layoutY="68.0" prefHeight="312.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="600.0">
          <items>
             <TextArea prefHeight="200.0" prefWidth="200.0" />
             <Pane prefHeight="200.0" prefWidth="200.0" />
