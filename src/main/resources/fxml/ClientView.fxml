@@ -9,27 +9,21 @@
    <children>
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0">
         <menus>
-          <Menu text="Editor">
+          <Menu text="Editor" mnemonicParsing="true">
             <items>
-              <MenuItem mnemonicParsing="false" text="Neu">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Öffnen" />
-                  <MenuItem mnemonicParsing="false" text="Beenden" />
+              <MenuItem mnemonicParsing="false" text="Neu" accelerator="Shortcut+N"/>
+                  <MenuItem mnemonicParsing="false" text="Öffnen" accelerator="Shortcut+O"/>
+                  <MenuItem mnemonicParsing="false" text="Beenden" accelerator="Shortcut+Q"/>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Spielfläche">
+          <Menu text="Spielfläche" mnemonicParsing="false">
             <items>
-                  <Menu mnemonicParsing="false" text="Speichern als">
+                  <Menu mnemonicParsing="false" text="Speichern als" accelerator="Shortcut+S">
                      <items>
                         <MenuItem mnemonicParsing="false" text="XML" />
                         <MenuItem mnemonicParsing="false" text="JAXB" />
                         <MenuItem mnemonicParsing="false" text="Serialisieren" />
                      </items>
-                     <accelerator>
-                        <KeyCodeCombination alt="ANY" code="S" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                     </accelerator>
                   </Menu>
               <MenuItem mnemonicParsing="false" text="Größe des Spielfeldes ändern" />
                   <MenuItem mnemonicParsing="false" text="Spielfigur platzieren" />
@@ -43,15 +37,13 @@
                   <MenuItem mnemonicParsing="false" text="Inhalt einer Kachel löschen" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Spielfigur">
+          <Menu text="Spielfigur" mnemonicParsing="false">
             <items>
-              <MenuItem mnemonicParsing="false" text="gehe nach oben">
-                     <accelerator>
-                        <KeyCodeCombination alt="ANY" code="W" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" text="gehe nach unten" />
-                  <MenuItem mnemonicParsing="false" text="gehe nach links" />
-                  <MenuItem mnemonicParsing="false" text="gehe nach rechts" />
+              <MenuItem mnemonicParsing="false" text="gehe nach oben" accelerator="Shortcut+Shift+W"/>
+                  <MenuItem mnemonicParsing="false" text="gehe nach unten" accelerator="Shortcut+Shift+S"/>
+                  <MenuItem mnemonicParsing="false" text="gehe nach links" accelerator="Shortcut+Shift+A"/>
+                  <MenuItem mnemonicParsing="false" text="gehe nach rechts" accelerator="Shortcut+Shift+D"/>
+                <SeparatorMenuItem></SeparatorMenuItem>
                   <Menu mnemonicParsing="false" text="nimm Gegenstand">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Katze" />
@@ -66,27 +58,18 @@
                   </Menu>
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Simulation">
+            <Menu text="Simulation" mnemonicParsing="false">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Start/Fortsetzen">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="F11" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Pause">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="SPACE" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Stopp">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="F12" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Start/Fortsetzen" accelerator="Shortcut+F11"/>
+                  <MenuItem mnemonicParsing="false" text="Pause" accelerator="Shortcut+Space"/>
+                  <MenuItem mnemonicParsing="false" text="Stopp" accelerator="Shortcut+F12"/>
                </items>
             </Menu>
         </menus>
       </MenuBar>
       <ToolBar layoutY="28.0" prefHeight="40.0" prefWidth="600.0">
         <items>
-            <Button>
+            <Button mnemonicParsing="true">
                 <graphic>
                     <ImageView>
                         <Image url="@../pictures/protag.png" />
