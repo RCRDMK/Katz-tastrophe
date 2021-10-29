@@ -72,7 +72,7 @@
             <Button mnemonicParsing="true">
                 <graphic>
                     <ImageView>
-                        <Image url="@../pictures/protag.png" />
+                        <Image url="@../images/protag.png" />
                     </ImageView>
                 </graphic>
             </Button>
