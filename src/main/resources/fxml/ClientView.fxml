@@ -69,31 +69,179 @@
       </MenuBar>
       <ToolBar layoutY="28.0" prefHeight="40.0" prefWidth="600.0">
         <items>
-            <Button mnemonicParsing="true">
+            <!--<Button mnemonicParsing="true">
                 <graphic>
                     <ImageView>
-                        <Image url="@../images/protag.png" />
+                        <Image url="@../images/protag/protag.png" />
                     </ImageView>
                 </graphic>
+                <tooltip><Tooltip text="Test"/> </tooltip>
+            </Button>-->
+
+          <Button mnemonicParsing="false">
+            <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/newFile.png" />
+                </ImageView>
+            </graphic>
+              <tooltip><Tooltip text="neue Datei erstellen"/> </tooltip>
             </Button>
-          <Button mnemonicParsing="false" text="Button" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="234.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="290.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="346.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="402.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="458.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="524.0" layoutY="20.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="534.0" layoutY="30.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="544.0" layoutY="40.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="554.0" layoutY="50.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="564.0" layoutY="60.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="574.0" layoutY="70.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="584.0" layoutY="80.0" mnemonicParsing="false" text="Button" />
+
+            <!--<Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/elements/cat.png" />
+                    </ImageView>
+                </graphic>
+                <tooltip><Tooltip text="Datei öffnen"/> </tooltip>
+            </Button>
+-->
+            <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/saveFile.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Speichern"/> </tooltip>
+            </Button>
+
+            <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/loadFile.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Laden"/> </tooltip>
+            </Button>
+
+            <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/changeGamefield.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Spielfeldgröße ändern"/> </tooltip>
+            </Button>
+
+            <Button layoutX="234.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/Kaigai Niki.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Spielfigur setzen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="290.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/drink.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Trinken platzieren"/> </tooltip>
+            </Button>
+
+            <Button layoutX="346.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/cat.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Katze platzieren"/> </tooltip>
+            </Button>
+
+            <Button layoutX="402.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/wall.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Wand platzieren"/> </tooltip>
+            </Button>
+
+            <Button layoutX="458.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/drinkPickup.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Trinken aufheben"/> </tooltip>
+            </Button>
+
+            <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/cat.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Katze aufheben"/> </tooltip>
+            </Button>
+
+            <!--<Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/elements/cat.png" />
+                    </ImageView>
+                </graphic>
+                <tooltip><Tooltip text="Trinken ablegen"/> </tooltip>
+            </Button> -->
+
+            <!--<Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/elements/cat.png" />
+                    </ImageView>
+                </graphic>
+                <tooltip><Tooltip text="Katze ablegen"/> </tooltip>
+            </Button> -->
+
+            <Button layoutX="524.0" layoutY="20.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/protag/protagUp.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="nach oben gehen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="534.0" layoutY="30.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/protag/protagDown.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="nach unten gehen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="544.0" layoutY="40.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/protag/protagRight.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="nach rechts gehen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="554.0" layoutY="50.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/protag/protagLeft.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="nach links gehen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="564.0" layoutY="60.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/startButton.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Start/Fortsetzen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="574.0" layoutY="70.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/pauseButton.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Pause"/> </tooltip>
+            </Button>
+
+            <Button layoutX="584.0" layoutY="80.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
+                    <Image url="@../images/elements/stopButton.png" />
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Stop"/> </tooltip>
+            </Button>
+
             <Slider />
         </items>
       </ToolBar>
