@@ -22,7 +22,7 @@ public class ClientPresenter extends Application {
         stage.show();
 
         stage.setMaxHeight(500);
-        stage.setMaxWidth(1300);
+        stage.setMaxWidth(stage.getWidth());
 
         stage.setMinHeight(450);
         stage.setMinWidth(1150);

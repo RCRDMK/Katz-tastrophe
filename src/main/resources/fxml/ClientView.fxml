@@ -5,11 +5,12 @@
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="1150" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="1150" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="presenter.ClientPresenter">
    <children>
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="1150.0">
         <menus>
-          <Menu text="Editor" mnemonicParsing="true">
+          <Menu text="_Editor">
             <items>
               <MenuItem mnemonicParsing="false" text="Neu" accelerator="Shortcut+N"/>
                   <MenuItem mnemonicParsing="false" text="Öffnen" accelerator="Shortcut+O"/>
@@ -232,7 +233,7 @@
 
             <Button layoutX="1018.0" layoutY="80.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
-                    <Image url="@../images/stopButton.png" />
+                    <Image url="@../images/quit.png" />
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Stop"/> </tooltip>
