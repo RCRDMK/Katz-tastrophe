@@ -151,13 +151,21 @@ fx:controller="presenter.ClientPresenter">
 
             <Button layoutX="458.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
+                    <Image url="@../images/delete.png"/>
+                </ImageView>
+            </graphic>
+                <tooltip><Tooltip text="Inhalt einer Kachel löschen"/> </tooltip>
+            </Button>
+
+            <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+                <ImageView>
                     <Image url="@../images/drinkPickUp.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Trinken aufheben"/> </tooltip>
             </Button>
 
-            <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
+            <Button layoutX="570.0" layoutY="10.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/catPickUp.png"/>
                 </ImageView>
@@ -165,7 +173,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Katze aufheben"/> </tooltip>
             </Button>
 
-            <Button layoutX="570.0" layoutY="10.0" mnemonicParsing="false">
+            <Button layoutX="626.0" layoutY="10.0" mnemonicParsing="false">
                 <graphic>
                     <ImageView>
                         <Image url="@../images/drinkPutDown.png"/>
@@ -174,7 +182,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Trinken ablegen"/> </tooltip>
             </Button>
 
-            <Button layoutX="626.0" layoutY="10.0" mnemonicParsing="false">
+            <Button layoutX="682.0" layoutY="10.0" mnemonicParsing="false">
                 <graphic>
                     <ImageView>
                         <Image url="@../images/catPutDown.png"/>
@@ -183,7 +191,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Katze ablegen"/> </tooltip>
             </Button>
 
-           <Button layoutX="682.0" layoutY="20.0" mnemonicParsing="false"> <graphic>
+           <Button layoutX="738.0" layoutY="20.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/protagUp.png"/>
                 </ImageView>
@@ -191,7 +199,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="nach oben gehen"/> </tooltip>
             </Button>
 
-           <Button layoutX="738.0" layoutY="30.0" mnemonicParsing="false"> <graphic>
+           <Button layoutX="794.0" layoutY="30.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/protagDown.png"/>
                 </ImageView>
@@ -199,7 +207,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="nach unten gehen"/> </tooltip>
             </Button>
 
-            <Button layoutX="794.0" layoutY="40.0" mnemonicParsing="false"> <graphic>
+            <Button layoutX="850.0" layoutY="40.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/protagRight.png"/>
                 </ImageView>
@@ -207,7 +215,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="nach rechts gehen"/> </tooltip>
             </Button>
 
-            <Button layoutX="850.0" layoutY="50.0" mnemonicParsing="false"> <graphic>
+            <Button layoutX="906.0" layoutY="50.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/protagLeft.png"/>
                 </ImageView>
@@ -215,7 +223,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="nach links gehen"/> </tooltip>
             </Button>
 
-            <Button layoutX="906.0" layoutY="60.0" mnemonicParsing="false"> <graphic>
+            <Button layoutX="962.0" layoutY="60.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/startButton.png"/>
                 </ImageView>
@@ -223,7 +231,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Start/Fortsetzen"/> </tooltip>
             </Button>
 
-            <Button layoutX="962.0" layoutY="70.0" mnemonicParsing="false"> <graphic>
+            <Button layoutX="1018.0" layoutY="70.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/pauseButton.png"/>
                 </ImageView>
@@ -231,7 +239,7 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Pause"/> </tooltip>
             </Button>
 
-            <Button layoutX="1018.0" layoutY="80.0" mnemonicParsing="false"> <graphic>
+            <Button layoutX="1074.0" layoutY="80.0" mnemonicParsing="false"> <graphic>
                 <ImageView>
                     <Image url="@../images/quit.png"/>
                 </ImageView>
@@ -239,7 +247,6 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Stop"/> </tooltip>
             </Button>
 
-            <Slider />
         </items>
       </ToolBar>
       <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0">
