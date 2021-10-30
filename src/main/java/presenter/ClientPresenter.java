@@ -17,8 +17,15 @@ public class ClientPresenter extends Application {
 
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ClientView.fxml"));
-        stage.setScene(new Scene(root, 200, 200));
+        stage.setScene(new Scene(root, 1150 , 400));
+        stage.setTitle("Katz-tastrophe");
         stage.show();
+
+        stage.setMaxHeight(500);
+        stage.setMaxWidth(1300);
+
+        stage.setMinHeight(450);
+        stage.setMinWidth(1150);
 
     }
 }
