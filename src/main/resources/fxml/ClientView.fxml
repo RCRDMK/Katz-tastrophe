@@ -8,6 +8,11 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="1150" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
 fx:controller="presenter.ClientPresenter">
    <children>
+
+       <fx:define>
+           <ToggleGroup fx:id="menuItems"/>
+       </fx:define>
+
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="1150.0">
         <menus>
           <Menu text="_Editor">
@@ -56,21 +61,21 @@ fx:controller="presenter.ClientPresenter">
                       </ImageView>
                   </graphic>
               </MenuItem>
-                  <MenuItem mnemonicParsing="false" fx:id="placeChara" text="Spielfigur platzieren"/>
+                  <RadioMenuItem mnemonicParsing="false" fx:id="placeChara" text="Spielfigur platzieren" toggleGroup="$menuItems"/>
                   <Menu mnemonicParsing="false" text="Hindernis platzieren">
                      <items>
-                        <MenuItem mnemonicParsing="false" fx:id="placeCat" text="Katze"/>
-                        <MenuItem mnemonicParsing="false" fx:id="placeWall" text="Wand"/>
+                        <RadioMenuItem mnemonicParsing="false" fx:id="placeCat" text="Katze" toggleGroup="$menuItems"/>
+                        <RadioMenuItem mnemonicParsing="false" fx:id="placeWall" text="Wand" toggleGroup="$menuItems"/>
                      </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" fx:id="placeDrink" text="Trinken platzieren"/>
-                  <MenuItem mnemonicParsing="false" fx:id="deleteContent" text="Inhalt einer Kachel löschen">
+                  <RadioMenuItem mnemonicParsing="false" fx:id="placeDrink" text="Trinken platzieren" toggleGroup="$menuItems"/>
+                  <RadioMenuItem mnemonicParsing="false" fx:id="deleteContent" text="Inhalt einer Kachel löschen" toggleGroup="$menuItems">
                       <graphic>
                           <ImageView>
                               <Image url="@../images/menuItems/deleteMenu.png"></Image>
                           </ImageView>
                       </graphic>
-                  </MenuItem>
+                  </RadioMenuItem>
             </items>
           </Menu>
           <Menu text="Spiel_figur">
@@ -82,45 +87,50 @@ fx:controller="presenter.ClientPresenter">
                 <SeparatorMenuItem></SeparatorMenuItem>
                   <Menu mnemonicParsing="false" text="nimm Gegenstand">
                      <items>
-                        <MenuItem mnemonicParsing="false" fx:id="pickCatUp" text="Katze"/>
-                        <MenuItem mnemonicParsing="false" fx:id="pickDrinkUp" text="Trinken"/>
+                        <RadioMenuItem mnemonicParsing="false" fx:id="pickCatUp" text="Katze" toggleGroup="$menuItems"/>
+                        <RadioMenuItem mnemonicParsing="false" fx:id="pickDrinkUp" text="Trinken" toggleGroup="$menuItems"/>
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="leg Gegenstand ab">
                      <items>
-                        <MenuItem mnemonicParsing="false" fx:id="putCatDown" text="Katze"/>
-                        <MenuItem mnemonicParsing="false" fx:id="putDrinkDown" text="Trinken"/>
+                        <RadioMenuItem mnemonicParsing="false" fx:id="putCatDown" text="Katze" toggleGroup="$menuItems"/>
+                        <RadioMenuItem mnemonicParsing="false" fx:id="putDrinkDown" text="Trinken" toggleGroup="$menuItems"/>
                      </items>
                   </Menu>
             </items>
           </Menu>
             <Menu text="Simul_ation">
                <items>
-                  <MenuItem mnemonicParsing="false" fx:id="start" text="Start/Fortsetzen" accelerator="Shortcut+F11">
+                  <RadioMenuItem mnemonicParsing="false" fx:id="start" text="Start/Fortsetzen" accelerator="Shortcut+F11" toggleGroup="$menuItems">
                       <graphic>
                           <ImageView>
                               <Image url="@../images/menuItems/startButtonMenu.png"></Image>
                           </ImageView>
                       </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" fx:id="pause" text="Pause" accelerator="Shortcut+Space">
+                  </RadioMenuItem>
+                  <RadioMenuItem mnemonicParsing="false" fx:id="pause" text="Pause" accelerator="Shortcut+Space" toggleGroup="$menuItems">
                       <graphic>
                           <ImageView>
                               <Image url="@../images/menuItems/pauseButtonMenu.png"></Image>
                           </ImageView>
                       </graphic>
-                  </MenuItem>
-                  <MenuItem mnemonicParsing="false" fx:id="stop" text="Stopp" accelerator="Shortcut+F12">
+                  </RadioMenuItem>
+                  <RadioMenuItem mnemonicParsing="false" fx:id="stop" text="Stopp" accelerator="Shortcut+F12" toggleGroup="$menuItems">
                       <graphic>
                           <ImageView>
                               <Image url="@../images/menuItems/quitMenu.png"></Image>
                           </ImageView>
                       </graphic>
-                  </MenuItem>
+                  </RadioMenuItem>
                </items>
             </Menu>
         </menus>
       </MenuBar>
+
+       <fx:define>
+           <ToggleGroup fx:id="buttons"/>
+       </fx:define>
+
       <ToolBar layoutY="28.0" prefHeight="40.0" prefWidth="1200.0">
         <items>
           <Button mnemonicParsing="true" fx:id="newFileButton">
@@ -146,7 +156,8 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Datei öffnen"/> </tooltip>
             </Button>
 -->
-            <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" fx:id="saveFileButton"> <graphic>
+            <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" fx:id="saveFileButton">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/saveFile.png"/>
                 </ImageView>
@@ -154,7 +165,8 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Speichern"/> </tooltip>
             </Button>
 
-            <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false" fx:id="openFileButton"> <graphic>
+            <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false" fx:id="openFileButton">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/loadFile.png"/>
                 </ImageView>
@@ -162,7 +174,8 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Laden"/> </tooltip>
             </Button>
 
-            <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" fx:id="changeSizeFieldButton"> <graphic>
+            <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" fx:id="changeSizeFieldButton">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/changeGamefield.png"/>
                 </ImageView>
@@ -170,135 +183,142 @@ fx:controller="presenter.ClientPresenter">
                 <tooltip><Tooltip text="Spielfeldgröße ändern"/> </tooltip>
             </Button>
 
-           <Button layoutX="234.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCharaButton"> <graphic>
+           <ToggleButton layoutX="234.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCharaButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/protag.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Spielfigur setzen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="290.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeDrinkButton"> <graphic>
+            <ToggleButton layoutX="290.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeDrinkButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/drink.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Trinken platzieren"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="346.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCatButton"> <graphic>
+            <ToggleButton layoutX="346.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCatButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/cat.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Katze platzieren"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="402.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeWallButton"> <graphic>
+            <ToggleButton layoutX="402.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeWallButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/wall.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Wand platzieren"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="458.0" layoutY="10.0" mnemonicParsing="false" fx:id="deleteContentButton"> <graphic>
+            <ToggleButton layoutX="458.0" layoutY="10.0" mnemonicParsing="false" fx:id="deleteContentButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/delete.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Inhalt einer Kachel löschen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="514.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton"> <graphic>
+            <ToggleButton layoutX="514.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/drinkPickUp.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Trinken aufheben"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton"> <graphic>
+            <ToggleButton layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton" toggleGroup="$buttons"> <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/catPickUp.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Katze aufheben"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton">
+            <ToggleButton layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton" toggleGroup="$buttons">
                 <graphic>
                     <ImageView>
                         <Image url="@../images/buttons/drinkPutDown.png"/>
                     </ImageView>
                 </graphic>
                 <tooltip><Tooltip text="Trinken ablegen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton">
+            <ToggleButton layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton" toggleGroup="$buttons">
                 <graphic>
                     <ImageView>
                         <Image url="@../images/buttons/catPutDown.png"/>
                     </ImageView>
                 </graphic>
                 <tooltip><Tooltip text="Katze ablegen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-           <Button layoutX="738.0" layoutY="20.0" mnemonicParsing="false" fx:id="moveUpButton"> <graphic>
+           <ToggleButton layoutX="738.0" layoutY="20.0" mnemonicParsing="false" fx:id="moveUpButton" toggleGroup="$buttons">
+               <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/protagUp.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="nach oben gehen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-           <Button layoutX="794.0" layoutY="30.0" mnemonicParsing="false" fx:id="moveDownButton"> <graphic>
+           <ToggleButton layoutX="794.0" layoutY="30.0" mnemonicParsing="false" fx:id="moveDownButton" toggleGroup="$buttons">
+               <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/protagDown.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="nach unten gehen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="850.0" layoutY="40.0" mnemonicParsing="false" fx:id="moveRightButton"> <graphic>
+            <ToggleButton layoutX="850.0" layoutY="40.0" mnemonicParsing="false" fx:id="moveRightButton" toggleGroup="$buttons">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/protagRight.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="nach rechts gehen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="906.0" layoutY="50.0" mnemonicParsing="false" fx:id="moveLeftButton"> <graphic>
+            <ToggleButton layoutX="906.0" layoutY="50.0" mnemonicParsing="false" fx:id="moveLeftButton" toggleGroup="$buttons">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/protagLeft.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="nach links gehen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="962.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"> <graphic>
+            <ToggleButton layoutX="962.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton" toggleGroup="$buttons">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/startButton.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Start/Fortsetzen"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="1018.0" layoutY="70.0" mnemonicParsing="false" fx:id="pauseButton"> <graphic>
+            <ToggleButton layoutX="1018.0" layoutY="70.0" mnemonicParsing="false" fx:id="pauseButton" toggleGroup="$buttons">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/pauseButton.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Pause"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
-            <Button layoutX="1074.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"> <graphic>
+            <ToggleButton layoutX="1074.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton" toggleGroup="$buttons">
+                <graphic>
                 <ImageView>
                     <Image url="@../images/buttons/quit.png"/>
                 </ImageView>
             </graphic>
                 <tooltip><Tooltip text="Stop"/> </tooltip>
-            </Button>
+            </ToggleButton>
 
         </items>
       </ToolBar>
