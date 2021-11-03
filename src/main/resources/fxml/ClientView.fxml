@@ -325,7 +325,7 @@ fx:controller="presenter.ClientPresenter">
       <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0">
          <items>
             <TextArea prefHeight="200.0" prefWidth="200.0"/>
-            <Pane prefHeight="200.0" prefWidth="200.0"/>
+             <Pane prefHeight="200.0" prefWidth="200.0"/>
          </items>
       </SplitPane>
       <Label layoutY="380.0" prefHeight="18.0" prefWidth="600.0" text="'Mau! Maaauuuuuu!!!' - Kuro, immer" fx:id="infoLabel"/>
