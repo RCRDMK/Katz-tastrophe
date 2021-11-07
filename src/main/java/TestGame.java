@@ -1,23 +1,67 @@
 import game.*;
 
+import java.util.Scanner;
+
 public class TestGame {
+
+    static GameField gameField = new GameField();
+    static GameCharacter character = new GameCharacter();
+    static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) throws WallInFrontException, DrinkInFrontException, CatInFrontException {
 
-        GameField gameField = new GameField();
-        GameCharacter character = new GameCharacter();
-
 
         System.out.println("Legende: \nX: ein leeres Feld\nW: eine Wand\nC: eine Katze\nD: Trinken\n^: Der Charakter. Die Pfeilspitze zeigt an, wohin der Charakter gerade schaut");
+        System.out.println("Wenn du das Programm schließen möchtest, dann gib 'quit' ein.");
         //setting the gamefield. Can't currently be smaller than 5x5.
         // Otherwise a OutOfBoundsException will occur because of the settings in the GameField class
         gameField.setGameField(7, 7);
         gameField.printGameField();
 
-        character.lookHere("right");
-        gameField.printGameField();
-        character.moveRight();
+        while (true) {
+            String antwort = scan.next();
+            TestGame.commands(antwort);
+        }
 
 
+    }
+
+    public static void commands(String command) throws WallInFrontException, DrinkInFrontException, CatInFrontException {
+        switch (command) {
+            case "hoch":
+                character.lookHere("up");
+                character.moveUp();
+                break;
+
+            case "runter":
+                character.lookHere("down");
+                character.moveDown();
+                break;
+
+            case "links":
+                character.lookHere("left");
+                character.moveLeft();
+                break;
+
+            case "rechts":
+                character.lookHere("right");
+                character.moveRight();
+                break;
+
+            case "hilfe":
+                System.out.println("Legende: \nX: ein leeres Feld\nW: eine Wand\nC: eine Katze\nD: Trinken\n^: Der Charakter. Die Pfeilspitze zeigt an, wohin der Charakter gerade schaut" +
+                        "\nWenn du das Programm schließen möchtest, dann gib 'quit' ein.");
+                break;
+
+            case "quit":
+                System.out.println("Bis zum nächsten Mal!");
+                scan.close();
+                System.exit(0);
+                break;
+
+            default:
+                System.out.println("Bitte nur eine gültige Aktion wie 'hoch', 'runter', 'links', 'rechts' oder 'hilfe' eingeben." +
+                        "\nWenn du das Programm schließen möchtest, dann gib 'quit' ein.");
+        }
     }
 }

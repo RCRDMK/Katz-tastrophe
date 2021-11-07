@@ -40,7 +40,9 @@ public class GameField {
             //Hier kann auch ein normaler "toString" ausgeführt werden.
             //Da aber evtl später mit Cells gearbeitet wird, bleibt dieser Befehl als spätere Spickhilfe erhalten
             System.out.println(Arrays.deepToString(this.field[i]));
+
         }
+        System.out.println("Bewege dich mit Richtungsanweisungen wie 'hoch', 'runter', 'links', 'rechts' oder rufe die Hilfe mit 'hilfe' auf.");
         System.out.println();
     }
 
