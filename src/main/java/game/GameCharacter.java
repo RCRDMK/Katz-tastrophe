@@ -119,7 +119,7 @@ public class GameCharacter {
         gameField.printGameField();
     }
 
-    void takeCat() throws HandsNotEmptyException {
+    public void takeCat() throws HandsNotEmptyException {
         if (!handsFull) {
             handsFull = true;
             catInHand = true;
@@ -176,7 +176,7 @@ public class GameCharacter {
 
     }
 
-    void takeDrink() throws HandsNotEmptyException {
+    public void takeDrink() throws HandsNotEmptyException {
         if (!handsFull) {
             handsFull = true;
             drinkInHand = true;
@@ -233,7 +233,7 @@ public class GameCharacter {
 
     }
 
-    void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException {
+    public void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException {
         if (catInHand) {
             catInHand = false;
             handsFull = false;
@@ -251,7 +251,7 @@ public class GameCharacter {
                                     throw new DrinkInFrontException();
                             }
                             if (gameField.gameField[i][j].equals("^")) {
-                                gameField.gameField[i - 1][j] = "x";
+                                gameField.gameField[i - 1][j] = "C";
                                 break;
                             }
                         }
@@ -270,7 +270,7 @@ public class GameCharacter {
                                     throw new DrinkInFrontException();
                             }
                             if (gameField.gameField[i][j].equals("v")) {
-                                gameField.gameField[i + 1][j] = "x";
+                                gameField.gameField[i + 1][j] = "C";
                                 break;
                             }
                         }
@@ -289,7 +289,7 @@ public class GameCharacter {
                                     throw new DrinkInFrontException();
                             }
                             if (gameField.gameField[i][j].equals(">")) {
-                                gameField.gameField[i][j + 1] = "x";
+                                gameField.gameField[i][j + 1] = "C";
                                 break;
                             }
                         }
@@ -299,6 +299,7 @@ public class GameCharacter {
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
+                            //TODO OutOfBoundsException hier lösen
                             switch (gameField.gameField[i][j - 1]) {
                                 case "W":
                                     throw new WallInFrontException();
@@ -308,7 +309,7 @@ public class GameCharacter {
                                     throw new DrinkInFrontException();
                             }
                             if (gameField.gameField[i][j].equals("<")) {
-                                gameField.gameField[i][j - 1] = "x";
+                                gameField.gameField[i][j - 1] = "C";
                                 break;
                             }
                         }
@@ -321,7 +322,7 @@ public class GameCharacter {
         }
     }
 
-    void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException {
+    public void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException {
         if (drinkInHand) {
             drinkInHand = false;
             handsFull = false;
@@ -337,7 +338,7 @@ public class GameCharacter {
                                     throw new CatInFrontException();
                             }
                             if (gameField.gameField[i][j].equals("^")) {
-                                gameField.gameField[i - 1][j] = "x";
+                                gameField.gameField[i - 1][j] = "D";
                                 break;
                             }
                         }
@@ -354,7 +355,7 @@ public class GameCharacter {
                                     throw new CatInFrontException();
                             }
                             if (gameField.gameField[i][j].equals("v")) {
-                                gameField.gameField[i + 1][j] = "x";
+                                gameField.gameField[i + 1][j] = "D";
                                 break;
                             }
                         }
@@ -371,7 +372,7 @@ public class GameCharacter {
                                     throw new CatInFrontException();
                             }
                             if (gameField.gameField[i][j].equals(">")) {
-                                gameField.gameField[i][j + 1] = "x";
+                                gameField.gameField[i][j + 1] = "D";
                                 break;
                             }
                         }
@@ -388,7 +389,7 @@ public class GameCharacter {
                                     throw new CatInFrontException();
                             }
                             if (gameField.gameField[i][j].equals("<")) {
-                                gameField.gameField[i][j - 1] = "x";
+                                gameField.gameField[i][j - 1] = "D";
                                 break;
                             }
                         }
