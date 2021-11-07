@@ -9,28 +9,36 @@ public class GameCharacter {
         switch (direction) {
             case "up":
                 gameField.character = "^";
+                changeCharacterView();
+                break;
             case "down":
                 gameField.character = "v";
+                changeCharacterView();
+                break;
             case "left":
                 gameField.character = "<";
+                changeCharacterView();
+                break;
             case "right":
                 gameField.character = ">";
-                for (int i = 0; i <= gameField.row - 1; i++) {
-                    //System.out.println(gameField.row);
-                    for (int j = 0; j <= gameField.column - 1; j++) {
-                        //System.out.println(gameField.column);
-                        if (gameField.field[i][j].equals("^")) {
-                            gameField.field[i][j] = gameField.character;
-                        }
-                    }
-                }
+                changeCharacterView();
                 break;
             default:
                 System.out.println("Bitte nur gültige Richtungen wie Up, Down, Left und Right benutzen.");
         }
     }
 
-    /*public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    private void changeCharacterView() {
+        for (int i = 0; i <= GameField.row - 1; i++) {
+            for (int j = 0; j <= gameField.column - 1; j++) {
+                if (gameField.field[i][j].equals("^") || gameField.field[i][j].equals("v") || gameField.field[i][j].equals("<") || gameField.field[i][j].equals(">")) {
+                    gameField.field[i][j] = gameField.character;
+                }
+            }
+        }
+    }
+
+    public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.field[i][j] == "^") {
@@ -41,9 +49,10 @@ public class GameCharacter {
                 }
             }
         }
-    }*/
+        gameField.printGameField();
+    }
 
-    /*public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.field[i][j] == "v") {
@@ -54,7 +63,8 @@ public class GameCharacter {
                 }
             }
         }
-    }*/
+        gameField.printGameField();
+    }
 
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row - 1; i++) {
@@ -69,7 +79,7 @@ public class GameCharacter {
         gameField.printGameField();
     }
 
-    /*public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.field[i][j] == "<") {
@@ -80,7 +90,8 @@ public class GameCharacter {
                 }
             }
         }
-    }*/
+        gameField.printGameField();
+    }
 
     void takeCat() throws HandsNotEmptyException {
 
