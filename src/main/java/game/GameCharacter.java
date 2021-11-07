@@ -1,9 +1,17 @@
 package game;
 
+import game.exceptions.CatInFrontException;
+import game.exceptions.DrinkInFrontException;
+import game.exceptions.HandsNotEmptyException;
+import game.exceptions.WallInFrontException;
+
 public class GameCharacter {
 
     GameField gameField = new GameField();
 
+    boolean handsFull = false;
+    boolean drinkInHand = false;
+    boolean catInHand = false;
 
     public void lookHere(String direction) {
         switch (direction) {
@@ -108,10 +116,20 @@ public class GameCharacter {
     }
 
     void takeCat() throws HandsNotEmptyException {
+        if (handsFull = false) {
+            handsFull = true;
+        } else {
+            throw new HandsNotEmptyException();
+        }
 
     }
 
     void takeDrink() throws HandsNotEmptyException {
+        if (handsFull = false) {
+            handsFull = true;
+        } else {
+            throw new HandsNotEmptyException();
+        }
 
     }
 
@@ -124,8 +142,10 @@ public class GameCharacter {
     }
 
     boolean handsFree() throws HandsNotEmptyException {
-
-        return true;
+        if (handsFull = false) {
+            return true;
+        }
+        return false;
     }
 
     boolean catThere() throws CatInFrontException {
@@ -133,8 +153,10 @@ public class GameCharacter {
         return true;
     }
 
-    boolean stepOverCat() throws HandsNotEmptyException, CatInFrontException {
-
+    boolean stepOverCatPossible() throws HandsNotEmptyException, CatInFrontException {
+        if (handsFull = true) {
+            return false;
+        }
         return true;
     }
 
