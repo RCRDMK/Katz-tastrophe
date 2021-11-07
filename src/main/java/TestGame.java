@@ -25,7 +25,7 @@ public class TestGame {
 
         while (true) {
             try {
-                String antwort = scan.next();
+                String antwort = scan.next().toLowerCase();
                 TestGame.commands(antwort);
             } catch (WallInFrontException w) {
                 System.out.println("Du kannst nicht auf dem selben Feld wie eine Wand stehen.");
