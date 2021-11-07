@@ -44,6 +44,7 @@ public class GameField {
         System.out.println();
     }
 
+/*
 
     public void lookHere(String direction) {
         switch (direction) {
@@ -65,7 +66,8 @@ public class GameField {
         }
     }
 
-    /*public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    */
+/*public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.field[i][j] == "^") {
@@ -76,9 +78,11 @@ public class GameField {
                 }
             }
         }
-    }*/
+    }*//*
 
-    /*public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+
+     */
+/*public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.field[i][j] == "v") {
@@ -89,7 +93,8 @@ public class GameField {
                 }
             }
         }
-    }*/
+    }*//*
+
 
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < row - 1; i++) {
@@ -109,7 +114,8 @@ public class GameField {
         //gameField.printGameField();
     }
 
-    /*public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    */
+/*public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.field[i][j] == "<") {
@@ -120,7 +126,8 @@ public class GameField {
                 }
             }
         }
-    }*/
+    }*//*
+
 
     void takeCat() throws HandsNotEmptyException {
 
@@ -152,5 +159,6 @@ public class GameField {
 
         return true;
     }
+*/
 
 }

@@ -19,7 +19,7 @@ public class GameCharacter {
                     System.out.println(gameField.row);
                     for (int j = 0; j <= gameField.row; j++) {
                         System.out.println(gameField.column);
-                        if (gameField.field[i][j].equals("^")) {
+                        if (!gameField.field[i][j].equals(null) && gameField.field[i][j].equals("^")) {
                             gameField.field[i][j] = gameField.character;
                         }
                     }
