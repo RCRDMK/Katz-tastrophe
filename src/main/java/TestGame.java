@@ -19,8 +19,13 @@ public class TestGame {
         gameField.printGameField();
 
         while (true) {
-            String antwort = scan.next();
-            TestGame.commands(antwort);
+            try {
+                String antwort = scan.next();
+                TestGame.commands(antwort);
+            } catch (WallInFrontException w) {
+                System.out.println("Du kannst nicht auf dem selben Feld wie eine Wand stehen.");
+            }
+
         }
 
 

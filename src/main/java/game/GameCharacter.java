@@ -42,9 +42,13 @@ public class GameCharacter {
         for (int i = 0; i < gameField.row - 1; i++) {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.field[i][j].equals("^")) {
-                    gameField.field[i][j] = "x";
-                    gameField.placesElementsInField(i - 1, j, "^");
-                    break;
+                    if (gameField.field[i - 1][j].equals("W")) {
+                        throw new WallInFrontException();
+                    } else {
+                        gameField.field[i][j] = "x";
+                        gameField.placesElementsInField(i - 1, j, "^");
+                        break;
+                    }
                 }
             }
         }
@@ -55,10 +59,14 @@ public class GameCharacter {
         for (int i = 0; i < gameField.row - 1; i++) {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.field[i][j].equals("v")) {
-                    gameField.field[i][j] = "x";
-                    gameField.placesElementsInField(i + 1, j, "v");
-                    i = gameField.row - 1;
-                    break;
+                    if (gameField.field[i + 1][j].equals("W")) {
+                        throw new WallInFrontException();
+                    } else {
+                        gameField.field[i][j] = "x";
+                        gameField.placesElementsInField(i + 1, j, "v");
+                        i = gameField.row - 1;
+                        break;
+                    }
                 }
             }
         }
@@ -69,9 +77,13 @@ public class GameCharacter {
         for (int i = 0; i < gameField.row - 1; i++) {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.field[i][j].equals(">")) {
-                    gameField.field[i][j] = "x";
-                    gameField.placesElementsInField(i, j + 1, ">");
-                    break;
+                    if (gameField.field[i][j + 1].equals("W")) {
+                        throw new WallInFrontException();
+                    } else {
+                        gameField.field[i][j] = "x";
+                        gameField.placesElementsInField(i, j + 1, ">");
+                        break;
+                    }
                 }
             }
         }
@@ -82,9 +94,13 @@ public class GameCharacter {
         for (int i = 0; i < gameField.row - 1; i++) {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.field[i][j].equals("<")) {
-                    gameField.field[i][j] = "x";
-                    gameField.placesElementsInField(i, j - 1, "<");
-                    break;
+                    if (gameField.field[i][j - 1].equals("W")) {
+                        throw new WallInFrontException();
+                    } else {
+                        gameField.field[i][j] = "x";
+                        gameField.placesElementsInField(i, j - 1, "<");
+                        break;
+                    }
                 }
             }
         }
