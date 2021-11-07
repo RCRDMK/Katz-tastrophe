@@ -39,13 +39,12 @@ public class GameCharacter {
     }
 
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-        for (int i = 0; i < gameField.row; i++) {
-            for (int j = 0; j < gameField.column; j++) {
-                if (gameField.field[i][j] == "^") {
-                    gameField.field[i][j] = "X";
-                    gameField.field[i - 1][j] = "^";
-                } else {
-                    System.out.println("Der Charakter kann nur in die Richtung gehen, in die er schaut");
+        for (int i = 0; i < gameField.row - 1; i++) {
+            for (int j = 0; j < gameField.column - 1; j++) {
+                if (gameField.field[i][j].equals("^")) {
+                    gameField.field[i][j] = "x";
+                    gameField.placesElementsInField(i - 1, j, "^");
+                    break;
                 }
             }
         }
@@ -53,13 +52,13 @@ public class GameCharacter {
     }
 
     public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-        for (int i = 0; i < gameField.row; i++) {
-            for (int j = 0; j < gameField.column; j++) {
-                if (gameField.field[i][j] == "v") {
-                    gameField.field[i][j] = "X";
-                    gameField.field[i + 1][j] = "v";
-                } else {
-                    System.out.println("Der Charakter kann nur in die Richtung gehen, in die er schaut");
+        for (int i = 0; i < gameField.row - 1; i++) {
+            for (int j = 0; j < gameField.column - 1; j++) {
+                if (gameField.field[i][j].equals("v")) {
+                    gameField.field[i][j] = "x";
+                    gameField.placesElementsInField(i + 1, j, "v");
+                    i = gameField.row - 1;
+                    break;
                 }
             }
         }
@@ -80,13 +79,12 @@ public class GameCharacter {
     }
 
     public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-        for (int i = 0; i < gameField.row; i++) {
-            for (int j = 0; j < gameField.column; j++) {
-                if (gameField.field[i][j] == "<") {
-                    gameField.field[i][j] = "X";
-                    gameField.field[i][j - 1] = "<";
-                } else {
-                    System.out.println("Der Charakter kann nur in die Richtung gehen, in die er schaut");
+        for (int i = 0; i < gameField.row - 1; i++) {
+            for (int j = 0; j < gameField.column - 1; j++) {
+                if (gameField.field[i][j].equals("<")) {
+                    gameField.field[i][j] = "x";
+                    gameField.placesElementsInField(i, j - 1, "<");
+                    break;
                 }
             }
         }
