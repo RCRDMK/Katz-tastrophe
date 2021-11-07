@@ -15,11 +15,11 @@ public class GameCharacter {
                 gameField.character = "<";
             case "right":
                 gameField.character = ">";
-                for (int i = 0; i <= gameField.row; i++) {
-                    System.out.println(gameField.row);
-                    for (int j = 0; j <= gameField.row; j++) {
-                        System.out.println(gameField.column);
-                        if (!gameField.field[i][j].equals(null) && gameField.field[i][j].equals("^")) {
+                for (int i = 0; i <= gameField.row - 1; i++) {
+                    //System.out.println(gameField.row);
+                    for (int j = 0; j <= gameField.column - 1; j++) {
+                        //System.out.println(gameField.column);
+                        if (gameField.field[i][j].equals("^")) {
                             gameField.field[i][j] = gameField.character;
                         }
                     }
@@ -57,15 +57,16 @@ public class GameCharacter {
     }*/
 
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-        for (int i = 0; i < gameField.column; i++) {
-            for (int j = 0; j < gameField.column; j++) {
+        for (int i = 0; i < gameField.row - 1; i++) {
+            for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.field[i][j].equals(">")) {
                     gameField.field[i][j] = "x";
                     gameField.placesElementsInField(i, j + 1, ">");
+                    break;
                 }
             }
         }
-        //gameField.printGameField();
+        gameField.printGameField();
     }
 
     /*public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {

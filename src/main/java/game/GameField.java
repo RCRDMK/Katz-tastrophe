@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class GameField {
 
+    static public String[][] field;
     static int row;
     static int column;
-    public String[][] field;
     String cat = "C";
     String wall = "W";
     String drink = "D";
