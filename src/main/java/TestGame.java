@@ -2,6 +2,7 @@ import game.GameCharacter;
 import game.GameField;
 import game.exceptions.CatInFrontException;
 import game.exceptions.DrinkInFrontException;
+import game.exceptions.EndOfGameFieldException;
 import game.exceptions.WallInFrontException;
 
 import java.util.Scanner;
@@ -28,6 +29,8 @@ public class TestGame {
                 TestGame.commands(antwort);
             } catch (WallInFrontException w) {
                 System.out.println("Du kannst nicht auf dem selben Feld wie eine Wand stehen.");
+            } catch (EndOfGameFieldException e) {
+                System.out.println("Ende des Spielfelds erreicht.");
             }
 
         }
@@ -35,7 +38,7 @@ public class TestGame {
 
     }
 
-    public static void commands(String command) throws WallInFrontException, DrinkInFrontException, CatInFrontException {
+    public static void commands(String command) throws WallInFrontException, DrinkInFrontException, CatInFrontException, EndOfGameFieldException {
         switch (command) {
             case "hoch":
                 character.lookHere("up");

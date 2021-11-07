@@ -1,9 +1,6 @@
 package game;
 
-import game.exceptions.CatInFrontException;
-import game.exceptions.DrinkInFrontException;
-import game.exceptions.HandsNotEmptyException;
-import game.exceptions.WallInFrontException;
+import game.exceptions.*;
 
 public class GameCharacter {
 
@@ -81,16 +78,20 @@ public class GameCharacter {
         gameField.printGameField();
     }
 
-    public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row - 1; i++) {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.field[i][j].equals(">")) {
                     if (gameField.field[i][j + 1].equals("W")) {
                         throw new WallInFrontException();
                     } else {
-                        gameField.field[i][j] = "x";
-                        gameField.placesElementsInField(i, j + 1, ">");
-                        break;
+                        if (j >= gameField.column) {
+                            throw new EndOfGameFieldException();
+                        } else {
+                            gameField.field[i][j] = "x";
+                            gameField.placesElementsInField(i, j + 1, ">");
+                            break;
+                        }
                     }
                 }
             }
@@ -118,6 +119,7 @@ public class GameCharacter {
     void takeCat() throws HandsNotEmptyException {
         if (handsFull = false) {
             handsFull = true;
+            catInHand = true;
         } else {
             throw new HandsNotEmptyException();
         }
@@ -127,18 +129,29 @@ public class GameCharacter {
     void takeDrink() throws HandsNotEmptyException {
         if (handsFull = false) {
             handsFull = true;
+            drinkInHand = true;
         } else {
             throw new HandsNotEmptyException();
         }
 
     }
 
-    void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-
+    void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException {
+        if (catInHand = true) {
+            catInHand = false;
+            handsFull = false;
+        } else {
+            throw new NoCatInHandException();
+        }
     }
 
-    void putDrinkDown() throws WallInFrontException, CatInFrontException {
-
+    void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException {
+        if (drinkInHand = true) {
+            drinkInHand = false;
+            handsFull = false;
+        } else {
+            throw new NoDrinkInHandException();
+        }
     }
 
     boolean handsFree() throws HandsNotEmptyException {
