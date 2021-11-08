@@ -82,31 +82,33 @@ public class GameCharacter {
 
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row - 1; i++) {
-            for (int j = 0; j < gameField.column - 1; j++) {
+            for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals(">")) {
-                    if (gameField.gameField[i][j + 1].equals("W")) {
+                    if (j+1==gameField.column) {
+                        throw new EndOfGameFieldException();
+                    }
+                    else if (gameField.gameField[i][j + 1].equals("W")) {
                         throw new WallInFrontException();
-                    } //TODO EndOfGameException vernünftig implementieren
-                    // else {
-                    //if (gameField.gameField[i][j + 1] > gameField.column) {
-                    //throw new EndOfGameFieldException();}
-                    else {
-                        gameField.gameField[i][j] = "x";
-                        gameField.placesElementsInField(i, j + 1, ">");
-                        break;
+                    } else {
+                            gameField.gameField[i][j] = "x";
+                            gameField.placesElementsInField(i, j + 1, ">");
+                            break;
+                        }
                     }
                 }
             }
-        }
 
         gameField.printGameField();
     }
 
-    public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
+    public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row - 1; i++) {
-            for (int j = 0; j < gameField.column - 1; j++) {
+            for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals("<")) {
-                    if (gameField.gameField[i][j - 1].equals("W")) {
+                    if (j+1==gameField.column) {
+                        throw new EndOfGameFieldException();
+                    }
+                     else if (gameField.gameField[i][j - 1].equals("W")) {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
