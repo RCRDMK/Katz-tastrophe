@@ -404,14 +404,14 @@ public class GameCharacter {
         }
     }
 
-    boolean handsFree() {
+    public boolean handsFree() {
         if (!handsFull) {
             return true;
         }
         return false;
     }
 
-    boolean catThere() {
+    public boolean catThere() {
 
         switch (gameField.character) {
             case "^":
@@ -454,7 +454,7 @@ public class GameCharacter {
         return false;
     }
 
-    boolean stepOverCatPossible() {
+    public boolean stepOverCatPossible() {
         if (handsFull) {
             return false;
         }
