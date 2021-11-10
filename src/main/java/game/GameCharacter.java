@@ -105,7 +105,7 @@ public class GameCharacter {
         for (int i = 0; i < gameField.row - 1; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals("<")) {
-                    if (j+1==gameField.column) {
+                    if (j==gameField.column/gameField.column-1) {
                         throw new EndOfGameFieldException();
                     }
                      else if (gameField.gameField[i][j - 1].equals("W")) {
