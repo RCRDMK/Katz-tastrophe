@@ -127,6 +127,7 @@ public class GameCharacter {
         gameField.printGameField();
     }
 
+    //TODO Nehmen und Ablegen auf EndOfGameFieldException überprüfen
     public void takeCat() throws HandsNotEmptyException {
         if (!handsFull) {
             handsFull = true;
@@ -250,16 +251,16 @@ public class GameCharacter {
                 case "^":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i - 1][j]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                                case "D":
-                                    throw new DrinkInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals("^")) {
-                                gameField.gameField[i - 1][j] = "C";
+                            if (gameField.gameField[i][j].equals("^")){
+                                switch (gameField.gameField[i-1][j]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                    case "D":
+                                        throw new DrinkInFrontException();
+                                }
+                                gameField.placesElementsInField(i-1,j,"C");
                                 break;
                             }
                         }
@@ -269,16 +270,16 @@ public class GameCharacter {
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i + 1][j]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                                case "D":
-                                    throw new DrinkInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals("v")) {
-                                gameField.gameField[i + 1][j] = "C";
+                            if (gameField.gameField[i][j].equals("v")){
+                                switch (gameField.gameField[i+1][j]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                    case "D":
+                                        throw new DrinkInFrontException();
+                                }
+                                gameField.placesElementsInField(i+1,j,"C");
                                 break;
                             }
                         }
@@ -288,17 +289,17 @@ public class GameCharacter {
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i][j + 1]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                                case "D":
-                                    throw new DrinkInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals(">")) {
-                                gameField.gameField[i][j + 1] = "C";
-                                break;
+                            if (gameField.gameField[i][j].equals(">")){
+                                switch (gameField.gameField[i][j+1]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                    case "D":
+                                        throw new DrinkInFrontException();
+                                }
+                                    gameField.placesElementsInField(i,j+1,"C");
+                                    break;
                             }
                         }
                     }
@@ -307,8 +308,8 @@ public class GameCharacter {
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            //TODO OutOfBoundsException hier lösen
-                            switch (gameField.gameField[i][j - 1]) {
+                            if (gameField.gameField[i][j].equals("<")){
+                            switch (gameField.gameField[i][j-1]) {
                                 case "W":
                                     throw new WallInFrontException();
                                 case "C":
@@ -316,8 +317,7 @@ public class GameCharacter {
                                 case "D":
                                     throw new DrinkInFrontException();
                             }
-                            if (gameField.gameField[i][j].equals("<")) {
-                                gameField.gameField[i][j - 1] = "C";
+                                gameField.placesElementsInField(i,j-1,"C");
                                 break;
                             }
                         }
@@ -339,14 +339,14 @@ public class GameCharacter {
                 case "^":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i - 1][j]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals("^")) {
-                                gameField.gameField[i - 1][j] = "D";
+                            if (gameField.gameField[i][j].equals("^")){
+                                switch (gameField.gameField[i-1][j]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                }
+                                gameField.placesElementsInField(i-1,j,"D");
                                 break;
                             }
                         }
@@ -356,14 +356,14 @@ public class GameCharacter {
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i + 1][j]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals("v")) {
-                                gameField.gameField[i + 1][j] = "D";
+                            if (gameField.gameField[i][j].equals("v")){
+                                switch (gameField.gameField[i+1][j]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                }
+                                gameField.placesElementsInField(i+1,j,"D");
                                 break;
                             }
                         }
@@ -373,14 +373,14 @@ public class GameCharacter {
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i][j + 1]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals(">")) {
-                                gameField.gameField[i][j + 1] = "D";
+                            if (gameField.gameField[i][j].equals(">")){
+                                switch (gameField.gameField[i][j+1]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                }
+                                gameField.placesElementsInField(i,j+1,"D");
                                 break;
                             }
                         }
@@ -390,14 +390,14 @@ public class GameCharacter {
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
                         for (int j = 0; j < gameField.column - 1; j++) {
-                            switch (gameField.gameField[i][j - 1]) {
-                                case "W":
-                                    throw new WallInFrontException();
-                                case "C":
-                                    throw new CatInFrontException();
-                            }
-                            if (gameField.gameField[i][j].equals("<")) {
-                                gameField.gameField[i][j - 1] = "D";
+                            if (gameField.gameField[i][j].equals("<")){
+                                switch (gameField.gameField[i][j-1]) {
+                                    case "W":
+                                        throw new WallInFrontException();
+                                    case "C":
+                                        throw new CatInFrontException();
+                                }
+                                gameField.placesElementsInField(i,j-1,"D");
                                 break;
                             }
                         }
