@@ -45,10 +45,13 @@ public class GameCharacter {
 
     //TODO Permanenz der Objekte in den Indices beim Bewegen wahren. Es darf keine Katze oder Trinken überschrieben, wenn der Spieler auf dem selben Feld ist
 
-    public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-        for (int i = 0; i < gameField.row - 1; i++) {
+    public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
+        for (int i = 0; i < gameField.row-1; i++) {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.gameField[i][j].equals("^")) {
+                    if (i==gameField.row/gameField.row-1){
+                        throw new EndOfGameFieldException();
+                    }
                     if (gameField.gameField[i - 1][j].equals("W")) {
                         throw new WallInFrontException();
                     } else {
