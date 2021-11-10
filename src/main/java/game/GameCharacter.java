@@ -46,13 +46,13 @@ public class GameCharacter {
     //TODO Permanenz der Objekte in den Indices beim Bewegen wahren. Es darf keine Katze oder Trinken überschrieben, wenn der Spieler auf dem selben Feld ist
 
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.row-1; i++) {
-            for (int j = 0; j < gameField.column - 1; j++) {
+        for (int i = 0; i < gameField.row; i++) {
+            for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals("^")) {
                     if (i==gameField.row/gameField.row-1){
                         throw new EndOfGameFieldException();
                     }
-                    if (gameField.gameField[i - 1][j].equals("W")) {
+                    else if (gameField.gameField[i - 1][j].equals("W")) {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
@@ -65,11 +65,14 @@ public class GameCharacter {
         gameField.printGameField();
     }
 
-    public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException {
-        for (int i = 0; i < gameField.row - 1; i++) {
-            for (int j = 0; j < gameField.column - 1; j++) {
+    public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
+        for (int i = 0; i < gameField.row; i++) {
+            for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals("v")) {
-                    if (gameField.gameField[i + 1][j].equals("W")) {
+                    if (i+1==gameField.row){
+                        throw new EndOfGameFieldException();
+                    }
+                    else if (gameField.gameField[i + 1][j].equals("W")) {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
@@ -84,7 +87,7 @@ public class GameCharacter {
     }
 
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.row - 1; i++) {
+        for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals(">")) {
                     if (j+1==gameField.column) {
@@ -105,7 +108,7 @@ public class GameCharacter {
     }
 
     public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.row - 1; i++) {
+        for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
                 if (gameField.gameField[i][j].equals("<")) {
                     if (j==gameField.column/gameField.column-1) {
