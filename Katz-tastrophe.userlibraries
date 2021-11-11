@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: org.openjfx:javafx-graphics:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-graphics/11/javafx-graphics-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:mac:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-graphics/11/javafx-graphics-11-mac.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-controls/11/javafx-controls-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:mac:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-controls/11/javafx-controls-11-mac.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-base/11/javafx-base-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:mac:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-base/11/javafx-base-11-mac.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-fxml/11/javafx-fxml-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:mac:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-fxml/11/javafx-fxml-11-mac.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-media:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-media/11/javafx-media-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-media:mac:11">
+    <archive path="/Users/joker/.m2/repository/org/openjfx/javafx-media/11/javafx-media-11-mac.jar" />
+  </library>
+</eclipse-userlibraries>
+

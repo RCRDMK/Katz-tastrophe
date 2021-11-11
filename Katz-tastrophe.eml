@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_11">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<levels>
+		<level name="Maven: org.openjfx:javafx-graphics:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-graphics:mac:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-controls:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-controls:mac:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-base:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-base:mac:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-fxml:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-fxml:mac:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-media:11" value="project"/>
+		<level name="Maven: org.openjfx:javafx-media:mac:11" value="project"/>
+	</levels>
+</component>
