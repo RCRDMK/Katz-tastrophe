@@ -5,8 +5,8 @@ import java.util.Arrays;
 public class GameField {
 
     static public String[][] gameField;
-    static int row;
-    static int column;
+    public static int row;
+    public static int column;
     String cat = "C";
     String wall = "W";
     String drink = "D";
