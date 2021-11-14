@@ -43,8 +43,8 @@ public class GameField {
             //System.out.println(Arrays.deepToString(this.gameField[i]));
 
         }
-        System.out.println("Bewege dich mit Richtungsanweisungen wie 'hoch', 'runter', 'links', 'rechts' oder rufe die Hilfe mit 'hilfe' auf.");
-        System.out.println();
+        //System.out.println("Bewege dich mit Richtungsanweisungen wie 'hoch', 'runter', 'links', 'rechts' oder rufe die Hilfe mit 'hilfe' auf.");
+        //System.out.println();
     }
 
     public static void GameField(int rows, int columns) {

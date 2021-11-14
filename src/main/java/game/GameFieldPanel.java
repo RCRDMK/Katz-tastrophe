@@ -7,11 +7,11 @@ import javafx.scene.paint.Color;
 
 public class GameFieldPanel extends Region {
 
+    //Anleitung zum Arbeiten mit Canvas'. Auch wie man Bilder einfügt oder diese animiert
     //https://edencoding.com/javafx-canvas/
 
     static GraphicsContext graCon;
     private static GameField gameField;
-    Canvas canvas;
 
     GameFieldPanel(GameField gameField) {
         this.gameField = gameField;
@@ -23,6 +23,7 @@ public class GameFieldPanel extends Region {
         graCon.fillRect(x, y, 25, 25);
     }
 
+    //TODO Elemente auf den korrekten Kacheln darstellen können
     public static void refreshElements(Canvas canvas) {
         graCon = canvas.getGraphicsContext2D();
 
@@ -44,5 +45,9 @@ public class GameFieldPanel extends Region {
             }
         }
 
+    }
+
+    public static void colorColumns(int count, int achsenWert, Canvas canvas) {
+        GameFieldPanel.color(canvas, Color.GRAY, count, achsenWert + 40);
     }
 }
