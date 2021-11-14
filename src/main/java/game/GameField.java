@@ -14,7 +14,6 @@ public class GameField {
     static String wall = "W";
     static String drink = "D";
     static String character = "^";
-    private static GameField gf;
 
     public static void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
@@ -62,5 +61,22 @@ public class GameField {
 
     static void placesElementsInField(int row, int column, String element) {
         gameField[row][column] = element;
+    }
+
+    //should be called when the gamefield sizes changes
+    public void checkIfCharacterOutOfBounds() {
+        for (int i = 0; i <= row; i++) {
+            for (int j = 0; j <= column; j++) {
+                if (!gameField[i][j].equals("^")) {
+                    gameField[0][0] = "^";
+                } else if (!gameField[i][j].equals("v")) {
+                    gameField[0][0] = "^";
+                } else if (!gameField[i][j].equals("<")) {
+                    gameField[0][0] = "^";
+                } else if (!gameField[i][j].equals(">")) {
+                    gameField[0][0] = "^";
+                }
+            }
+        }
     }
 }
