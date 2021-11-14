@@ -1,11 +1,3 @@
-#test {
-    background-color: red;
-}
-
-.button {
-    -fx-background-color: red;
-}
-
-.label .label {
-    -fx-background-color: BLUE;
+#pane {
+    -fx-text-alignment: center;
 }

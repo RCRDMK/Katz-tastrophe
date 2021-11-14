@@ -8,16 +8,17 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ClientPresenter extends Application {
 
     public static final String fxml = "/fxml/ClientView.fxml";
-    public ScrollPane pane;
+    @FXML
+    ScrollPane pane;
     @FXML
     Label infoLabel;
-    GameFieldPanel gameFieldPanel;
     GameField gameField;
 
     public static void main(String[] args) {
@@ -34,28 +35,64 @@ public class ClientPresenter extends Application {
 
     public void onStartButton(ActionEvent actionEvent) {
         Canvas canvas = new Canvas(pane.getWidth(), pane.getHeight());
+        GridPane gridPane = new GridPane();
+        gridPane.add(canvas, 1, 1);
 
-        for (int i = 0; i < pane.getWidth(); i = i + 30) {
-            for (int j = 0; j < pane.getWidth(); j = j + 30) {
-                GameFieldPanel.color(canvas, Color.GRAY, i, j);
+        //Das funktioniert. Nur 7 Reihen werden gemalt
+        int achsenWert = 0;
+        for (int i = 0; i < gameField.row; i++, achsenWert = achsenWert + 30) {
+            GameFieldPanel.color(canvas, Color.GRAY, i + achsenWert, 10);
+            for (int j = 0; j < gameField.column; j++) {
+                System.out.println(i + " " + j);
+
             }
+            //Das nicht mehr. Es wird viel zu lange geladen und das Programm reagiert nicht mehr
+            /*for (int j = 0; i < gameField.column; j++, achsenWert = achsenWert - 30) {
+                GameFieldPanel.color(canvas, Color.GRAY,  30, j + achsenWert);
+            }*/
         }
+
+        //TODO sehr schlechter Code. Muss UNBEDINGT verbessert werden!!
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(0, achsenWert, canvas);
+        }
+
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(31, achsenWert, canvas);
+        }
+
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(62, achsenWert, canvas);
+        }
+
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(93, achsenWert, canvas);
+        }
+
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(124, achsenWert, canvas);
+        }
+
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(155, achsenWert, canvas);
+        }
+
+        achsenWert = 0;
+        for (int i = 0; i < gameField.column; i++, achsenWert = achsenWert + 30) {
+            colorColumns(186, achsenWert, canvas);
+        }
+
         GameFieldPanel.refreshElements(canvas);
-        chara();
-        pane.setContent(canvas);
+        pane.setContent(gridPane);
     }
 
-
-    public void chara() {
-        for (int i = 0; i < GameField.row; i++) {
-            for (int j = 0; j < GameField.column; j++) {
-                //String s = gameField.gamefield[i][j;
-                if (GameField.gameField[i][j].equals("^")) {
-                    System.out.println("Hey");
-                } else {
-                    System.out.println("Anders");
-                }
-            }
-        }
+    void colorColumns(int count, int achsenWert, Canvas canvas) {
+        GameFieldPanel.color(canvas, Color.GRAY, count, achsenWert + 40);
     }
 }

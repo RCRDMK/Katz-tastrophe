@@ -30,7 +30,7 @@ public class GameFieldPanel extends Region {
             for (int j = 0; j < gameField.column - 1; j++) {
                 if (gameField.gameField[i][j].equals("^")) {
                     graCon.setFill(Color.RED);
-                    graCon.fillRect(i * 25, j * 25, 25, 25);
+                    graCon.fillRect(i, j, 25, 25);
                 } else if (gameField.gameField[i][j].equals("W")) {
                     graCon.setFill(Color.BLACK);
                     graCon.fillRect(i * 25, j * 25, 25, 25);
