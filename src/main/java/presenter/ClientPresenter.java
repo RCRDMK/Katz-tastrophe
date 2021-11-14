@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -34,8 +34,8 @@ public class ClientPresenter extends Application {
 
     public void onStartButton(ActionEvent actionEvent) {
         Canvas canvas = new Canvas(pane.getWidth(), pane.getHeight());
-        GridPane gridPane = new GridPane();
-        gridPane.add(canvas, 1, 1);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(canvas);
 
         //Das funktioniert. Nur die Anzahl der rows werden gemalt
         int achsenWert = 0;
@@ -91,6 +91,6 @@ public class ClientPresenter extends Application {
         }
 
         //GameFieldPanel.refreshElements(canvas);
-        pane.setContent(gridPane);
+        pane.setContent(borderPane);
     }
 }
