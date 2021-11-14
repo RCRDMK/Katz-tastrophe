@@ -3,40 +3,46 @@ package game;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
-import presenter.ClientPresenter;
+import javafx.scene.paint.Color;
 
 public class GameFieldPanel extends Region {
 
     //https://edencoding.com/javafx-canvas/
 
-    static GameField gameField;
-    public Canvas canvas;
-    GraphicsContext graCon;
+    static GraphicsContext graCon;
+    private static GameField gameField;
+    Canvas canvas;
 
-    GameFieldPanel(GameField gameField, int rows, int columns) {
+    GameFieldPanel(GameField gameField) {
         this.gameField = gameField;
-        canvas = new Canvas(rows, columns);
-        graCon = canvas.getGraphicsContext2D();
-        canvas.widthProperty().bind(this.widthProperty());
-        canvas.heightProperty().bind(this.heightProperty());
-        ClientPresenter.test.getChildren().addAll(canvas);
-        //canvas.setStyle("-fx-background-color: red");
-        canvas.getStyleClass().add("test");
-        draw();
     }
 
-    public void draw() {
-        graCon.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
+    public static void color(Canvas canvas, Color color, int x, int y) {
+        graCon = canvas.getGraphicsContext2D();
+        graCon.setFill(color);
+        graCon.fillRect(x, y, 25, 25);
+    }
 
-        for (int i = 0; i < gameField.row; i++) {
-            for (int j = 0; j < gameField.column; j++) {
-                graCon.setFill(Paint.valueOf(GameField.gameField[i][j]));
+    public static void refreshElements(Canvas canvas) {
+        graCon = canvas.getGraphicsContext2D();
+
+        for (int i = 0; i < gameField.row - 1; i++) {
+            for (int j = 0; j < gameField.column - 1; j++) {
+                if (gameField.gameField[i][j].equals("^")) {
+                    graCon.setFill(Color.RED);
+                    graCon.fillRect(i * 25, j * 25, 25, 25);
+                } else if (gameField.gameField[i][j].equals("W")) {
+                    graCon.setFill(Color.BLACK);
+                    graCon.fillRect(i * 25, j * 25, 25, 25);
+                } else if (gameField.gameField[i][j].equals("C")) {
+                    graCon.setFill(Color.YELLOW);
+                    graCon.fillRect(i * 25, j * 25, 25, 25);
+                } else if (gameField.gameField[i][j].equals("D")) {
+                    graCon.setFill(Color.BLUE);
+                    graCon.fillRect(i * 25, j * 25, 25, 25);
+                }
             }
         }
-    }
 
-    void clear() {
-        graCon.clearRect(0, 0, canvas.getHeight(), canvas.getWidth());
     }
 }

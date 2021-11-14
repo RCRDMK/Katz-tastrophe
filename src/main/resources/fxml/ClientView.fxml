@@ -3,8 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="1150"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400"
+            minWidth="1150"
             prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2"
             fx:controller="presenter.ClientPresenter">
     <children>
@@ -364,7 +364,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="962.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onStartButton">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/startButton.png"/>
@@ -404,7 +404,7 @@
         <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0">
             <items>
                 <TextArea prefHeight="200.0" prefWidth="200.0"/>
-                <Pane prefHeight="200.0" prefWidth="200.0" fx:id="test"/>
+                <ScrollPane prefHeight="200.0" prefWidth="200.0" fx:id="pane"/>
             </items>
         </SplitPane>
         <Label layoutY="380.0" prefHeight="18.0" prefWidth="600.0" text="'Mau! Maaauuuuuu!!!' - Kuro, immer"
