@@ -364,7 +364,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="962.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"
-                              toggleGroup="$buttons" onAction="#onStartButton">
+                              toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/startButton.png"/>
@@ -404,7 +404,8 @@
         <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0">
             <items>
                 <TextArea prefHeight="200.0" prefWidth="200.0"/>
-                <ScrollPane prefHeight="200.0" prefWidth="200.0" fx:id="pane"/>
+                <ScrollPane prefHeight="200.0" prefWidth="200.0" fx:id="scrollPane"/>
+                <!--GameFieldPanel></GameFieldPanel-->
             </items>
         </SplitPane>
         <Label layoutY="380.0" prefHeight="18.0" prefWidth="600.0" text="'Mau! Maaauuuuuu!!!' - Kuro, immer"

@@ -1,10 +1,5 @@
 package game;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 public class GameField {
 
     static public String[][] gameField;
@@ -15,19 +10,11 @@ public class GameField {
     static String drink = "D";
     static String character = "^";
 
-    public static void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
-        stage.setScene(new Scene(root, 1150, 400));
-
-        stage.setTitle("Katz-tastrophe");
-
-        stage.show();
-
-        stage.setMaxHeight(500);
-        stage.setMaxWidth(stage.getWidth());
-
-        stage.setMinHeight(450);
-        stage.setMinWidth(1150);
+    public GameField(int rows, int columns) {
+        row = rows;
+        column = columns;
+        gameField = new String[row][column];
+        printGameField();
     }
 
     public static void printGameField() {
@@ -43,23 +30,13 @@ public class GameField {
             //System.out.println(Arrays.deepToString(this.gameField[i]));
 
         }
-        //System.out.println("Bewege dich mit Richtungsanweisungen wie 'hoch', 'runter', 'links', 'rechts' oder rufe die Hilfe mit 'hilfe' auf.");
-        //System.out.println();
     }
 
-    public static void GameField(int rows, int columns) {
-        row = rows;
-        column = columns;
-        gameField = new String[row][column];
-
-        placesElementsInField(5, 5, cat);
-        placesElementsInField(3, 1, wall);
-        placesElementsInField(3, 2, cat);
-        placesElementsInField(4, 1, drink);
-        placesElementsInField(3, 3, character);
+    public static String[][] getGameField() {
+        return gameField;
     }
 
-    static void placesElementsInField(int row, int column, String element) {
+    public void placeElementsInField(int row, int column, String element) {
         gameField[row][column] = element;
     }
 

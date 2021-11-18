@@ -4,7 +4,7 @@ import game.exceptions.*;
 
 public class GameCharacter {
 
-    GameField gameField = new GameField();
+    GameField gameField;
 
     boolean handsFull = false;
     boolean drinkInHand = false;
@@ -55,7 +55,7 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placesElementsInField(i - 1, j, "^");
+                        gameField.placeElementsInField(i - 1, j, "^");
                         break;
                     }
                 }
@@ -74,7 +74,7 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placesElementsInField(i + 1, j, "v");
+                        gameField.placeElementsInField(i + 1, j, "v");
                         i = gameField.row - 1;
                         break;
                     }
@@ -94,7 +94,7 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placesElementsInField(i, j + 1, ">");
+                        gameField.placeElementsInField(i, j + 1, ">");
                         break;
                     }
                 }
@@ -114,7 +114,7 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placesElementsInField(i, j - 1, "<");
+                        gameField.placeElementsInField(i, j - 1, "<");
                         break;
                     }
                 }
@@ -257,7 +257,7 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placesElementsInField(i - 1, j, "C");
+                                gameField.placeElementsInField(i - 1, j, "C");
                                 break;
                             }
                         }
@@ -276,7 +276,7 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placesElementsInField(i + 1, j, "C");
+                                gameField.placeElementsInField(i + 1, j, "C");
                                 break;
                             }
                         }
@@ -295,7 +295,7 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placesElementsInField(i, j + 1, "C");
+                                gameField.placeElementsInField(i, j + 1, "C");
                                 break;
                             }
                         }
@@ -314,7 +314,7 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placesElementsInField(i, j - 1, "C");
+                                gameField.placeElementsInField(i, j - 1, "C");
                                 break;
                             }
                         }
@@ -343,7 +343,7 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placesElementsInField(i - 1, j, "D");
+                                gameField.placeElementsInField(i - 1, j, "D");
                                 break;
                             }
                         }
@@ -360,7 +360,7 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placesElementsInField(i + 1, j, "D");
+                                gameField.placeElementsInField(i + 1, j, "D");
                                 break;
                             }
                         }
@@ -377,7 +377,7 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placesElementsInField(i, j + 1, "D");
+                                gameField.placeElementsInField(i, j + 1, "D");
                                 break;
                             }
                         }
@@ -394,7 +394,7 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placesElementsInField(i, j - 1, "D");
+                                gameField.placeElementsInField(i, j - 1, "D");
                                 break;
                             }
                         }
