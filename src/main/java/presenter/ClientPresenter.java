@@ -10,12 +10,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
+
+/**
+ * This class holds the entire view of the FXML file with which the user can interact. As such it starts the application
+ * and handles the action events coming from the user.
+ *
+ * @since 03.11.2021
+ */
 public class ClientPresenter extends Application {
 
     public static final String fxml = "/fxml/ClientView.fxml";
     @FXML
     ScrollPane scrollPane;
-    GameField gameField;
     private GameFieldPanelController gameFieldPanelController;
 
     public static void main(String[] args) {

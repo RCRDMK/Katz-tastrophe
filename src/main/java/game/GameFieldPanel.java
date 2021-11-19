@@ -6,6 +6,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
+
+/**
+ * This class holds the actual view in which the gamefield gets drawn on a canvas
+ * and changed depending on the actions from the user
+ * <p>
+ *
+ * @since 10.11.2021
+ */
 public class GameFieldPanel extends Region {
 
     //Anleitung zum Arbeiten mit Canvas'. Auch wie man Bilder einfügt oder diese animiert
@@ -22,13 +30,28 @@ public class GameFieldPanel extends Region {
     private double tileHeightCalculated;
     private double tileWidthCalculated;
 
+    /**
+     * The default constructor of the class
+     */
     public GameFieldPanel() {
     }
+
+    /**
+     * The custom constructor of the class
+     * <p>
+     * This constructor is responsible setting up the initial gamefield graphics wise. It sets the canvas on which later is being
+     * drawn, calculates the height and width of a singular tile and lastly draws the gamefield it has generated.
+     *
+     * @param gameField the gamefield which it generates
+     * @param height    the total height of the gamefield and thus the canvas
+     * @param width     the total width of the gamefield and thus the canvas
+     *                  <p>
+     * @since 18.11.2021
+     */
 
     //the custom constructor of this class and the drawGameField method were written while being inspired by
     //the following open-source project from tdshi-zz
     //https://github.com/tdshi-zz/cellular/blob/main/src/main/java/de/study/app/view/PopulationPanel.java
-
     public GameFieldPanel(GameField gameField, int height, int width) {
         this.gameField = gameField;
         this.canvas = new Canvas(height, width);
@@ -40,6 +63,14 @@ public class GameFieldPanel extends Region {
         drawGameField();
     }
 
+    /**
+     * Responsible for actually drawing the gamefield.
+     * <p>
+     * In this method the canvas, on which the gamefield is, first gets cleared and afterwards tiles for the amount of
+     * columns and rows of the gamefield array get drawn.
+     *
+     * @since 18.11.2021
+     */
     void drawGameField() {
         graCon.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int i = 0; i < gameField.getGameField().length; i++) {
@@ -52,8 +83,16 @@ public class GameFieldPanel extends Region {
         }
     }
 
+    /**
+     * Responsible for drawing objects on the gamefield like walls or the character.
+     * <p>
+     * In this method the drawGameField method first get called to afterwards draw over it. After it, it searches
+     * the gamefield array for the positions of the objects and draws it on the correct tile of the gamefield.
+     *
+     * @since 18.11.2011
+     */
     public void drawObjectsOnGameField() {
-
+        drawGameField();
         for (int i = 0; i < gameField.getGameField().length; i++) {
             for (int j = 0; j < gameField.getGameField()[0].length; j++) {
                 if (gameField.gameField[i][j].equals("C")) {

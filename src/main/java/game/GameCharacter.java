@@ -2,6 +2,12 @@ package game;
 
 import game.exceptions.*;
 
+/**
+ * This class is responsible handling every action the game character can do.
+ *
+ * @since 03.11.2021
+ */
+
 public class GameCharacter {
 
     GameField gameField;
@@ -10,6 +16,12 @@ public class GameCharacter {
     boolean drinkInHand = false;
     boolean catInHand = false;
 
+    /**
+     * Responsible for changing the direction in which the character currently looks
+     *
+     * @param direction the new direction in which the character ought to look
+     * @since 03.11.2021
+     */
     public void lookHere(String direction) {
         switch (direction) {
             case "up":
@@ -33,6 +45,11 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * Responsible for changing the direction the character looks in the gamefield array
+     *
+     * @since 03.11.2021
+     */
     private void changeCharacterView() {
         for (int i = 0; i <= GameField.row - 1; i++) {
             for (int j = 0; j <= gameField.column - 1; j++) {
@@ -43,8 +60,16 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * Responsible for moving the character one tile up. Though the character can only move if he looks into this direction.
+     *
+     * @throws WallInFrontException    If a wall is in front of the character, the character can't move up
+     * @throws CatInFrontException     If a cat is in front of the character and the character isn't able to step over the cat
+     * @throws DrinkInFrontException   If a drink is in front of the character and the user wants to put something down on that tile
+     * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move upwards
+     * @since 05.11.2021
+     */
     //TODO Permanenz der Objekte in den Indices beim Bewegen wahren. Es darf keine Katze oder Trinken überschrieben, wenn der Spieler auf dem selben Feld ist
-
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
@@ -55,15 +80,24 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placeElementsInField(i - 1, j, "^");
+                        gameField.placeObjectsInGameField(i - 1, j, "^");
                         break;
                     }
                 }
             }
         }
-        gameField.printGameField();
+        gameField.fillUpGameField();
     }
 
+    /**
+     * Responsible for moving the character one tile down. Though the character can only move if he looks into this direction.
+     *
+     * @throws WallInFrontException    If a wall is in front of the character, the character can't move down
+     * @throws CatInFrontException     If a cat is in front of the character and the character isn't able to step over the cat
+     * @throws DrinkInFrontException   If a drink is in front of the character and the user wants to put something down on that tile
+     * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move downwards
+     * @since 05.11.2021
+     */
     public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
@@ -74,16 +108,25 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placeElementsInField(i + 1, j, "v");
+                        gameField.placeObjectsInGameField(i + 1, j, "v");
                         i = gameField.row - 1;
                         break;
                     }
                 }
             }
         }
-        gameField.printGameField();
+        gameField.fillUpGameField();
     }
 
+    /**
+     * Responsible for moving the character one tile to the right. Though the character can only move if he looks into this direction.
+     *
+     * @throws WallInFrontException    If a wall is in front of the character, the character can't move to the right
+     * @throws CatInFrontException     If a cat is in front of the character and the character isn't able to step over the cat
+     * @throws DrinkInFrontException   If a drink is in front of the character and the user wants to put something down on that tile
+     * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move to the right
+     * @since 05.11.2021
+     */
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
@@ -94,16 +137,25 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placeElementsInField(i, j + 1, ">");
+                        gameField.placeObjectsInGameField(i, j + 1, ">");
                         break;
                     }
                 }
             }
         }
 
-        gameField.printGameField();
+        gameField.fillUpGameField();
     }
 
+    /**
+     * Responsible for moving the character one tile to the left. Though the character can only move if he looks into this direction.
+     *
+     * @throws WallInFrontException    If a wall is in front of the character, the character can't move to the left
+     * @throws CatInFrontException     If a cat is in front of the character and the character isn't able to step over the cat
+     * @throws DrinkInFrontException   If a drink is in front of the character and the user wants to put something down on that tile
+     * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move to the left
+     * @since 05.11.2021
+     */
     public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.row; i++) {
             for (int j = 0; j < gameField.column; j++) {
@@ -114,16 +166,25 @@ public class GameCharacter {
                         throw new WallInFrontException();
                     } else {
                         gameField.gameField[i][j] = "x";
-                        gameField.placeElementsInField(i, j - 1, "<");
+                        gameField.placeObjectsInGameField(i, j - 1, "<");
                         break;
                     }
                 }
             }
         }
-        gameField.printGameField();
+        gameField.fillUpGameField();
     }
 
-    //TODO Nehmen und Ablegen auf EndOfGameFieldException überprüfen
+    /**
+     * Responsible for taking a cat from a tile and communicating this change to the gamefield array.
+     * <p>
+     * In this method the array gets checked in which direction the character looks and if the character is even able
+     * to pick up a cat at the moment.
+     *
+     * @throws HandsNotEmptyException If the user wants to pick up a cat even though the hands of the character are not empty at the moment.
+     * @since 05.11.2011
+     */
+    //TODO Nehmen und Ablegen auf EndOfGameFieldException überprüfen sowie was passiert wenn nicht das gewünschte Objekt vor dem Charakter liegt
     public void takeCat() throws HandsNotEmptyException {
         if (!handsFull) {
             handsFull = true;
@@ -140,7 +201,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -151,7 +212,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -162,7 +223,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -173,7 +234,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
             }
         } else {
@@ -182,6 +243,15 @@ public class GameCharacter {
 
     }
 
+    /**
+     * Responsible for taking a drink from a tile and communicating this change to the gamefield array.
+     * <p>
+     * In this method the array gets checked in which direction the character looks and if the character is even able
+     * to pick up a drink at the moment.
+     *
+     * @throws HandsNotEmptyException If the user wants to pick up a drink even though the hands of the character are not empty at the moment.
+     * @since 05.11.2011
+     */
     public void takeDrink() throws HandsNotEmptyException {
         if (!handsFull) {
             handsFull = true;
@@ -197,7 +267,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -208,7 +278,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -219,7 +289,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -230,7 +300,7 @@ public class GameCharacter {
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
             }
         } else {
@@ -239,6 +309,18 @@ public class GameCharacter {
 
     }
 
+    /**
+     * Responsible for putting down a cat and communicating this change to the gamefield array.
+     * <p>
+     * In this method the array gets checked in which direction the character looks and if it possible to put down
+     * the cat on the tile or if the character even holds a cat in the first place.
+     *
+     * @throws WallInFrontException  if the user wants to put down the cat on a tile with a wall on it
+     * @throws CatInFrontException   if the user wants to put down the cat on a tile with a cat already on it
+     * @throws DrinkInFrontException if the user wants to put down the cat on a tile with a drink on it
+     * @throws NoCatInHandException  if the user wants to put down the cat without even having picked up a cat first
+     * @since 05.11.2021
+     */
     public void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException {
         if (catInHand) {
             catInHand = false;
@@ -257,12 +339,12 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placeElementsInField(i - 1, j, "C");
+                                gameField.placeObjectsInGameField(i - 1, j, "C");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -276,12 +358,12 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placeElementsInField(i + 1, j, "C");
+                                gameField.placeObjectsInGameField(i + 1, j, "C");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -295,12 +377,12 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placeElementsInField(i, j + 1, "C");
+                                gameField.placeObjectsInGameField(i, j + 1, "C");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -314,12 +396,12 @@ public class GameCharacter {
                                     case "D":
                                         throw new DrinkInFrontException();
                                 }
-                                gameField.placeElementsInField(i, j - 1, "C");
+                                gameField.placeObjectsInGameField(i, j - 1, "C");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
             }
         } else {
@@ -327,6 +409,18 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * Responsible for putting down a drink and communicating this change to the gamefield array.
+     * <p>
+     * In this method the array gets checked in which direction the character looks and if it possible to put down
+     * the drink on the tile or if the character even holds a drink in the first place.
+     *
+     * @throws WallInFrontException   if the user wants to put down the drink on a tile with a wall on it
+     * @throws CatInFrontException    if the user wants to put down the drink on a tile with a cat on it
+     * @throws DrinkInFrontException  if the user wants to put down the drink on a tile with a drink already on it
+     * @throws NoDrinkInHandException if the user wants to put down the drink without even having picked up a drink first
+     * @since 05.11.2021
+     */
     public void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException {
         if (drinkInHand) {
             drinkInHand = false;
@@ -343,12 +437,12 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placeElementsInField(i - 1, j, "D");
+                                gameField.placeObjectsInGameField(i - 1, j, "D");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -360,12 +454,12 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placeElementsInField(i + 1, j, "D");
+                                gameField.placeObjectsInGameField(i + 1, j, "D");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -377,12 +471,12 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placeElementsInField(i, j + 1, "D");
+                                gameField.placeObjectsInGameField(i, j + 1, "D");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -394,12 +488,12 @@ public class GameCharacter {
                                     case "C":
                                         throw new CatInFrontException();
                                 }
-                                gameField.placeElementsInField(i, j - 1, "D");
+                                gameField.placeObjectsInGameField(i, j - 1, "D");
                                 break;
                             }
                         }
                     }
-                    gameField.printGameField();
+                    gameField.fillUpGameField();
                     break;
             }
         } else {
@@ -407,6 +501,12 @@ public class GameCharacter {
         }
     }
 
+    /**
+     * checks if the hands the character are currently free or full
+     *
+     * @return true if hands are free, false if the hands are full
+     * @since 05.11.2021
+     */
     public boolean handsFree() {
         if (!handsFull) {
             return true;
@@ -414,6 +514,12 @@ public class GameCharacter {
         return false;
     }
 
+    /**
+     * checks if a cat is in front of the direction in which the character currently looks
+     *
+     * @return true if there IS a cat, false if there is not
+     * @since 05.11.2021
+     */
     public boolean catThere() {
 
         switch (gameField.character) {
@@ -457,6 +563,12 @@ public class GameCharacter {
         return false;
     }
 
+    /**
+     * checks if it's currently possible for the character to step over a cat in front of him
+     *
+     * @return true if he can step over a cat, because his hands are free, false if he can't because his hands are full
+     * @since 05.11.2021
+     */
     public boolean stepOverCatPossible() {
         if (handsFull) {
             return false;
