@@ -16,7 +16,7 @@ public class GameFieldPanelController {
         this.gameField.placeElementsInField(3, 2, "C");
         this.gameField.placeElementsInField(4, 1, "D");
         this.gameField.placeElementsInField(3, 3, "^");
-        this.gameFieldPanel.checkGameField();
+        this.gameFieldPanel.drawObjectsOnGameField();
     }
 
     public GameFieldPanel getGameFieldPanel() {
