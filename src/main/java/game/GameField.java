@@ -15,6 +15,16 @@ public class GameField {
     static String wall = "W";
     static String drink = "D";
     static String character = "^";
+    // tip points to where the character is looking. Initially the character looks up (^) but depending on the
+    // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)
+
+    /**
+     * The default constructor of the class.
+     *
+     * @since 03.11.2021
+     */
+    public GameField() {
+    }
 
     /**
      * The custom constructor of the class.

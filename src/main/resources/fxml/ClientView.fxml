@@ -31,7 +31,8 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" fx:id="quit" text="Beenden" accelerator="Shortcut+Q">
+                        <MenuItem mnemonicParsing="false" fx:id="quit" text="Beenden" accelerator="Shortcut+Q"
+                                  onAction="#onQuitClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/quitMenu.png"></Image>
@@ -54,7 +55,8 @@
                                 <MenuItem mnemonicParsing="false" fx:id="saveSerial" text="Serialisieren"/>
                             </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" fx:id="changeSizeField" text="Größe des Spielfeldes ändern">
+                        <MenuItem mnemonicParsing="false" fx:id="changeSizeField" text="Größe des Spielfeldes ändern"
+                                  onAction="#onChangeSizeFieldClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/changeGamefieldMenu.png"></Image>
@@ -62,19 +64,19 @@
                             </graphic>
                         </MenuItem>
                         <RadioMenuItem mnemonicParsing="false" fx:id="placeChara" text="Spielfigur platzieren"
-                                       toggleGroup="$menuItems"/>
+                                       toggleGroup="$menuItems" onAction="#onPlaceCharaClicked"/>
                         <Menu mnemonicParsing="false" text="Hindernis platzieren">
                             <items>
                                 <RadioMenuItem mnemonicParsing="false" fx:id="placeCat" text="Katze"
-                                               toggleGroup="$menuItems"/>
+                                               toggleGroup="$menuItems" onAction="#onPlaceCatClicked"/>
                                 <RadioMenuItem mnemonicParsing="false" fx:id="placeWall" text="Wand"
-                                               toggleGroup="$menuItems"/>
+                                               toggleGroup="$menuItems" onAction="#onPlaceWallClicked"/>
                             </items>
                         </Menu>
                         <RadioMenuItem mnemonicParsing="false" fx:id="placeDrink" text="Trinken platzieren"
-                                       toggleGroup="$menuItems"/>
+                                       toggleGroup="$menuItems" onAction="#onPlaceDrinkClicked"/>
                         <RadioMenuItem mnemonicParsing="false" fx:id="deleteContent" text="Inhalt einer Kachel löschen"
-                                       toggleGroup="$menuItems">
+                                       toggleGroup="$menuItems" onAction="#onDeleteContentClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/deleteMenu.png"></Image>
@@ -86,28 +88,28 @@
                 <Menu text="Spiel_figur">
                     <items>
                         <MenuItem mnemonicParsing="false" fx:id="moveUp" text="gehe nach oben"
-                                  accelerator="Shortcut+Shift+W"/>
+                                  accelerator="Shortcut+Shift+W" onAction="#onMoveUpClicked"/>
                         <MenuItem mnemonicParsing="false" fx:id="moveDown" text="gehe nach unten"
-                                  accelerator="Shortcut+Shift+S"/>
+                                  accelerator="Shortcut+Shift+S" onAction="#onMoveDownClicked"/>
                         <MenuItem mnemonicParsing="false" fx:id="moveLeft" text="gehe nach links"
-                                  accelerator="Shortcut+Shift+A"/>
+                                  accelerator="Shortcut+Shift+A" onAction="#onMoveLeftClicked"/>
                         <MenuItem mnemonicParsing="false" fx:id="moveRight" text="gehe nach rechts"
-                                  accelerator="Shortcut+Shift+D"/>
+                                  accelerator="Shortcut+Shift+D" onAction="#onMoveRightClicked"/>
                         <SeparatorMenuItem></SeparatorMenuItem>
                         <Menu mnemonicParsing="false" text="nimm Gegenstand">
                             <items>
                                 <RadioMenuItem mnemonicParsing="false" fx:id="pickCatUp" text="Katze"
-                                               toggleGroup="$menuItems"/>
+                                               toggleGroup="$menuItems" onAction="#onPickCatUpClicked"/>
                                 <RadioMenuItem mnemonicParsing="false" fx:id="pickDrinkUp" text="Trinken"
-                                               toggleGroup="$menuItems"/>
+                                               toggleGroup="$menuItems" onAction="#onPickDrinkUpClicked"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="leg Gegenstand ab">
                             <items>
                                 <RadioMenuItem mnemonicParsing="false" fx:id="putCatDown" text="Katze"
-                                               toggleGroup="$menuItems"/>
+                                               toggleGroup="$menuItems" onAction="#onPutCatDownClicked"/>
                                 <RadioMenuItem mnemonicParsing="false" fx:id="putDrinkDown" text="Trinken"
-                                               toggleGroup="$menuItems"/>
+                                               toggleGroup="$menuItems" onAction="#onPutDrinkDownClicked"/>
                             </items>
                         </Menu>
                     </items>

@@ -10,11 +10,25 @@ import game.exceptions.*;
 
 public class GameCharacter {
 
-    GameField gameField;
+    public static GameField gameField;
+    GameFieldPanel gameFieldPanel;
 
     boolean handsFull = false;
     boolean drinkInHand = false;
     boolean catInHand = false;
+
+    public GameCharacter() {
+
+    }
+
+    public GameCharacter(GameFieldPanel gameFieldPanel) {
+        this.gameFieldPanel = gameFieldPanel;
+    }
+
+    /*public GameCharacter(GameField gameField, GameFieldPanel gameFieldPanel) {
+        this.gameField = gameField;
+        this.gameFieldPanel = gameFieldPanel;
+    }*/
 
     /**
      * Responsible for changing the direction in which the character currently looks
@@ -87,6 +101,8 @@ public class GameCharacter {
             }
         }
         gameField.fillUpGameField();
+        gameFieldPanel.drawObjectsOnGameField();
+
     }
 
     /**
@@ -116,6 +132,7 @@ public class GameCharacter {
             }
         }
         gameField.fillUpGameField();
+        gameFieldPanel.drawObjectsOnGameField();
     }
 
     /**
@@ -145,6 +162,7 @@ public class GameCharacter {
         }
 
         gameField.fillUpGameField();
+        gameFieldPanel.drawObjectsOnGameField();
     }
 
     /**
@@ -173,6 +191,7 @@ public class GameCharacter {
             }
         }
         gameField.fillUpGameField();
+        gameFieldPanel.drawObjectsOnGameField();
     }
 
     /**
@@ -202,6 +221,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -213,6 +233,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -224,6 +245,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -235,6 +257,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
             }
         } else {
@@ -268,6 +291,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -279,6 +303,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -290,6 +315,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -301,6 +327,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
             }
         } else {
@@ -345,6 +372,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -364,6 +392,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -383,6 +412,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -402,6 +432,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
             }
         } else {
@@ -443,6 +474,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "v":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -460,6 +492,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case ">":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -477,6 +510,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
                 case "<":
                     for (int i = 0; i < gameField.row - 1; i++) {
@@ -494,6 +528,7 @@ public class GameCharacter {
                         }
                     }
                     gameField.fillUpGameField();
+                    gameFieldPanel.drawObjectsOnGameField();
                     break;
             }
         } else {

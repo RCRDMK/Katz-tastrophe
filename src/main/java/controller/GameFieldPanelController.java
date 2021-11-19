@@ -1,5 +1,6 @@
 package controller;
 
+import game.GameCharacter;
 import game.GameField;
 import game.GameFieldPanel;
 
@@ -13,6 +14,7 @@ public class GameFieldPanelController {
 
     private GameFieldPanel gameFieldPanel;
     private GameField gameField;
+    private GameCharacter character;
 
     /**
      * The custom constructor for the class.
@@ -27,6 +29,8 @@ public class GameFieldPanelController {
     public GameFieldPanelController(int rows, int columns) {
         this.gameField = new GameField(rows, columns);
         this.gameFieldPanel = new GameFieldPanel(gameField, 250, 250);
+        GameCharacter.gameField = this.gameField;
+        //this.character = new GameCharacter(gameField, gameFieldPanel);
         this.gameField.placeObjectsInGameField(5, 5, "C");
         this.gameField.placeObjectsInGameField(3, 1, "W");
         this.gameField.placeObjectsInGameField(3, 2, "C");

@@ -101,7 +101,16 @@ public class GameFieldPanel extends Region {
                     graCon.drawImage(wall, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 } else if (gameField.gameField[i][j].equals("D")) {
                     graCon.drawImage(drink, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("^")) {
+                }
+
+
+                if (gameField.gameField[i][j].equals("^")) {
+                    graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
+                } else if (gameField.gameField[i][j].equals("v")) {
+                    graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
+                } else if (gameField.gameField[i][j].equals(">")) {
+                    graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
+                } else if (gameField.gameField[i][j].equals("<")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
             }
