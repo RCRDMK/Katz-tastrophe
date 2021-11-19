@@ -29,14 +29,16 @@ public class GameFieldPanelController {
     public GameFieldPanelController(int rows, int columns) {
         this.gameField = new GameField(rows, columns);
         this.gameFieldPanel = new GameFieldPanel(gameField, 250, 250);
-        GameCharacter.gameField = this.gameField;
-        //this.character = new GameCharacter(gameField, gameFieldPanel);
         this.gameField.placeObjectsInGameField(5, 5, "C");
         this.gameField.placeObjectsInGameField(3, 1, "W");
         this.gameField.placeObjectsInGameField(3, 2, "C");
         this.gameField.placeObjectsInGameField(4, 1, "D");
         this.gameField.placeObjectsInGameField(3, 3, "^");
         this.gameFieldPanel.drawObjectsOnGameField();
+    }
+
+    public GameField getGameField() {
+        return gameField;
     }
 
     public GameFieldPanel getGameFieldPanel() {

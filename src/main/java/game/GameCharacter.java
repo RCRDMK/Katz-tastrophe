@@ -21,14 +21,10 @@ public class GameCharacter {
 
     }
 
-    public GameCharacter(GameFieldPanel gameFieldPanel) {
-        this.gameFieldPanel = gameFieldPanel;
-    }
-
-    /*public GameCharacter(GameField gameField, GameFieldPanel gameFieldPanel) {
+    public GameCharacter(GameField gameField, GameFieldPanel gameFieldPanel) {
         this.gameField = gameField;
         this.gameFieldPanel = gameFieldPanel;
-    }*/
+    }
 
     /**
      * Responsible for changing the direction in which the character currently looks

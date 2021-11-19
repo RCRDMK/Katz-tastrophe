@@ -53,7 +53,7 @@ public class ClientPresenter extends Application {
     public void initialize() {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
-        character = new GameCharacter(gameFieldPanelController.getGameFieldPanel());
+        character = new GameCharacter(gameFieldPanelController.getGameField(), gameFieldPanelController.getGameFieldPanel());
     }
 
     //Kopiervorlage für Actionevents
