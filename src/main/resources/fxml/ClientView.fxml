@@ -407,8 +407,12 @@
         <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0">
             <items>
                 <TextArea prefHeight="200.0" prefWidth="200.0"/>
-                <ScrollPane prefHeight="200.0" prefWidth="200.0" fx:id="scrollPane"/>
-                <!--GameFieldPanel></GameFieldPanel-->
+                <!--<VBox alignment="CENTER" fx:id="vBox">
+                    <HBox alignment="CENTER" fx:id="hBox">
+                        <ScrollPane fx:id="scrollPane"/>
+                    </HBox>
+                </VBox>-->
+                <ScrollPane fx:id="scrollPane"/>
             </items>
         </SplitPane>
         <Label layoutY="380.0" prefHeight="18.0" prefWidth="600.0" text="'Mau! Maaauuuuuu!!!' - Kuro, immer"

@@ -55,8 +55,10 @@ public class ClientPresenter extends Application {
     public void initialize() {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
-        //TODO character in eine sinnvollere Klasse wegen MVC verschieben
-        character = new GameCharacter(gameFieldPanelController.getGameField(), gameFieldPanelController.getGameFieldPanel());
+        character = gameFieldPanelController.getCharacter();
+        /*scrollPane.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
+        vBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
+        hBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());*/
     }
 
     /**
@@ -72,12 +74,17 @@ public class ClientPresenter extends Application {
     }
 
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) {
-        GameField.setGameField(6, 6);
-        //GameField.checkIfCharacterOutOfBounds();
+        GameField.setGameField(5, 5);
+        for (int i = 5; i < GameField.getGameField().length; i++) {
+            for (int j = 5; j < GameField.getGameField()[j].length; j++) {
+                GameField.placeObjectsInGameField(i, j, "x");
+            }
+        }
+        GameField.checkIfCharacterExists();
         GameFieldPanel.drawObjectsOnGameField();
     }
 
-    //TODO Chara neu malen Bug beheben und aufpassen nicht mehr Objekte zu malen als erlaubt ist
+    //TODO Aufpassen nicht mehr Objekte zu malen als erlaubt ist
 
     /**
      * Responsible for handling the interaction with the menu item for placing the character on a tile.

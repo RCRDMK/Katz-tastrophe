@@ -10,7 +10,7 @@ import game.exceptions.*;
 
 public class GameCharacter {
 
-    public static GameField gameField;
+    GameField gameField;
     GameFieldPanel gameFieldPanel;
 
     boolean handsFull = false;

@@ -71,17 +71,24 @@ public class GameField {
         }
     }
 
-    //should be called when the gamefield sizes changes
+    /**
+     * Responsible for checking if there still exist a character in the gamefield array. If not, the character is
+     * added to the index of [0][0].
+     *
+     * @since 10.11.2021
+     */
     public static void checkIfCharacterExists() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                if (!gameField[i][j].equals("^")) {
-                    gameField[0][0] = "^";
-                } else if (!gameField[i][j].equals("v")) {
-                    gameField[0][0] = "^";
-                } else if (!gameField[i][j].equals("<")) {
-                    gameField[0][0] = "^";
-                } else if (!gameField[i][j].equals(">")) {
+                if (gameField[i][j].equals("^")) {
+                    continue;
+                } else if (gameField[i][j].equals("v")) {
+                    continue;
+                } else if (gameField[i][j].equals("<")) {
+                    continue;
+                } else if (gameField[i][j].equals(">")) {
+                    continue;
+                } else {
                     gameField[0][0] = "^";
                 }
             }
