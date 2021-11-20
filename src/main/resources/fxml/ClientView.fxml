@@ -198,7 +198,8 @@
                     </tooltip>
                 </Button>
 
-                <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" fx:id="changeSizeFieldButton">
+                <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" fx:id="changeSizeFieldButton"
+                        onAction="#onChangeSizeFieldClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/changeGamefield.png"/>
@@ -210,7 +211,7 @@
                 </Button>
 
                 <ToggleButton layoutX="234.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCharaButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPlaceCharaClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/protag.png"/>
@@ -222,7 +223,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="290.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeDrinkButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPlaceDrinkClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/drink.png"/>
@@ -234,7 +235,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="346.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCatButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPlaceCatClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/cat.png"/>
@@ -246,7 +247,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="402.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeWallButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPlaceWallClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/wall.png"/>
@@ -258,7 +259,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="458.0" layoutY="10.0" mnemonicParsing="false" fx:id="deleteContentButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onDeleteContentClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/delete.png"/>
@@ -270,7 +271,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="514.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPickDrinkUpClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/drinkPickUp.png"/>
@@ -282,7 +283,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPickCatUpClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/catPickUp.png"/>
@@ -294,7 +295,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPutDrinkDownClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/drinkPutDown.png"/>
@@ -306,7 +307,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onPutCatDownClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/catPutDown.png"/>
@@ -318,7 +319,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="738.0" layoutY="20.0" mnemonicParsing="false" fx:id="moveUpButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onMoveUpClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/protagUp.png"/>
@@ -330,7 +331,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="794.0" layoutY="30.0" mnemonicParsing="false" fx:id="moveDownButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onMoveDownClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/protagDown.png"/>
@@ -342,7 +343,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="850.0" layoutY="40.0" mnemonicParsing="false" fx:id="moveRightButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onMoveRightClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/protagRight.png"/>
@@ -354,7 +355,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="906.0" layoutY="50.0" mnemonicParsing="false" fx:id="moveLeftButton"
-                              toggleGroup="$buttons">
+                              toggleGroup="$buttons" onAction="#onMoveLeftClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/protagLeft.png"/>

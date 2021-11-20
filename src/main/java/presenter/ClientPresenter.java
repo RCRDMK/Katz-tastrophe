@@ -59,15 +59,6 @@ public class ClientPresenter extends Application {
         character = new GameCharacter(gameFieldPanelController.getGameField(), gameFieldPanelController.getGameFieldPanel());
     }
 
-    //Kopiervorlage für Actionevents
-    /**
-     *
-     *
-     * @param actionEvent the interaction of the user with the FXML Element
-     *
-     * @since 19.11.2021
-     */
-
     /**
      * Responsible for handling the interaction with the quit menu item.
      * <p>
@@ -85,6 +76,8 @@ public class ClientPresenter extends Application {
         //GameField.checkIfCharacterOutOfBounds();
         GameFieldPanel.drawObjectsOnGameField();
     }
+
+    //TODO Place Methoden sind buggy und setzen Elemente nicht da, wo sie sollen
 
     /**
      * Responsible for handling the interaction with the menu item for placing the character on a tile.
