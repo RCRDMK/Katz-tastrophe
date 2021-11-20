@@ -64,10 +64,6 @@ public class GameField {
                     gameField[i][j] = "x";
                 }
             }
-            //Hier kann auch ein normaler "toString" ausgeführt werden.
-            //Da aber evtl später mit Cells gearbeitet wird, bleibt dieser Befehl als spätere Spickhilfe erhalten
-            //System.out.println(Arrays.deepToString(this.gameField[i]));
-
         }
     }
 
@@ -78,20 +74,26 @@ public class GameField {
      * @since 10.11.2021
      */
     public static void checkIfCharacterExists() {
+        boolean characterExist = false;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 if (gameField[i][j].equals("^")) {
-                    continue;
+                    characterExist = true;
+                    break;
                 } else if (gameField[i][j].equals("v")) {
-                    continue;
+                    characterExist = true;
+                    break;
                 } else if (gameField[i][j].equals("<")) {
-                    continue;
+                    characterExist = true;
+                    break;
                 } else if (gameField[i][j].equals(">")) {
-                    continue;
-                } else {
-                    gameField[0][0] = "^";
+                    characterExist = true;
+                    break;
                 }
             }
+        }
+        if (!characterExist) {
+            gameField[0][0] = "^";
         }
     }
 

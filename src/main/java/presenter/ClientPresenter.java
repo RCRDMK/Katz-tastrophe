@@ -73,6 +73,7 @@ public class ClientPresenter extends Application {
         System.exit(0);
     }
 
+    //TODO Position der Objekte im Array beibehalten (Vll Array gigantisch aufsetzen und nur einen Teil zeichnen?)
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) {
         GameField.setGameField(5, 5);
         for (int i = 5; i < GameField.getGameField().length; i++) {
@@ -84,13 +85,12 @@ public class ClientPresenter extends Application {
         GameFieldPanel.drawObjectsOnGameField();
     }
 
-    //TODO Aufpassen nicht mehr Objekte zu malen als erlaubt ist
-
     /**
      * Responsible for handling the interaction with the menu item for placing the character on a tile.
      * <p>
      * When this method is called, it first checks if the click actually happened inside the gamefield and
-     * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
+     * not on the offside of it. Afterwards it searches the array for the current position of the character in the
+     * gamefield array and overwrites its position. Then it saves the x and y coordinates, subtracts the border patting of
      * the gamefield and divides it through tile width and height declared in the GameFieldPanel class. By saving it
      * as an int, it can traverse the gamefield array much more easily, as when it had to worry about potential decimals.
      * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
@@ -104,10 +104,16 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    for (int i = 0; i < GameField.getGameField().length; i++) {
+                        for (int j = 0; j < GameField.getGameField()[0].length; j++) {
+                            if (GameField.getGameField()[i][j].equals("^") || GameField.getGameField()[i][j].equals("v") || GameField.getGameField()[i][j].equals(">") || GameField.getGameField()[i][j].equals("<")) {
+                                GameField.getGameField()[i][j] = "x";
+                            }
+                        }
+                    }
                     int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
                     int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "^");
-                    GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
                 }
 
@@ -165,7 +171,6 @@ public class ClientPresenter extends Application {
                     int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
                     int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "W");
-                    System.out.println(xAxis + "" + yAxis);
                     GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
                 }
@@ -192,6 +197,13 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    for (int i = 0; i < GameField.getGameField().length; i++) {
+                        for (int j = 0; j < GameField.getGameField()[0].length; j++) {
+                            if (GameField.getGameField()[i][j].equals("D")) {
+                                GameField.getGameField()[i][j] = "x";
+                            }
+                        }
+                    }
                     int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
                     int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "D");
