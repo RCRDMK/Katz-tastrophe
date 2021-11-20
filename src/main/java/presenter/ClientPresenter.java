@@ -3,6 +3,7 @@ package presenter;
 import controller.GameFieldPanelController;
 import game.GameCharacter;
 import game.GameField;
+import game.GameFieldPanel;
 import game.exceptions.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -12,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -28,7 +28,6 @@ public class ClientPresenter extends Application {
     public static final String fxml = "/fxml/ClientView.fxml";
     @FXML
     ScrollPane scrollPane;
-    Image test;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
 
@@ -83,28 +82,149 @@ public class ClientPresenter extends Application {
 
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) {
         GameField.setGameField(6, 6);
-        GameField.checkIfCharacterOutOfBounds();
-        //GameFieldPanel.drawGameField();
+        //GameField.checkIfCharacterOutOfBounds();
+        GameFieldPanel.drawObjectsOnGameField();
     }
 
+    /**
+     * Responsible for handling the interaction with the menu item for placing the character on a tile.
+     * <p>
+     * When this method is called, it first checks if the click actually happened inside the gamefield and
+     * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
+     * the gamefield and divides it through tile width and height declared in the GameFieldPanel class. By saving it
+     * as an int, it can traverse the gamefield array much more easily, as when it had to worry about potential decimals.
+     * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
+     * exists within the array and then draws gamefield new to accommodate for the change that just happened.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 20.11.2021
+     */
     public void onPlaceCharaClicked(ActionEvent actionEvent) {
+        scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    GameField.placeObjectsInGameField(xAxis, yAxis, "^");
+                    GameField.checkIfCharacterExists();
+                    GameFieldPanel.drawObjectsOnGameField();
+                }
+
+            }
+        });
     }
 
+    /**
+     * Responsible for handling the interaction with the menu item for placing a cat on a tile.
+     * <p>
+     * When this method is called, it first checks if the click actually happened inside the gamefield and
+     * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
+     * the gamefield and divides it through tile width and height declared in the GameFieldPanel class. By saving it
+     * as an int, it can traverse the gamefield array much more easily, as when it had to worry about potential decimals.
+     * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
+     * exists within the array and then draws gamefield new to accommodate for the change that just happened.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 20.11.2021
+     */
     public void onPlaceCatClicked(ActionEvent actionEvent) {
+        scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    GameField.placeObjectsInGameField(xAxis, yAxis, "C");
+                    GameField.checkIfCharacterExists();
+                    GameFieldPanel.drawObjectsOnGameField();
+                }
+
+            }
+        });
     }
 
+    /**
+     * Responsible for handling the interaction with the menu item for placing a wall on a tile.
+     * <p>
+     * When this method is called, it first checks if the click actually happened inside the gamefield and
+     * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
+     * the gamefield and divides it through tile width and height declared in the GameFieldPanel class. By saving it
+     * as an int, it can traverse the gamefield array much more easily, as when it had to worry about potential decimals.
+     * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
+     * exists within the array and then draws gamefield new to accommodate for the change that just happened.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 20.11.2021
+     */
     public void onPlaceWallClicked(ActionEvent actionEvent) {
+        scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    GameField.placeObjectsInGameField(xAxis, yAxis, "W");
+                    GameField.checkIfCharacterExists();
+                    GameFieldPanel.drawObjectsOnGameField();
+                }
+
+            }
+        });
     }
 
+    /**
+     * Responsible for handling the interaction with the menu item for placing a drink on a tile.
+     * <p>
+     * When this method is called, it first checks if the click actually happened inside the gamefield and
+     * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
+     * the gamefield and divides it through tile width and height declared in the GameFieldPanel class. By saving it
+     * as an int, it can traverse the gamefield array much more easily, as when it had to worry about potential decimals.
+     * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
+     * exists within the array and then draws gamefield new to accommodate for the change that just happened.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 20.11.2021
+     */
     public void onPlaceDrinkClicked(ActionEvent actionEvent) {
+        scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    GameField.placeObjectsInGameField(xAxis, yAxis, "D");
+                    GameField.checkIfCharacterExists();
+                    GameFieldPanel.drawObjectsOnGameField();
+                }
+
+            }
+        });
     }
 
+    /**
+     * Responsible for handling the interaction with the menu item for removing content from a tile.
+     * <p>
+     * When this method is called, it first checks if the click actually happened inside the gamefield and
+     * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
+     * the gamefield and divides it through tile width and height declared in the GameFieldPanel class. By saving it
+     * as an int, it can traverse the gamefield array much more easily, as when it had to worry about potential decimals.
+     * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
+     * exists within the array and then draws gamefield new to accommodate for the change that just happened.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 20.11.2021
+     */
     public void onDeleteContentClicked(ActionEvent actionEvent) {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getX() < 251 && event.getY() < 250) {
-
+                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    GameField.placeObjectsInGameField(xAxis, yAxis, "x");
+                    GameField.checkIfCharacterExists();
+                    GameFieldPanel.drawObjectsOnGameField();
                 }
 
             }

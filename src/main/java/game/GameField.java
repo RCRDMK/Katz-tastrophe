@@ -72,12 +72,11 @@ public class GameField {
     }
 
     //should be called when the gamefield sizes changes
-    public static void checkIfCharacterOutOfBounds() {
-        for (int i = 0; i <= row; i++) {
-            for (int j = 0; j <= column; j++) {
+    public static void checkIfCharacterExists() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
                 if (!gameField[i][j].equals("^")) {
                     gameField[0][0] = "^";
-                    System.out.println("changed");
                 } else if (!gameField[i][j].equals("v")) {
                     gameField[0][0] = "^";
                 } else if (!gameField[i][j].equals("<")) {
@@ -97,7 +96,7 @@ public class GameField {
      * @param object the object which should be placed. Like the character, a cat, etc.
      * @since 03.11.2011
      */
-    public void placeObjectsInGameField(int row, int column, String object) {
+    public static void placeObjectsInGameField(int row, int column, String object) {
         gameField[row][column] = object;
     }
 }
