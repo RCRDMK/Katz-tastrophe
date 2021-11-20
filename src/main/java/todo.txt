@@ -1,10 +1,4 @@
 Permanenz von Objekten im Array bewahren. Ein Betreten eines Feldes mit Trinken oder einer Katze darf nicht dazu führen,
 dass diese Objekte überschrieben werden vom Charakter.
 
-MVC/MVP stärker durchsetzen. Im Moment ist zwar die View getrennt, aber Controller und Model mehr oder weniger dasselbe.
-
-Draw Methode anpassen, so dass ein Feld mit den Maßen des Arrays gemalt werden kann und auch Objekte wie Wände oder der
-Charakter gemalt werden. Im Moment ist hier noch sehr smelliger Code. Der muss unbedingt ausgebessert werden!
-
-Vielleicht ist es schlauer hier mit tatsächlichen Nodes zu arbeiten und diesen später Werte zu geben? Könnte auch
-bei Objekten einfacher werden... Wäre dann hier eine Grid Pane schlau?
+Startpunkt grafisch anzeigen, wohin der User zurückkehren soll, nachdem er das Trinken geholt hat.

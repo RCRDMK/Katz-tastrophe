@@ -46,6 +46,10 @@ public class GameField {
         return gameField;
     }
 
+    public static void setGameField(int rows, int columns) {
+        new GameField(rows, columns);
+    }
+
     /**
      * Responsible for giving every index of the value null the value x. In doing that possible NullPointerExceptions
      * can be circumvented when traversing through the array.
@@ -67,6 +71,24 @@ public class GameField {
         }
     }
 
+    //should be called when the gamefield sizes changes
+    public static void checkIfCharacterOutOfBounds() {
+        for (int i = 0; i <= row; i++) {
+            for (int j = 0; j <= column; j++) {
+                if (!gameField[i][j].equals("^")) {
+                    gameField[0][0] = "^";
+                    System.out.println("changed");
+                } else if (!gameField[i][j].equals("v")) {
+                    gameField[0][0] = "^";
+                } else if (!gameField[i][j].equals("<")) {
+                    gameField[0][0] = "^";
+                } else if (!gameField[i][j].equals(">")) {
+                    gameField[0][0] = "^";
+                }
+            }
+        }
+    }
+
     /**
      * Responsible for placing objects manually in the gamefield array.
      *
@@ -77,22 +99,5 @@ public class GameField {
      */
     public void placeObjectsInGameField(int row, int column, String object) {
         gameField[row][column] = object;
-    }
-
-    //should be called when the gamefield sizes changes
-    public void checkIfCharacterOutOfBounds() {
-        for (int i = 0; i <= row; i++) {
-            for (int j = 0; j <= column; j++) {
-                if (!gameField[i][j].equals("^")) {
-                    gameField[0][0] = "^";
-                } else if (!gameField[i][j].equals("v")) {
-                    gameField[0][0] = "^";
-                } else if (!gameField[i][j].equals("<")) {
-                    gameField[0][0] = "^";
-                } else if (!gameField[i][j].equals(">")) {
-                    gameField[0][0] = "^";
-                }
-            }
-        }
     }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import game.GameCharacter;
 import game.GameField;
 import game.GameFieldPanel;
 
@@ -14,7 +13,6 @@ public class GameFieldPanelController {
 
     private GameFieldPanel gameFieldPanel;
     private GameField gameField;
-    private GameCharacter character;
 
     /**
      * The custom constructor for the class.
