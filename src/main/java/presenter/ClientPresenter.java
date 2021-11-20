@@ -77,7 +77,7 @@ public class ClientPresenter extends Application {
         GameFieldPanel.drawObjectsOnGameField();
     }
 
-    //TODO Place Methoden sind buggy und setzen Elemente nicht da, wo sie sollen
+    //TODO Chara neu malen Bug beheben und aufpassen nicht mehr Objekte zu malen als erlaubt ist
 
     /**
      * Responsible for handling the interaction with the menu item for placing the character on a tile.
@@ -97,8 +97,8 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "^");
                     GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
@@ -126,8 +126,8 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "C");
                     GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
@@ -155,9 +155,10 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "W");
+                    System.out.println(xAxis + "" + yAxis);
                     GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
                 }
@@ -184,8 +185,8 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "D");
                     GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
@@ -213,8 +214,8 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    int yAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
+                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
                     GameField.placeObjectsInGameField(xAxis, yAxis, "x");
                     GameField.checkIfCharacterExists();
                     GameFieldPanel.drawObjectsOnGameField();
