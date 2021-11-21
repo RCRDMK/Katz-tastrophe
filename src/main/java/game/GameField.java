@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Arrays;
+
 /**
  * This class the gamefield in the form of a multidimensional array and is also responsible for changing said array
  * depending on the action of the user.
@@ -46,8 +48,25 @@ public class GameField {
         return gameField;
     }
 
-    public static void setGameField(int rows, int columns) {
+    /**
+     * Responsible for changing the size of the gamefield array.
+     * <p>
+     * When this method is called, it first clones the current gamefield with all of its values. Afterwards it creates
+     * a new gamefield array with the requested amount of column and rows. Lastly, it fills the newly created array
+     * with the values of the old array.
+     *
+     * @param rows    amount of the requested rows the array should depict.
+     * @param columns amount of the requested columns the array should depict.
+     * @since 21.11.2021
+     */
+    public static void resizeGameFieldSize(int rows, int columns) {
+        String copy[][] = Arrays.stream(getGameField()).map(String[]::clone).toArray(String[][]::new);
         new GameField(rows, columns);
+        for (int i = 0; i < getGameField().length; i++) {
+            for (int j = 0; j < getGameField()[0].length; j++) {
+                gameField[i][j] = copy[i][j];
+            }
+        }
     }
 
     /**
@@ -57,7 +76,6 @@ public class GameField {
      * @since 03.11.2021
      */
     public static void fillUpGameField() {
-        //responsible for filling indexes which have the value null with an x
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 if (gameField[i][j] == null) {

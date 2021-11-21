@@ -73,14 +73,9 @@ public class ClientPresenter extends Application {
         System.exit(0);
     }
 
-    //TODO Position der Objekte im Array beibehalten (Vll Array gigantisch aufsetzen und nur einen Teil zeichnen?)
+    //TODO Popup für die Spielfeldanpassung erstellen
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) {
-        GameField.setGameField(5, 5);
-        for (int i = 5; i < GameField.getGameField().length; i++) {
-            for (int j = 5; j < GameField.getGameField()[j].length; j++) {
-                GameField.placeObjectsInGameField(i, j, "x");
-            }
-        }
+        GameField.resizeGameFieldSize(5, 2);
         GameField.checkIfCharacterExists();
         GameFieldPanel.drawObjectsOnGameField();
     }
