@@ -81,11 +81,19 @@ public class ClientPresenter extends Application {
      * @throws IOException
      * @since 21.11.2021
      */
-    //TODO FXML View richtig anzeigen und damit interagieren und wie weit das Feld vergrößert oder verkleinert werden darf
+    //TODO FXML View richtig anzeigen und damit interagieren und wie weit das Feld vergrößert oder verkleinert werden darf (Min 2 und Max 10?)
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
 
-        //Diesen Code später durch die FXML ersetzen
 
+        /*Alert clickAlert = new Alert(Alert.AlertType.NONE);
+        ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.NO);
+        clickAlert.getButtonTypes().setAll(ok);
+
+
+        clickAlert.show()*/
+        ;
+
+//Diesen Code später durch die FXML ersetzen
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
         Stage primaryStage = new Stage();
         Pane pane = new Pane();
