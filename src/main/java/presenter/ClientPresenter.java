@@ -63,7 +63,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the quit menu item.
+     * Responsible for handling the interaction with the quit menu item and button.
      * <p>
      * If the user clicks this menu item, the application in its entirety will get terminated.
      *
@@ -74,7 +74,14 @@ public class ClientPresenter extends Application {
         System.exit(0);
     }
 
-    //TODO FXML View richtig anzeigen und damit interagieren
+    /**
+     * Responsible for handling the interaction with the change gamefield size menu item and button.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @throws IOException
+     * @since 21.11.2021
+     */
+    //TODO FXML View richtig anzeigen und damit interagieren und wie weit das Feld vergrößert oder verkleinert werden darf
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
 
         //Diesen Code später durch die FXML ersetzen
@@ -160,7 +167,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for placing the character on a tile.
+     * Responsible for handling the interaction with the menu item and button for placing the character on a tile.
      * <p>
      * When this method is called, it first checks if the click actually happened inside the gamefield and
      * not on the offside of it. Afterwards it searches the array for the current position of the character in the
@@ -196,7 +203,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for placing a cat on a tile.
+     * Responsible for handling the interaction with the menu item and button for placing a cat on a tile.
      * <p>
      * When this method is called, it first checks if the click actually happened inside the gamefield and
      * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
@@ -225,7 +232,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for placing a wall on a tile.
+     * Responsible for handling the interaction with the menu item and button for placing a wall on a tile.
      * <p>
      * When this method is called, it first checks if the click actually happened inside the gamefield and
      * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
@@ -254,7 +261,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for placing a drink on a tile.
+     * Responsible for handling the interaction with the menu item and button for placing a drink on a tile.
      * <p>
      * When this method is called, it first checks if the click actually happened inside the gamefield and
      * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
@@ -290,7 +297,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for removing content from a tile.
+     * Responsible for handling the interaction with the menu item and button for removing content from a tile.
      * <p>
      * When this method is called, it first checks if the click actually happened inside the gamefield and
      * not on the offside of it. Afterwards it saves the x and y coordinates, subtracts the border patting of
@@ -319,7 +326,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for moving up.
+     * Responsible for handling the interaction with the menu item and button for moving up.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -330,7 +337,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for moving down.
+     * Responsible for handling the interaction with the menu item and button for moving down.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -341,7 +348,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for moving left.
+     * Responsible for handling the interaction with the menu item and button for moving left.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -352,7 +359,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for moving right.
+     * Responsible for handling the interaction with the menu item and button for moving right.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -363,7 +370,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for picking the cat up.
+     * Responsible for handling the interaction with the menu item and button for picking the cat up.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -373,7 +380,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for picking the drink up.
+     * Responsible for handling the interaction with the menu item and button for picking the drink up.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -383,7 +390,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for putting the cat down.
+     * Responsible for handling the interaction with the menu item and button for putting the cat down.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -393,7 +400,7 @@ public class ClientPresenter extends Application {
     }
 
     /**
-     * Responsible for handling the interaction with the menu item for putting the drink down.
+     * Responsible for handling the interaction with the menu item and button for putting the drink down.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021

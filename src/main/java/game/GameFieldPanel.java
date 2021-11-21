@@ -75,6 +75,15 @@ public class GameFieldPanel extends Region {
         return tileWidthCalculated;
     }
 
+    public static Canvas getCanvas() {
+        return canvas;
+    }
+
+    public static void calculateTileHeightAndWidth() {
+        GameFieldPanel.tileHeightCalculated = (getCanvas().getHeight() - BORDER_PATTING) / gameField.getGameField().length;
+        GameFieldPanel.tileWidthCalculated = (getCanvas().getWidth() - BORDER_PATTING) / gameField.getGameField()[0].length;
+    }
+
     /**
      * Responsible for actually drawing the gamefield.
      * <p>

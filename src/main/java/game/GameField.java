@@ -62,10 +62,20 @@ public class GameField {
     public static void resizeGameFieldSize(int rows, int columns) {
         String copy[][] = Arrays.stream(getGameField()).map(String[]::clone).toArray(String[][]::new);
         new GameField(rows, columns);
-        for (int i = 0; i < getGameField().length; i++) {
-            for (int j = 0; j < getGameField()[0].length; j++) {
-                gameField[i][j] = copy[i][j];
+        if (gameField.length < copy.length) {
+            for (int i = 0; i < getGameField().length; i++) {
+                for (int j = 0; j < getGameField()[0].length; j++) {
+                    gameField[i][j] = copy[i][j];
+                }
             }
+        } else {
+            for (int i = 0; i < copy.length; i++) {
+                for (int j = 0; j < copy[0].length; j++) {
+                    gameField[i][j] = copy[i][j];
+                }
+            }
+            GameFieldPanel.calculateTileHeightAndWidth();
+            fillUpGameField();
         }
     }
 
