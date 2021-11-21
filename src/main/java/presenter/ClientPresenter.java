@@ -12,9 +12,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 /**
@@ -30,11 +36,6 @@ public class ClientPresenter extends Application {
     ScrollPane scrollPane;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -73,11 +74,89 @@ public class ClientPresenter extends Application {
         System.exit(0);
     }
 
-    //TODO Popup für die Spielfeldanpassung erstellen
-    public void onChangeSizeFieldClicked(ActionEvent actionEvent) {
-        GameField.resizeGameFieldSize(5, 2);
+    //TODO FXML View richtig anzeigen und damit interagieren
+    public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
+
+        //Diesen Code später durch die FXML ersetzen
+
+        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
+        Stage primaryStage = new Stage();
+        Pane pane = new Pane();
+        pane.setPrefSize(440, 200);
+        Button cancel = new Button("Abbrechen");
+        Button accept = new Button("Akzeptieren");
+        Label row = new Label("Reihen");
+        Label column = new Label("Spalten");
+        Label rowCurrently = new Label();
+        Label columnCurrently = new Label();
+        TextField rowText = new TextField();
+        TextField columnText = new TextField();
+
+        cancel.setLayoutX(124);
+        cancel.setLayoutY(165);
+
+        accept.setLayoutX(274);
+        accept.setLayoutY(165);
+
+        row.setLayoutX(92);
+        row.setLayoutY(47);
+
+        column.setLayoutX(92);
+        column.setLayoutY(102);
+
+        rowCurrently.setLayoutX(337);
+        rowCurrently.setLayoutY(47);
+        rowCurrently.setText("Momentan " + GameField.getGameField().length);
+
+        columnCurrently.setLayoutX(337);
+        columnCurrently.setLayoutY(102);
+        columnCurrently.setText("Momentan " + GameField.getGameField()[0].length);
+
+        rowText.setLayoutX(161);
+        rowText.setLayoutY(43);
+
+        columnText.setLayoutX(161);
+        columnText.setLayoutY(98);
+
+        pane.getChildren().addAll(cancel, accept, row, column, rowCurrently, columnCurrently, rowText, columnText);
+        primaryStage.setScene(new Scene(pane));
+
+
+        primaryStage.setTitle("Größe des Spielfelds verändern");
+
+        primaryStage.show();
+
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.close();
+            }
+        });
+
+        accept.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                int rows = Integer.valueOf(rowText.getText());
+                int columns = Integer.valueOf(columnText.getText());
+                GameField.resizeGameFieldSize(rows, columns);
+                GameField.checkIfCharacterExists();
+                GameFieldPanel.drawObjectsOnGameField();
+                primaryStage.close();
+            }
+        });
+
+       /* Platform.runLater(() -> {
+            ChangeGameFieldPresenter.changeViewCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println("hi");
+                }
+            });
+        });*/
+
+        /*GameField.resizeGameFieldSize(5, 2);
         GameField.checkIfCharacterExists();
-        GameFieldPanel.drawObjectsOnGameField();
+        GameFieldPanel.drawObjectsOnGameField();*/
     }
 
     /**
