@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="215.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presenter.ChangeGameFieldPresenter">
+   <children>
+      <Button layoutX="124.0" layoutY="165.0" mnemonicParsing="false" text="Abbrechen" fx:id="ChangeViewCancel"/>
+      <Button layoutX="274.0" layoutY="165.0" mnemonicParsing="false" text="Bestätigen" fx:id="ChangeViewAccept"/>
+      <Label layoutX="92.0" layoutY="47.0" text="Reihen" fx:id="ChangeViewRow"/>
+      <Label layoutX="92.0" layoutY="102.0" text="Spalten" fx:id="ChangeViewColumn"/>
+      <TextField layoutX="161.0" layoutY="43.0" fx:id="ChangeViewTextFieldRow"/>
+      <TextField layoutX="161.0" layoutY="98.0" fx:id="ChangeViewTextFieldColumn"/>
+      <Label layoutX="337.0" layoutY="47.0" text="Momentan" fx:id="ChangeViewRowCurrently"/>
+      <Label layoutX="337.0" layoutY="102.0" text="Momentan" fx:id="ChangeViewColumnCurrently"/>
+   </children>
+</AnchorPane>
