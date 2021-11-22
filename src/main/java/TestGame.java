@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class TestGame {
 
-    static GameField gameField = new GameField();
+    static GameField gameField;
     static GameCharacter character = new GameCharacter();
     static Scanner scan = new Scanner(System.in);
 
@@ -17,8 +17,8 @@ public class TestGame {
         System.out.println("Wenn du das Programm schließen möchtest, dann gib 'quit' ein.");
         //setting the gamefield. Can't currently be smaller than 5x5.
         // Otherwise a OutOfBoundsException will occur because of the settings in the GameField class
-        gameField.GameField(7, 7);
-        gameField.printGameField();
+        //gameField.GameField(7, 7);
+        //gameField.printGameField();
 
         while (true) {
             try {

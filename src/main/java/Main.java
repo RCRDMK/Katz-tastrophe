@@ -1,7 +1,8 @@
+import javafx.application.Application;
 import presenter.ClientPresenter;
 
 public class Main {
     public static void main(String[] args) {
-        ClientPresenter.main(args);
+        Application.launch(ClientPresenter.class, args);
     }
 }

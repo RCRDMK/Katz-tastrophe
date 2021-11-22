@@ -1,0 +1,4 @@
+Permanenz von Objekten im Array bewahren. Ein Betreten eines Feldes mit Trinken oder einer Katze darf nicht dazu führen,
+dass diese Objekte überschrieben werden vom Charakter.
+
+Startpunkt grafisch anzeigen, wohin der User zurückkehren soll, nachdem er das Trinken geholt hat.
