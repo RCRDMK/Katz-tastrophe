@@ -1,5 +1,7 @@
 package game;
 
+import controller.GameFieldPanelController;
+
 import java.util.Arrays;
 
 /**
@@ -17,6 +19,7 @@ public class GameField {
     static String wall = "W";
     static String drink = "D";
     static String character = "^";
+    private GameFieldPanelController gameFieldPanelController;
     // tip points to where the character is looking. Initially the character looks up (^) but depending on the
     // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)
 
@@ -46,37 +49,6 @@ public class GameField {
 
     public static String[][] getGameField() {
         return gameField;
-    }
-
-    /**
-     * Responsible for changing the size of the gamefield array.
-     * <p>
-     * When this method is called, it first clones the current gamefield with all of its values. Afterwards it creates
-     * a new gamefield array with the requested amount of column and rows. Lastly, it fills the newly created array
-     * with the values of the old array.
-     *
-     * @param rows    amount of the requested rows the array should depict.
-     * @param columns amount of the requested columns the array should depict.
-     * @since 21.11.2021
-     */
-    public static void resizeGameFieldSize(int rows, int columns) {
-        String copy[][] = Arrays.stream(getGameField()).map(String[]::clone).toArray(String[][]::new);
-        new GameField(rows, columns);
-        if (gameField.length < copy.length) {
-            for (int i = 0; i < getGameField().length; i++) {
-                for (int j = 0; j < getGameField()[0].length; j++) {
-                    gameField[i][j] = copy[i][j];
-                }
-            }
-        } else {
-            for (int i = 0; i < copy.length; i++) {
-                for (int j = 0; j < copy[0].length; j++) {
-                    gameField[i][j] = copy[i][j];
-                }
-            }
-            GameFieldPanel.calculateTileHeightAndWidth();
-            fillUpGameField();
-        }
     }
 
     /**
@@ -135,5 +107,36 @@ public class GameField {
      */
     public static void placeObjectsInGameField(int row, int column, String object) {
         gameField[row][column] = object;
+    }
+
+    /**
+     * Responsible for changing the size of the gamefield array.
+     * <p>
+     * When this method is called, it first clones the current gamefield with all of its values. Afterwards it creates
+     * a new gamefield array with the requested amount of column and rows. Lastly, it fills the newly created array
+     * with the values of the old array.
+     *
+     * @param rows    amount of the requested rows the array should depict.
+     * @param columns amount of the requested columns the array should depict.
+     * @since 21.11.2021
+     */
+    public void resizeGameFieldSize(int rows, int columns) {
+        String copy[][] = Arrays.stream(getGameField()).map(String[]::clone).toArray(String[][]::new);
+        new GameField(rows, columns);
+        if (gameField.length < copy.length) {
+            for (int i = 0; i < getGameField().length; i++) {
+                for (int j = 0; j < getGameField()[0].length; j++) {
+                    gameField[i][j] = copy[i][j];
+                }
+            }
+        } else {
+            for (int i = 0; i < copy.length; i++) {
+                for (int j = 0; j < copy[0].length; j++) {
+                    gameField[i][j] = copy[i][j];
+                }
+            }
+            gameFieldPanelController.getGameFieldPanel().calculateTileHeightAndWidth();
+            fillUpGameField();
+        }
     }
 }

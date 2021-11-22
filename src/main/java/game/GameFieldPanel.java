@@ -19,16 +19,16 @@ public class GameFieldPanel extends Region {
     //Anleitung zum Arbeiten mit Canvas'. Auch wie man Bilder einfügt oder diese animiert
     //https://edencoding.com/javafx-canvas/
 
-    static final int BORDER_PATTING = 20;
-    static private final Image cat = new Image("images/buttons/cat.png");
-    static private final Image wall = new Image("images/buttons/wall.png");
-    static private final Image drink = new Image("images/buttons/drink.png");
-    static private final Image character = new Image("images/buttons/protag.png");
-    static private GameField gameField;
-    static private Canvas canvas;
-    static private GraphicsContext graCon;
-    static private double tileHeightCalculated;
-    static private double tileWidthCalculated;
+    final int BORDER_PATTING = 20;
+    private final Image cat = new Image("images/buttons/cat.png");
+    private final Image wall = new Image("images/buttons/wall.png");
+    private final Image drink = new Image("images/buttons/drink.png");
+    private final Image character = new Image("images/buttons/protag.png");
+    private GameField gameField;
+    private Canvas canvas;
+    private GraphicsContext graCon;
+    private double tileHeightCalculated;
+    private double tileWidthCalculated;
 
     /**
      * The default constructor of the class
@@ -63,25 +63,25 @@ public class GameFieldPanel extends Region {
         drawGameField();
     }
 
-    public static int getBorderPatting() {
+    public int getBorderPatting() {
         return BORDER_PATTING;
     }
 
-    public static double getTileHeightCalculated() {
+    public double getTileHeightCalculated() {
         return tileHeightCalculated;
     }
 
-    public static double getTileWidthCalculated() {
+    public double getTileWidthCalculated() {
         return tileWidthCalculated;
     }
 
-    public static Canvas getCanvas() {
+    public Canvas getCanvas() {
         return canvas;
     }
 
-    public static void calculateTileHeightAndWidth() {
-        GameFieldPanel.tileHeightCalculated = (getCanvas().getHeight() - BORDER_PATTING) / gameField.getGameField().length;
-        GameFieldPanel.tileWidthCalculated = (getCanvas().getWidth() - BORDER_PATTING) / gameField.getGameField()[0].length;
+    public void calculateTileHeightAndWidth() {
+        tileHeightCalculated = (getCanvas().getHeight() - BORDER_PATTING) / gameField.getGameField().length;
+        tileWidthCalculated = (getCanvas().getWidth() - BORDER_PATTING) / gameField.getGameField()[0].length;
     }
 
     /**
@@ -92,7 +92,7 @@ public class GameFieldPanel extends Region {
      *
      * @since 18.11.2021
      */
-    private static void drawGameField() {
+    private void drawGameField() {
         graCon.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int i = 0; i < gameField.getGameField().length; i++) {
             for (int j = 0; j < gameField.getGameField()[0].length; j++) {
@@ -112,7 +112,7 @@ public class GameFieldPanel extends Region {
      *
      * @since 18.11.2011
      */
-    public static void drawObjectsOnGameField() {
+    public void drawObjectsOnGameField() {
         drawGameField();
         for (int i = 0; i < gameField.getGameField().length; i++) {
             for (int j = 0; j < gameField.getGameField()[0].length; j++) {

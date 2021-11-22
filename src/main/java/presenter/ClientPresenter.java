@@ -3,7 +3,6 @@ package presenter;
 import controller.GameFieldPanelController;
 import game.GameCharacter;
 import game.GameField;
-import game.GameFieldPanel;
 import game.exceptions.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -12,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -34,6 +30,7 @@ public class ClientPresenter extends Application {
     public static final String fxml = "/fxml/ClientView.fxml";
     @FXML
     ScrollPane scrollPane;
+    private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
 
@@ -85,13 +82,14 @@ public class ClientPresenter extends Application {
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
 
 
-        /*Alert clickAlert = new Alert(Alert.AlertType.NONE);
+        //Buttons zum hoch und runterzählen
+        Alert clickAlert = new Alert(Alert.AlertType.NONE);
         ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.NO);
         clickAlert.getButtonTypes().setAll(ok);
+        TextField textField = new TextField();
 
+        clickAlert.show();
 
-        clickAlert.show()*/
-        ;
 
 //Diesen Code später durch die FXML ersetzen
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
@@ -121,11 +119,11 @@ public class ClientPresenter extends Application {
 
         rowCurrently.setLayoutX(337);
         rowCurrently.setLayoutY(47);
-        rowCurrently.setText("Momentan " + GameField.getGameField().length);
+        rowCurrently.setText("Momentan " + gameField.getGameField().length);
 
         columnCurrently.setLayoutX(337);
         columnCurrently.setLayoutY(102);
-        columnCurrently.setText("Momentan " + GameField.getGameField()[0].length);
+        columnCurrently.setText("Momentan " + gameField.getGameField()[0].length);
 
         rowText.setLayoutX(161);
         rowText.setLayoutY(43);
@@ -153,9 +151,9 @@ public class ClientPresenter extends Application {
             public void handle(ActionEvent event) {
                 int rows = Integer.valueOf(rowText.getText());
                 int columns = Integer.valueOf(columnText.getText());
-                GameField.resizeGameFieldSize(rows, columns);
-                GameField.checkIfCharacterExists();
-                GameFieldPanel.drawObjectsOnGameField();
+                gameField.resizeGameFieldSize(rows, columns);
+                gameField.checkIfCharacterExists();
+                gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 primaryStage.close();
             }
         });
@@ -192,18 +190,18 @@ public class ClientPresenter extends Application {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    for (int i = 0; i < GameField.getGameField().length; i++) {
-                        for (int j = 0; j < GameField.getGameField()[0].length; j++) {
-                            if (GameField.getGameField()[i][j].equals("^") || GameField.getGameField()[i][j].equals("v") || GameField.getGameField()[i][j].equals(">") || GameField.getGameField()[i][j].equals("<")) {
-                                GameField.getGameField()[i][j] = "x";
+                if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
+                    for (int i = 0; i < gameField.getGameField().length; i++) {
+                        for (int j = 0; j < gameField.getGameField()[0].length; j++) {
+                            if (gameField.getGameField()[i][j].equals("^") || gameField.getGameField()[i][j].equals("v") || gameField.getGameField()[i][j].equals(">") || gameField.getGameField()[i][j].equals("<")) {
+                                gameField.getGameField()[i][j] = "x";
                             }
                         }
                     }
-                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
-                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    GameField.placeObjectsInGameField(xAxis, yAxis, "^");
-                    GameFieldPanel.drawObjectsOnGameField();
+                    int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                    gameField.placeObjectsInGameField(xAxis, yAxis, "^");
+                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
             }
@@ -227,12 +225,12 @@ public class ClientPresenter extends Application {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
-                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    GameField.placeObjectsInGameField(xAxis, yAxis, "C");
-                    GameField.checkIfCharacterExists();
-                    GameFieldPanel.drawObjectsOnGameField();
+                if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                    gameField.placeObjectsInGameField(xAxis, yAxis, "C");
+                    gameField.checkIfCharacterExists();
+                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
             }
@@ -256,12 +254,12 @@ public class ClientPresenter extends Application {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
-                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    GameField.placeObjectsInGameField(xAxis, yAxis, "W");
-                    GameField.checkIfCharacterExists();
-                    GameFieldPanel.drawObjectsOnGameField();
+                if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                    gameField.placeObjectsInGameField(xAxis, yAxis, "W");
+                    gameField.checkIfCharacterExists();
+                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
             }
@@ -285,19 +283,19 @@ public class ClientPresenter extends Application {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    for (int i = 0; i < GameField.getGameField().length; i++) {
-                        for (int j = 0; j < GameField.getGameField()[0].length; j++) {
-                            if (GameField.getGameField()[i][j].equals("D")) {
-                                GameField.getGameField()[i][j] = "x";
+                if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
+                    for (int i = 0; i < gameField.getGameField().length; i++) {
+                        for (int j = 0; j < gameField.getGameField()[0].length; j++) {
+                            if (gameField.getGameField()[i][j].equals("D")) {
+                                gameField.getGameField()[i][j] = "x";
                             }
                         }
                     }
-                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
-                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    GameField.placeObjectsInGameField(xAxis, yAxis, "D");
-                    GameField.checkIfCharacterExists();
-                    GameFieldPanel.drawObjectsOnGameField();
+                    int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                    gameField.placeObjectsInGameField(xAxis, yAxis, "D");
+                    gameField.checkIfCharacterExists();
+                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
             }
@@ -321,12 +319,13 @@ public class ClientPresenter extends Application {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if ((event.getX() > GameFieldPanel.getBorderPatting() && event.getX() < 251) && (event.getY() > GameFieldPanel.getBorderPatting() && event.getY() < 250)) {
-                    int xAxis = (int) ((event.getY() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileHeightCalculated());
-                    int yAxis = (int) ((event.getX() - GameFieldPanel.getBorderPatting()) / GameFieldPanel.getTileWidthCalculated());
-                    GameField.placeObjectsInGameField(xAxis, yAxis, "x");
-                    GameField.checkIfCharacterExists();
-                    GameFieldPanel.drawObjectsOnGameField();
+                if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
+                    int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                    int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                    gameField.placeObjectsInGameField(xAxis, yAxis, "x");
+                    gameField.checkIfCharacterExists();
+                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
+                    //GameFieldPanel.drawObjectsOnGameField();
                 }
 
             }
