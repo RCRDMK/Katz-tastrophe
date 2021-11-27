@@ -17,6 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 /**
@@ -48,12 +50,17 @@ public class ClientPresenter extends Application {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
+
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
         character = gameFieldPanelController.getCharacter();
+
+        if (Files.notExists(Path.of("src/main/program"))) {
+            Files.createDirectory(Path.of("src/main/program"));
+        }
         /*scrollPane.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
         vBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
         hBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());*/
