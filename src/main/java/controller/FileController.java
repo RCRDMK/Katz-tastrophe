@@ -4,27 +4,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 public class FileController {
 
+    public FileController() {
+
+    }
+
     public void create() {
         try {
-            if (Files.notExists(Path.of("src/main/program"))) {
-                Files.createDirectory(Path.of("src/main/program"));
-            } else {
-                System.out.println("directory already exists");
-            }
-            File file = new File("src/main/program/test.txt");
+            File file = new File("src/main/program/test.java");
             if (file.createNewFile()) {
                 System.out.println("created " + file.getName());
-                write();
+                //write();
             } else {
                 System.out.println("file already created");
             }
-            read(file);
+            //read(file);
         } catch (IOException e) {
             e.printStackTrace();
         }

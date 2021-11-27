@@ -1,5 +1,6 @@
 package presenter;
 
+import controller.FileController;
 import controller.GameFieldPanelController;
 import game.GameCharacter;
 import game.GameField;
@@ -35,6 +36,7 @@ public class ClientPresenter extends Application {
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
+    private FileController fileController = new FileController();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -64,6 +66,16 @@ public class ClientPresenter extends Application {
         /*scrollPane.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
         vBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
         hBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());*/
+    }
+
+    public void onNewFileClicked(ActionEvent actionEvent) {
+        fileController.create();
+    }
+
+    public void onLoadFileClicked(ActionEvent actionEvent) {
+    }
+
+    public void onSaveXmlClicked(ActionEvent actionEvent) {
     }
 
     /**

@@ -17,14 +17,16 @@
             <menus>
                 <Menu text="_Editor">
                     <items>
-                        <MenuItem mnemonicParsing="false" fx:id="newFile" text="Neu" accelerator="Shortcut+N">
+                        <MenuItem mnemonicParsing="false" fx:id="newFile" text="Neu" accelerator="Shortcut+N"
+                                  onAction="#onNewFileClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/newFileMenu.png"></Image>
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" fx:id="openFile" text="Öffnen" accelerator="Shortcut+O">
+                        <MenuItem mnemonicParsing="false" fx:id="loadFile" text="Öffnen" accelerator="Shortcut+O"
+                                  onAction="#onLoadFileClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/loadFileMenu.png"></Image>
@@ -50,7 +52,8 @@
                                 </ImageView>
                             </graphic>
                             <items>
-                                <MenuItem mnemonicParsing="false" fx:id="saveXml" text="XML" accelerator="Shortcut+S"/>
+                                <MenuItem mnemonicParsing="false" fx:id="saveXml" text="XML" accelerator="Shortcut+S"
+                                          onAction="#onSaveXmlClicked"/>
                                 <MenuItem mnemonicParsing="false" fx:id="saveJaxb" text="JAXB"/>
                                 <MenuItem mnemonicParsing="false" fx:id="saveSerial" text="Serialisieren"/>
                             </items>
