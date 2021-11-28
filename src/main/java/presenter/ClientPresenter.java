@@ -15,6 +15,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -33,6 +36,10 @@ import java.nio.file.Path;
 public class ClientPresenter extends Application {
 
     public static final String fxml = "/fxml/ClientView.fxml";
+
+    @FXML
+    SplitPane splitPane;
+
     @FXML
     ScrollPane scrollPane;
 
@@ -85,6 +92,7 @@ public class ClientPresenter extends Application {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
         character = gameFieldPanelController.getCharacter();
+        dragChara();
 
         if (Files.notExists(Path.of("src/main/program"))) {
             Files.createDirectory(Path.of("src/main/program"));
@@ -129,6 +137,8 @@ public class ClientPresenter extends Application {
 
     /**
      * Responsible for handling the interaction with the change gamefield size menu item and button.
+     * <p>
+     * When this method is called, a new instance of the ChangeGameFieldView gets created.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @throws IOException
@@ -162,7 +172,7 @@ public class ClientPresenter extends Application {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 20.11.2021
      */
-    public void onPlaceCharaClicked(ActionEvent actionEvent) {
+    public void onPlaceCharaClicked(ActionEvent actionEvent) {//TODO Chara per Drag und Drop bewegen
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -180,6 +190,32 @@ public class ClientPresenter extends Application {
                     gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
+            }
+        });
+    }
+
+    public void dragChara() {
+
+        scrollPane.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                System.out.println("drag " + xAxis + " " + yAxis);
+            }
+        });
+
+        scrollPane.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                System.out.println("over");
+            }
+        });
+
+        scrollPane.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
+            @Override
+            public void handle(MouseDragEvent event) {
+                System.out.println("entered " + event.getX() + event.getY());
             }
         });
     }

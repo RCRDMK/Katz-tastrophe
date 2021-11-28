@@ -81,24 +81,29 @@ public class GameCharacter {
      */
     //TODO Permanenz der Objekte in den Indices beim Bewegen wahren. Es darf keine Katze oder Trinken überschrieben, wenn der Spieler auf dem selben Feld ist
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.getRow(); i++) {
-            for (int j = 0; j < gameField.getColumn(); j++) {
-                if (gameField.getGameField()[i][j].equals("^")) {
-                    if (i == gameField.getRow() / gameField.getRow() - 1) {
-                        throw new EndOfGameFieldException();
-                    } else if (gameField.getGameField()[i - 1][j].equals("W")) {
-                        throw new WallInFrontException();
-                    } else {
-                        gameField.getGameField()[i][j] = "x";
-                        gameField.placeObjectsInGameField(i - 1, j, "^");
-                        break;
+        try {
+            for (int i = 0; i < gameField.getRow(); i++) {
+                for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameField()[i][j].equals("^")) {
+                        if (i == gameField.getRow() / gameField.getRow() - 1) {
+                            throw new EndOfGameFieldException();
+                        } else if (gameField.getGameField()[i - 1][j].equals("W")) {
+                            throw new WallInFrontException();
+                        } else {
+                            gameField.getGameField()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i - 1, j, "^");
+                            break;
+                        }
                     }
                 }
             }
+            gameField.fillUpGameField();
+            gameFieldPanel.drawObjectsOnGameField();
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("Edge of gamefield is reached");
+        } catch (WallInFrontException wife) {
+            System.out.println("Can't move in this direction. Wall in front");
         }
-        gameField.fillUpGameField();
-        gameFieldPanel.drawObjectsOnGameField();
-
     }
 
     /**
@@ -111,24 +116,30 @@ public class GameCharacter {
      * @since 05.11.2021
      */
     public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.getRow(); i++) {
-            for (int j = 0; j < gameField.getColumn(); j++) {
-                if (gameField.getGameField()[i][j].equals("v")) {
-                    if (i + 1 == gameField.getRow()) {
-                        throw new EndOfGameFieldException();
-                    } else if (gameField.getGameField()[i + 1][j].equals("W")) {
-                        throw new WallInFrontException();
-                    } else {
-                        gameField.getGameField()[i][j] = "x";
-                        gameField.placeObjectsInGameField(i + 1, j, "v");
-                        i = gameField.getRow() - 1;
-                        break;
+        try {
+            for (int i = 0; i < gameField.getRow(); i++) {
+                for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameField()[i][j].equals("v")) {
+                        if (i + 1 == gameField.getRow()) {
+                            throw new EndOfGameFieldException();
+                        } else if (gameField.getGameField()[i + 1][j].equals("W")) {
+                            throw new WallInFrontException();
+                        } else {
+                            gameField.getGameField()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i + 1, j, "v");
+                            i = gameField.getRow() - 1;
+                            break;
+                        }
                     }
                 }
             }
+            gameField.fillUpGameField();
+            gameFieldPanel.drawObjectsOnGameField();
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("Edge of gamefield is reached");
+        } catch (WallInFrontException wife) {
+            System.out.println("Can't move in this direction. Wall in front");
         }
-        gameField.fillUpGameField();
-        gameFieldPanel.drawObjectsOnGameField();
     }
 
     /**
@@ -141,24 +152,29 @@ public class GameCharacter {
      * @since 05.11.2021
      */
     public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.getRow(); i++) {
-            for (int j = 0; j < gameField.getColumn(); j++) {
-                if (gameField.getGameField()[i][j].equals(">")) {
-                    if (j + 1 == gameField.getColumn()) {
-                        throw new EndOfGameFieldException();
-                    } else if (gameField.getGameField()[i][j + 1].equals("W")) {
-                        throw new WallInFrontException();
-                    } else {
-                        gameField.getGameField()[i][j] = "x";
-                        gameField.placeObjectsInGameField(i, j + 1, ">");
-                        break;
+        try {
+            for (int i = 0; i < gameField.getRow(); i++) {
+                for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameField()[i][j].equals(">")) {
+                        if (j + 1 == gameField.getColumn()) {
+                            throw new EndOfGameFieldException();
+                        } else if (gameField.getGameField()[i][j + 1].equals("W")) {
+                            throw new WallInFrontException();
+                        } else {
+                            gameField.getGameField()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i, j + 1, ">");
+                            break;
+                        }
                     }
                 }
             }
+            gameField.fillUpGameField();
+            gameFieldPanel.drawObjectsOnGameField();
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("Edge of gamefield is reached");
+        } catch (WallInFrontException wife) {
+            System.out.println("Can't move in this direction. Wall in front");
         }
-
-        gameField.fillUpGameField();
-        gameFieldPanel.drawObjectsOnGameField();
     }
 
     /**
@@ -171,23 +187,29 @@ public class GameCharacter {
      * @since 05.11.2021
      */
     public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
-        for (int i = 0; i < gameField.getRow(); i++) {
-            for (int j = 0; j < gameField.getColumn(); j++) {
-                if (gameField.getGameField()[i][j].equals("<")) {
-                    if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                        throw new EndOfGameFieldException();
-                    } else if (gameField.getGameField()[i][j - 1].equals("W")) {
-                        throw new WallInFrontException();
-                    } else {
-                        gameField.getGameField()[i][j] = "x";
-                        gameField.placeObjectsInGameField(i, j - 1, "<");
-                        break;
+        try {
+            for (int i = 0; i < gameField.getRow(); i++) {
+                for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameField()[i][j].equals("<")) {
+                        if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                            throw new EndOfGameFieldException();
+                        } else if (gameField.getGameField()[i][j - 1].equals("W")) {
+                            throw new WallInFrontException();
+                        } else {
+                            gameField.getGameField()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i, j - 1, "<");
+                            break;
+                        }
                     }
                 }
             }
+            gameField.fillUpGameField();
+            gameFieldPanel.drawObjectsOnGameField();
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("Edge of gamefield is reached");
+        } catch (WallInFrontException wife) {
+            System.out.println("Can't move in this direction. Wall in front");
         }
-        gameField.fillUpGameField();
-        gameFieldPanel.drawObjectsOnGameField();
     }
 
     /**
@@ -201,65 +223,67 @@ public class GameCharacter {
      */
     //TODO Nehmen und Ablegen auf EndOfGameFieldException überprüfen sowie was passiert wenn nicht das gewünschte Objekt vor dem Charakter liegt
     public void takeCat() throws HandsNotEmptyException {
-        if (!handsFull) {
-            handsFull = true;
-            catInHand = true;
+        try {
+            if (!handsFull) {
+                handsFull = true;
+                catInHand = true;
 
-
-            switch (gameField.getCharacter()) {
-                case "^":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameField()[i][j].equals("^")) {
-                                gameField.getGameField()[i - 1][j] = "x";
-                                break;
+                switch (gameField.getCharacter()) {
+                    case "^":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameField()[i][j].equals("^")) {
+                                    gameField.getGameField()[i - 1][j] = "x";
+                                    break;
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    gameFieldPanel.drawObjectsOnGameField();
-                    break;
-                case "v":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameField()[i][j].equals("v")) {
-                                gameField.getGameField()[i + 1][j] = "x";
-                                break;
+                        gameField.fillUpGameField();
+                        gameFieldPanel.drawObjectsOnGameField();
+                        break;
+                    case "v":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameField()[i][j].equals("v")) {
+                                    gameField.getGameField()[i + 1][j] = "x";
+                                    break;
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    gameFieldPanel.drawObjectsOnGameField();
-                    break;
-                case ">":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameField()[i][j].equals(">")) {
-                                gameField.getGameField()[i][j + 1] = "x";
-                                break;
+                        gameField.fillUpGameField();
+                        gameFieldPanel.drawObjectsOnGameField();
+                        break;
+                    case ">":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameField()[i][j].equals(">")) {
+                                    gameField.getGameField()[i][j + 1] = "x";
+                                    break;
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    gameFieldPanel.drawObjectsOnGameField();
-                    break;
-                case "<":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameField()[i][j].equals("<")) {
-                                gameField.getGameField()[i][j - 1] = "x";
-                                break;
+                        gameField.fillUpGameField();
+                        gameFieldPanel.drawObjectsOnGameField();
+                        break;
+                    case "<":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameField()[i][j].equals("<")) {
+                                    gameField.getGameField()[i][j - 1] = "x";
+                                    break;
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    gameFieldPanel.drawObjectsOnGameField();
-                    break;
+                        gameField.fillUpGameField();
+                        gameFieldPanel.drawObjectsOnGameField();
+                        break;
+                }
+            } else {
+                throw new HandsNotEmptyException();
             }
-        } else {
-            throw new HandsNotEmptyException();
+        } catch (HandsNotEmptyException hnee) {
+            System.out.println("Hands are not empty");
         }
-
     }
 
     /**
