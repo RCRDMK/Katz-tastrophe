@@ -1,5 +1,6 @@
 package controller;
 
+import javax.tools.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -48,5 +49,11 @@ public class FileController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void compile(File file) {
+        DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<JavaFileObject>();
+        JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
+        StandardJavaFileManager javaFileManager = javaCompiler.getStandardFileManager(diagnosticCollector, null, null);
     }
 }

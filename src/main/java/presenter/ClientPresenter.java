@@ -16,9 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -199,16 +197,22 @@ public class ClientPresenter extends Application {
         scrollPane.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Dragboard db = scrollPane.startDragAndDrop(TransferMode.MOVE);
                 int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
                 int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
                 System.out.println("drag " + xAxis + " " + yAxis);
+                event.consume();
             }
         });
 
         scrollPane.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                System.out.println("over");
+                if (event.getGestureSource() == scrollPane) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                    System.out.println("over");
+                }
+
             }
         });
 
