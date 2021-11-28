@@ -1,54 +1,68 @@
 package presenter;
 
 import game.GameField;
-import javafx.application.Application;
+import game.GameFieldPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 
-public class ChangeGameFieldPresenter extends Application {
+public class ChangeGameFieldPresenter {
+
+    static GameField gameField;
+    static GameFieldPanel gameFieldPanel;
 
     @FXML
-    Button changeViewCancel;
+    Label changeViewErrorLabel;
 
     @FXML
     Label changeViewRowCurrently;
 
     @FXML
+    TextField changeViewTextFieldRow;
+
+    @FXML
+    Button changeViewAccept;
+
+    @FXML
+    Button changeViewCancel;
+
+    @FXML
+    TextField changeViewTextFieldColumn;
+
+    @FXML
     Label changeViewColumnCurrently;
 
+    //TODO Button dynamisch en- und disablen
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
-        primaryStage.setScene(new Scene(root));
+    public static void setGameField(GameField gameField) {
+        ChangeGameFieldPresenter.gameField = gameField;
+    }
 
-        primaryStage.setTitle("Größe des Spielfelds verändern");
+    public static void setGameFieldPanel(GameFieldPanel gameFieldPanel) {
+        ChangeGameFieldPresenter.gameFieldPanel = gameFieldPanel;
+    }
 
-        changeViewRowCurrently.setText("niofkd");
-
-        changeViewColumnCurrently.setText("fjf");
-
-        primaryStage.show();
+    public void initialize() {
+        changeViewRowCurrently.setText("Momentan " + Integer.toString(gameField.getRow()));
+        changeViewColumnCurrently.setText("Momentan " + Integer.toString(gameField.getColumn()));
     }
 
     public void onChangeViewCancelClicked(ActionEvent actionEvent) {
-        System.out.println("Close");
-        //primaryStage.close();
+        changeViewCancel.getScene().getWindow().hide();
     }
 
     public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
-        System.out.println("Accept");
-        /*int rows = Integer.valueOf(rowText.getText());
-        int columns = Integer.valueOf(columnText.getText());
-        GameField.resizeGameFieldSize(rows, columns);
-        GameField.checkIfCharacterExists();
-        GameFieldPanel.drawObjectsOnGameField();
-        primaryStage.close();*/
+        if (changeViewTextFieldRow.getText().matches("[2-9]$") && changeViewTextFieldColumn.getText().matches("[2-9]$")) {
+            int rows = Integer.valueOf(changeViewTextFieldRow.getText());
+            int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
+            gameField.resizeGameFieldSize(rows, columns);
+            gameField.checkIfCharacterExists();
+            gameFieldPanel.drawObjectsOnGameField();
+            changeViewAccept.getScene().getWindow().hide();
+        } else {
+            changeViewErrorLabel.setVisible(true);
+        }
     }
 }

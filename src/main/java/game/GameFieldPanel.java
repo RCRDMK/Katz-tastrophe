@@ -16,10 +16,7 @@ import javafx.scene.paint.Color;
  */
 public class GameFieldPanel extends Region {
 
-    //Anleitung zum Arbeiten mit Canvas'. Auch wie man Bilder einfügt oder diese animiert
-    //https://edencoding.com/javafx-canvas/
-
-    final int BORDER_PATTING = 20;
+    final int BORDER_PATTING = 0;
     private final Image cat = new Image("images/buttons/cat.png");
     private final Image wall = new Image("images/buttons/wall.png");
     private final Image drink = new Image("images/buttons/drink.png");
@@ -116,22 +113,22 @@ public class GameFieldPanel extends Region {
         drawGameField();
         for (int i = 0; i < gameField.getGameField().length; i++) {
             for (int j = 0; j < gameField.getGameField()[0].length; j++) {
-                if (gameField.gameField[i][j].equals("C")) {
+                if (gameField.getGameField()[i][j].equals("C")) {
                     graCon.drawImage(cat, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("W")) {
+                } else if (gameField.getGameField()[i][j].equals("W")) {
                     graCon.drawImage(wall, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("D")) {
+                } else if (gameField.getGameField()[i][j].equals("D")) {
                     graCon.drawImage(drink, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
 
 
-                if (gameField.gameField[i][j].equals("^")) {
+                if (gameField.getGameField()[i][j].equals("^")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("v")) {
+                } else if (gameField.getGameField()[i][j].equals("v")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals(">")) {
+                } else if (gameField.getGameField()[i][j].equals(">")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("<")) {
+                } else if (gameField.getGameField()[i][j].equals("<")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
             }

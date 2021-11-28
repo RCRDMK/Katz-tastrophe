@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -33,15 +35,35 @@ public class ClientPresenter extends Application {
     public static final String fxml = "/fxml/ClientView.fxml";
     @FXML
     ScrollPane scrollPane;
+
+
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
     private FileController fileController = new FileController();
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
         primaryStage.setScene(new Scene(root, 1150, 400));
+
+        Button btn = new Button("test");
+
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Label label = new Label("hi");
+
+                Pane pane = new Pane();
+                pane.getChildren().addAll(label);
+
+                Scene scene = new Scene(pane);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
 
         primaryStage.setTitle("Katz-tastrophe");
 
@@ -52,7 +74,11 @@ public class ClientPresenter extends Application {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
+    }
 
+    void test(Stage primaryStage) throws IOException {
+        System.out.println("test");
+        primaryStage.setScene(new Scene(FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"))));
     }
 
     public void initialize() throws IOException {
@@ -69,7 +95,18 @@ public class ClientPresenter extends Application {
     }
 
     public void onNewFileClicked(ActionEvent actionEvent) {
-        fileController.create();
+
+        try {
+            Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Neue Datei erstellen");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //fileController.create();
     }
 
     public void onLoadFileClicked(ActionEvent actionEvent) {
@@ -97,98 +134,18 @@ public class ClientPresenter extends Application {
      * @throws IOException
      * @since 21.11.2021
      */
-    //TODO FXML View richtig anzeigen und damit interagieren und wie weit das Feld vergrößert oder verkleinert werden darf (Min 2 und Max 10?)
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
+        try {
+            Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Größe des Spielfeldes ändern");
+            stage.setScene(new Scene(root));
+            stage.show();
 
 
-        //Buttons zum hoch und runterzählen
-        Alert clickAlert = new Alert(Alert.AlertType.NONE);
-        ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.NO);
-        clickAlert.getButtonTypes().setAll(ok);
-        TextField textField = new TextField();
-
-        clickAlert.show();
-
-
-//Diesen Code später durch die FXML ersetzen
-        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
-        Stage primaryStage = new Stage();
-        Pane pane = new Pane();
-        pane.setPrefSize(440, 200);
-        Button cancel = new Button("Abbrechen");
-        Button accept = new Button("Akzeptieren");
-        Label row = new Label("Reihen");
-        Label column = new Label("Spalten");
-        Label rowCurrently = new Label();
-        Label columnCurrently = new Label();
-        TextField rowText = new TextField();
-        TextField columnText = new TextField();
-
-        cancel.setLayoutX(124);
-        cancel.setLayoutY(165);
-
-        accept.setLayoutX(274);
-        accept.setLayoutY(165);
-
-        row.setLayoutX(92);
-        row.setLayoutY(47);
-
-        column.setLayoutX(92);
-        column.setLayoutY(102);
-
-        rowCurrently.setLayoutX(337);
-        rowCurrently.setLayoutY(47);
-        rowCurrently.setText("Momentan " + gameField.getGameField().length);
-
-        columnCurrently.setLayoutX(337);
-        columnCurrently.setLayoutY(102);
-        columnCurrently.setText("Momentan " + gameField.getGameField()[0].length);
-
-        rowText.setLayoutX(161);
-        rowText.setLayoutY(43);
-
-        columnText.setLayoutX(161);
-        columnText.setLayoutY(98);
-
-        pane.getChildren().addAll(cancel, accept, row, column, rowCurrently, columnCurrently, rowText, columnText);
-        primaryStage.setScene(new Scene(pane));
-
-
-        primaryStage.setTitle("Größe des Spielfelds verändern");
-
-        primaryStage.show();
-
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.close();
-            }
-        });
-
-        accept.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                int rows = Integer.valueOf(rowText.getText());
-                int columns = Integer.valueOf(columnText.getText());
-                gameField.resizeGameFieldSize(rows, columns);
-                gameField.checkIfCharacterExists();
-                gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
-                primaryStage.close();
-            }
-        });
-
-       /* Platform.runLater(() -> {
-            ChangeGameFieldPresenter.changeViewCancel.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    System.out.println("hi");
-                }
-            });
-        });*/
-
-        /*GameField.resizeGameFieldSize(5, 2);
-        GameField.checkIfCharacterExists();
-        GameFieldPanel.drawObjectsOnGameField();*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

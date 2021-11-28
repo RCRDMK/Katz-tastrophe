@@ -1,7 +1,5 @@
 package game;
 
-import controller.GameFieldPanelController;
-
 import java.util.Arrays;
 
 /**
@@ -12,14 +10,16 @@ import java.util.Arrays;
  */
 public class GameField {
 
-    static public String[][] gameField;
-    public static int row;
-    public static int column;
-    static String cat = "C";
-    static String wall = "W";
-    static String drink = "D";
-    static String character = "^";
-    private GameFieldPanelController gameFieldPanelController;
+    private static GameFieldPanel gameFieldPanel;
+
+    private int row;
+    private String[][] gameField;
+    private int column;
+    private String cat = "C";
+    private String wall = "W";
+    private String drink = "D";
+    private String character = "^";
+
     // tip points to where the character is looking. Initially the character looks up (^) but depending on the
     // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)
 
@@ -28,7 +28,7 @@ public class GameField {
      *
      * @since 03.11.2021
      */
-    public GameField() {
+    GameField() {
     }
 
     /**
@@ -47,8 +47,24 @@ public class GameField {
         fillUpGameField();
     }
 
-    public static String[][] getGameField() {
+    public static void setGameFieldPanel(GameFieldPanel gameFieldPanel) {
+        GameField.gameFieldPanel = gameFieldPanel;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public String[][] getGameField() {
         return gameField;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
     }
 
     /**
@@ -57,7 +73,7 @@ public class GameField {
      *
      * @since 03.11.2021
      */
-    public static void fillUpGameField() {
+    public void fillUpGameField() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 if (gameField[i][j] == null) {
@@ -73,7 +89,7 @@ public class GameField {
      *
      * @since 10.11.2021
      */
-    public static void checkIfCharacterExists() {
+    public void checkIfCharacterExists() {
         boolean characterExist = false;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -105,7 +121,7 @@ public class GameField {
      * @param object the object which should be placed. Like the character, a cat, etc.
      * @since 03.11.2011
      */
-    public static void placeObjectsInGameField(int row, int column, String object) {
+    public void placeObjectsInGameField(int row, int column, String object) {
         gameField[row][column] = object;
     }
 
@@ -124,8 +140,8 @@ public class GameField {
         String copy[][] = Arrays.stream(getGameField()).map(String[]::clone).toArray(String[][]::new);
         new GameField(rows, columns);
         if (gameField.length < copy.length) {
-            for (int i = 0; i < getGameField().length; i++) {
-                for (int j = 0; j < getGameField()[0].length; j++) {
+            for (int i = 0; i < gameField.length; i++) {
+                for (int j = 0; j < gameField[0].length; j++) {
                     gameField[i][j] = copy[i][j];
                 }
             }
@@ -135,8 +151,12 @@ public class GameField {
                     gameField[i][j] = copy[i][j];
                 }
             }
-            gameFieldPanelController.getGameFieldPanel().calculateTileHeightAndWidth();
+            gameFieldPanel.calculateTileHeightAndWidth();
             fillUpGameField();
         }
+    }
+
+    public int getColumn() {
+        return column;
     }
 }

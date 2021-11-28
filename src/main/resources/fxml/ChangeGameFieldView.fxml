@@ -12,9 +12,12 @@
                 onAction="#onChangeViewAcceptClicked"/>
         <Label layoutX="92.0" layoutY="47.0" text="Reihen" fx:id="changeViewRow"/>
         <Label layoutX="92.0" layoutY="102.0" text="Spalten" fx:id="changeViewColumn"/>
-        <TextField layoutX="161.0" layoutY="43.0" fx:id="changeViewTextFieldRow"/>
+        <TextField layoutX="161.0" layoutY="43.0" fx:id="changeViewTextFieldRow"
+        />
         <TextField layoutX="161.0" layoutY="98.0" fx:id="changeViewTextFieldColumn"/>
-        <Label layoutX="337.0" layoutY="47.0" text="Momentan" fx:id="changeViewRowCurrently"/>
-        <Label layoutX="337.0" layoutY="102.0" text="Momentan" fx:id="changeViewColumnCurrently"/>
+        <Label layoutX="337.0" layoutY="47.0" text="Momentan " fx:id="changeViewRowCurrently"/>
+        <Label layoutX="337.0" layoutY="102.0" text="Momentan " fx:id="changeViewColumnCurrently"/>
+        <Label layoutX="161.0" layoutY="128.0" text="Bitte nur Zahlen und Werte von 2 - 10 eingeben" visible="false"
+               fx:id="changeViewErrorLabel"/>
     </children>
 </AnchorPane>
