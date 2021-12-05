@@ -1,17 +1,16 @@
 package presenter;
 
 import game.GameField;
-import game.GameFieldPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import pattern.ObserverInterface;
 
-public class ChangeGameFieldPresenter {
+public class ChangeGameFieldPresenter implements ObserverInterface {
 
-    static GameField gameField;
-    static GameFieldPanel gameFieldPanel;
+    private GameField gameField;
 
     @FXML
     Label changeViewErrorLabel;
@@ -36,17 +35,18 @@ public class ChangeGameFieldPresenter {
 
     //TODO Button dynamisch en- und disablen
 
-    public static void setGameField(GameField gameField) {
-        ChangeGameFieldPresenter.gameField = gameField;
-    }
-
-    public static void setGameFieldPanel(GameFieldPanel gameFieldPanel) {
-        ChangeGameFieldPresenter.gameFieldPanel = gameFieldPanel;
-    }
-
     public void initialize() {
-        changeViewRowCurrently.setText("Momentan " + Integer.toString(gameField.getRow()));
-        changeViewColumnCurrently.setText("Momentan " + Integer.toString(gameField.getColumn()));
+        gameField.addObserver(this);
+        //changeViewRowCurrently.setText("Momentan " + gameField.getGameFieldArray().length);
+        //changeViewColumnCurrently.setText("Momentan " + gameField.getGameFieldArray()[0].length);
+        /*changeViewAccept.setDisable(true);
+        changeViewTextFieldRow.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+           if (!newValue) {
+               if (!changeViewTextFieldRow.getText().matches("[2 - 10]")){
+                   System.out.println(changeViewTextFieldRow.getText().matches("[2 - 10]"));
+               }
+           }
+        });*/
     }
 
     public void onChangeViewCancelClicked(ActionEvent actionEvent) {
@@ -59,10 +59,14 @@ public class ChangeGameFieldPresenter {
             int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
             gameField.resizeGameFieldSize(rows, columns);
             gameField.checkIfCharacterExists();
-            gameFieldPanel.drawObjectsOnGameField();
             changeViewAccept.getScene().getWindow().hide();
         } else {
             changeViewErrorLabel.setVisible(true);
         }
+    }
+
+    @Override
+    public void update(Object object) {
+        gameField = (GameField) object;
     }
 }

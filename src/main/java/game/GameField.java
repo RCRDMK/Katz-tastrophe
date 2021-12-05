@@ -1,5 +1,7 @@
 package game;
 
+import pattern.ObservedObject;
+
 import java.util.Arrays;
 
 /**
@@ -8,12 +10,10 @@ import java.util.Arrays;
  *
  * @since 03.11.2021
  */
-public class GameField {
-
-    private static GameFieldPanel gameFieldPanel;
+public class GameField extends ObservedObject {
 
     private int row;
-    private String[][] gameField;
+    private String[][] gameFieldArray;
     private int column;
     private String cat = "C";
     private String wall = "W";
@@ -43,20 +43,18 @@ public class GameField {
     public GameField(int rows, int columns) {
         row = rows;
         column = columns;
-        gameField = new String[row][column];
+        gameFieldArray = new String[row][column];
         fillUpGameField();
+        notifyRegisteredObservers(this);
     }
 
-    public static void setGameFieldPanel(GameFieldPanel gameFieldPanel) {
-        GameField.gameFieldPanel = gameFieldPanel;
-    }
 
     public int getRow() {
         return row;
     }
 
-    public String[][] getGameField() {
-        return gameField;
+    public String[][] getGameFieldArray() {
+        return gameFieldArray;
     }
 
     public String getCharacter() {
@@ -65,6 +63,19 @@ public class GameField {
 
     public void setCharacter(String character) {
         this.character = character;
+        notifyRegisteredObservers(this);
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+        notifyRegisteredObservers(this);
+        checkIfCharacterExists();
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+        notifyRegisteredObservers(this);
+        checkIfCharacterExists();
     }
 
     /**
@@ -76,11 +87,12 @@ public class GameField {
     public void fillUpGameField() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                if (gameField[i][j] == null) {
-                    gameField[i][j] = "x";
+                if (gameFieldArray[i][j] == null) {
+                    gameFieldArray[i][j] = "x";
                 }
             }
         }
+        notifyRegisteredObservers(this);
     }
 
     /**
@@ -93,23 +105,23 @@ public class GameField {
         boolean characterExist = false;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                if (gameField[i][j].equals("^")) {
+                if (gameFieldArray[i][j].equals("^")) {
                     characterExist = true;
                     break;
-                } else if (gameField[i][j].equals("v")) {
+                } else if (gameFieldArray[i][j].equals("v")) {
                     characterExist = true;
                     break;
-                } else if (gameField[i][j].equals("<")) {
+                } else if (gameFieldArray[i][j].equals("<")) {
                     characterExist = true;
                     break;
-                } else if (gameField[i][j].equals(">")) {
+                } else if (gameFieldArray[i][j].equals(">")) {
                     characterExist = true;
                     break;
                 }
             }
         }
         if (!characterExist) {
-            gameField[0][0] = "^";
+            gameFieldArray[0][0] = "^";
         }
     }
 
@@ -122,7 +134,8 @@ public class GameField {
      * @since 03.11.2011
      */
     public void placeObjectsInGameField(int row, int column, String object) {
-        gameField[row][column] = object;
+        gameFieldArray[row][column] = object;
+        notifyRegisteredObservers(this);
     }
 
     /**
@@ -137,23 +150,28 @@ public class GameField {
      * @since 21.11.2021
      */
     public void resizeGameFieldSize(int rows, int columns) {
-        String copy[][] = Arrays.stream(getGameField()).map(String[]::clone).toArray(String[][]::new);
-        new GameField(rows, columns);
-        if (gameField.length < copy.length) {
-            for (int i = 0; i < gameField.length; i++) {
-                for (int j = 0; j < gameField[0].length; j++) {
-                    gameField[i][j] = copy[i][j];
+        String copy[][] = Arrays.stream(getGameFieldArray()).map(String[]::clone).toArray(String[][]::new);
+        gameFieldArray = new String[rows][columns];
+        //TODO rows und columns überdenken
+        row = rows;
+        column = columns;
+        //new GameField(rows, columns);
+        if (gameFieldArray.length < copy.length) {
+            for (int i = 0; i < gameFieldArray.length; i++) {
+                for (int j = 0; j < gameFieldArray[0].length; j++) {
+                    gameFieldArray[i][j] = copy[i][j];
                 }
             }
         } else {
             for (int i = 0; i < copy.length; i++) {
                 for (int j = 0; j < copy[0].length; j++) {
-                    gameField[i][j] = copy[i][j];
+                    gameFieldArray[i][j] = copy[i][j];
                 }
             }
-            gameFieldPanel.calculateTileHeightAndWidth();
+            notifyRegisteredObservers(this);
             fillUpGameField();
         }
+        notifyRegisteredObservers(this);
     }
 
     public int getColumn() {

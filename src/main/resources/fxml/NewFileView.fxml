@@ -9,11 +9,12 @@
             minWidth="-Infinity"
             prefHeight="207.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/17"
             fx:controller="presenter.NewFilePresenter">
-   <children>
-      <TextField layoutX="173.0" layoutY="91.0"/>
-      <Label layoutX="158.0" layoutY="43.0" text="Wie soll deine neue Datei heißen?"/>
-      <Button layoutX="98.0" layoutY="144.0" mnemonicParsing="false" text="Abbrechen" fx:id="newFileCancel"
-              onAction="#onNewFileCancelClicked"/>
-      <Button layoutX="323.0" layoutY="144.0" mnemonicParsing="false" text="Akzeptieren"/>
-   </children>
+    <children>
+        <TextField layoutX="173.0" layoutY="91.0" fx:id="newFileText"/>
+        <Label layoutX="158.0" layoutY="43.0" text="Wie soll deine neue Datei heißen?"/>
+        <Button layoutX="98.0" layoutY="144.0" mnemonicParsing="false" text="Abbrechen" fx:id="newFileCancel"
+                onAction="#onNewFileCancelClicked"/>
+        <Button layoutX="323.0" layoutY="144.0" mnemonicParsing="false" text="Akzeptieren" fx:id="newFileAccept"
+                onAction="#onNewFileAcceptedClicked"/>
+    </children>
 </AnchorPane>

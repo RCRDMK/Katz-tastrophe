@@ -12,12 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.*;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -47,28 +46,13 @@ public class ClientPresenter extends Application {
     private GameFieldPanelController gameFieldPanelController;
     private FileController fileController = new FileController();
 
+    public ClientPresenter() {
+    }
 
-    @Override
+
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
         primaryStage.setScene(new Scene(root, 1150, 400));
-
-        Button btn = new Button("test");
-
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Label label = new Label("hi");
-
-                Pane pane = new Pane();
-                pane.getChildren().addAll(label);
-
-                Scene scene = new Scene(pane);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-            }
-        });
 
         primaryStage.setTitle("Katz-tastrophe");
 
@@ -79,28 +63,46 @@ public class ClientPresenter extends Application {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
-    }
 
-    void test(Stage primaryStage) throws IOException {
-        System.out.println("test");
-        primaryStage.setScene(new Scene(FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"))));
     }
 
     public void initialize() throws IOException {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
         character = gameFieldPanelController.getCharacter();
-        dragChara();
+        gameField = gameFieldPanelController.getGameField();
+        gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
+        //gameField.addObserver(changeGameFieldPresenter);
 
-        if (Files.notExists(Path.of("src/main/program"))) {
-            Files.createDirectory(Path.of("src/main/program"));
+
+        if (Files.notExists(Path.of("src/main/programs"))) {
+            Files.createDirectory(Path.of("src/main/programs"));
         }
+
+        contextClick();
+
         /*scrollPane.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
         vBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
         hBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());*/
     }
 
-    public void onNewFileClicked(ActionEvent actionEvent) {
+    private void contextClick() {
+        scrollPane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItem = new MenuItem("test");
+                contextMenu.getItems().add(menuItem);
+                scrollPane.setContextMenu(contextMenu);
+            }
+        });
+    }
+
+    private void loadWindows() {
+
+    }
+
+    public void onNewFileClicked(ActionEvent actionEvent) throws Exception {
 
         try {
             Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
@@ -112,13 +114,32 @@ public class ClientPresenter extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //fileController.create();
+        //fileController.loadTest();
     }
 
-    public void onLoadFileClicked(ActionEvent actionEvent) {
+    public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
+
+        Stage primaryStage = new Stage();
+
+        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
+        primaryStage.setScene(new Scene(root, 1150, 400));
+
+        primaryStage.setTitle("Katz-tastrophe");
+
+        primaryStage.show();
+
+        primaryStage.setMaxHeight(500);
+        primaryStage.setMaxWidth(primaryStage.getWidth());
+
+        primaryStage.setMinHeight(450);
+        primaryStage.setMinWidth(1150);
+
+        //gameFieldPanelController.getGameField().setRow(6);
+        //gameFieldPanelController.getGameField().setColumn(6);
     }
 
     public void onSaveXmlClicked(ActionEvent actionEvent) {
+
     }
 
     /**
@@ -175,10 +196,10 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
-                    for (int i = 0; i < gameField.getGameField().length; i++) {
-                        for (int j = 0; j < gameField.getGameField()[0].length; j++) {
-                            if (gameField.getGameField()[i][j].equals("^") || gameField.getGameField()[i][j].equals("v") || gameField.getGameField()[i][j].equals(">") || gameField.getGameField()[i][j].equals("<")) {
-                                gameField.getGameField()[i][j] = "x";
+                    for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
+                        for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {
+                            if (gameField.getGameFieldArray()[i][j].equals("^") || gameField.getGameFieldArray()[i][j].equals("v") || gameField.getGameFieldArray()[i][j].equals(">") || gameField.getGameFieldArray()[i][j].equals("<")) {
+                                gameField.getGameFieldArray()[i][j] = "x";
                             }
                         }
                     }
@@ -300,10 +321,10 @@ public class ClientPresenter extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if ((event.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getX() < 251) && (event.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && event.getY() < 250)) {
-                    for (int i = 0; i < gameField.getGameField().length; i++) {
-                        for (int j = 0; j < gameField.getGameField()[0].length; j++) {
-                            if (gameField.getGameField()[i][j].equals("D")) {
-                                gameField.getGameField()[i][j] = "x";
+                    for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
+                        for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {
+                            if (gameField.getGameFieldArray()[i][j].equals("D")) {
+                                gameField.getGameFieldArray()[i][j] = "x";
                             }
                         }
                     }

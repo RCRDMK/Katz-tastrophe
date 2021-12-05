@@ -3,7 +3,7 @@ package controller;
 import game.GameCharacter;
 import game.GameField;
 import game.GameFieldPanel;
-import presenter.ChangeGameFieldPresenter;
+import pattern.ObservedObject;
 
 /**
  * The controller class for the gameFieldPanel class
@@ -11,12 +11,12 @@ import presenter.ChangeGameFieldPresenter;
  * @since 18.11.2021
  */
 
-public class GameFieldPanelController {
+public class GameFieldPanelController extends ObservedObject {
 
     private GameFieldPanel gameFieldPanel;
     private GameField gameField;
     private GameCharacter character;
-    private ChangeGameFieldPresenter changeGameFieldPresenter;
+
 
     /**
      * The custom constructor for the class.
@@ -31,10 +31,7 @@ public class GameFieldPanelController {
     public GameFieldPanelController(int rows, int columns) {
         this.gameField = new GameField(rows, columns);
         this.gameFieldPanel = new GameFieldPanel(gameField, 250, 250);
-        this.character = new GameCharacter(gameField, gameFieldPanel);
-        ChangeGameFieldPresenter.setGameField(gameField);
-        ChangeGameFieldPresenter.setGameFieldPanel(gameFieldPanel);
-        GameField.setGameFieldPanel(gameFieldPanel);
+        this.character = new GameCharacter(gameField);
         this.gameField.placeObjectsInGameField(5, 5, "C");
         this.gameField.placeObjectsInGameField(3, 1, "W");
         this.gameField.placeObjectsInGameField(3, 2, "C");
@@ -45,6 +42,10 @@ public class GameFieldPanelController {
 
     public GameField getGameField() {
         return gameField;
+    }
+
+    public void setGameField(GameField gameField) {
+        this.gameField = gameField;
     }
 
     public GameFieldPanel getGameFieldPanel() {
