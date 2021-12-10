@@ -1,10 +1,10 @@
 package pattern;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ObservedObject {
-    private final List<ObserverInterface> registeredObservers = new ArrayList<>();
+    private final List<ObserverInterface> registeredObservers = new CopyOnWriteArrayList<>();
 
     public void addObserver(ObserverInterface observer) {
         registeredObservers.add(observer);

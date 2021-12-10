@@ -1,14 +1,17 @@
 package presenter;
 
 import game.GameField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import pattern.ObserverInterface;
 
-public class ChangeGameFieldPresenter implements ObserverInterface {
+import java.util.regex.Pattern;
+
+public class ChangeGameFieldPresenter {
 
     private GameField gameField;
 
@@ -35,18 +38,24 @@ public class ChangeGameFieldPresenter implements ObserverInterface {
 
     //TODO Button dynamisch en- und disablen
 
-    public void initialize() {
-        gameField.addObserver(this);
-        //changeViewRowCurrently.setText("Momentan " + gameField.getGameFieldArray().length);
-        //changeViewColumnCurrently.setText("Momentan " + gameField.getGameFieldArray()[0].length);
-        /*changeViewAccept.setDisable(true);
-        changeViewTextFieldRow.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-           if (!newValue) {
-               if (!changeViewTextFieldRow.getText().matches("[2 - 10]")){
-                   System.out.println(changeViewTextFieldRow.getText().matches("[2 - 10]"));
-               }
-           }
-        });*/
+    public void init(GameField gameField) {
+        this.gameField = gameField;
+        changeViewRowCurrently.setText("Momentan " + gameField.getGameFieldArray().length);
+        changeViewColumnCurrently.setText("Momentan " + gameField.getGameFieldArray()[0].length);
+        changeViewAccept.setDisable(true);
+        validateTextField();
+    }
+
+    public void validateTextField() {
+        changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (Pattern.matches("[2-9]", changeViewTextFieldRow.getText())) {
+                    changeViewAccept.setDisable(false);
+                }
+            }
+        });
+
     }
 
     public void onChangeViewCancelClicked(ActionEvent actionEvent) {
@@ -54,7 +63,8 @@ public class ChangeGameFieldPresenter implements ObserverInterface {
     }
 
     public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
-        if (changeViewTextFieldRow.getText().matches("[2-9]$") && changeViewTextFieldColumn.getText().matches("[2-9]$")) {
+        if (changeViewTextFieldRow.getText().matches("^[2 - 9]$") && changeViewTextFieldColumn.getText().matches("^[2 - 9]$")) {
+            changeViewAccept.setDisable(false);
             int rows = Integer.valueOf(changeViewTextFieldRow.getText());
             int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
             gameField.resizeGameFieldSize(rows, columns);
@@ -65,8 +75,5 @@ public class ChangeGameFieldPresenter implements ObserverInterface {
         }
     }
 
-    @Override
-    public void update(Object object) {
-        gameField = (GameField) object;
-    }
+
 }

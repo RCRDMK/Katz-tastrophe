@@ -123,6 +123,7 @@ public class GameField extends ObservedObject {
         if (!characterExist) {
             gameFieldArray[0][0] = "^";
         }
+        notifyRegisteredObservers(this);
     }
 
     /**

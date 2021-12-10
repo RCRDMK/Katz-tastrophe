@@ -8,15 +8,14 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class FileController {
 
     Path javaSource = null;
 
-    String directory = "src/main/programs/";
+    String directory = "programs/";
     String fileType = ".java";
 
     String fileHeader = "public class ";
@@ -66,16 +65,31 @@ public class FileController {
         }
     }
 
-    public void compile(String file) throws IOException {
-        javaSource = Paths.get(file);
+
+    //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
+    public void compileTest() throws IOException {
+        final String file1 = "programs/Test.java";
+        JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
+        ByteArrayOutputStream err = new ByteArrayOutputStream();
+        boolean success =
+                javac.run(null, null, err, file1) == 0;
+        if (!success) {
+            System.out.println(err.toString());
+        } else {
+            System.out.println("ok");
+        }
+    }
+
+    //https://openbook.rheinwerk-verlag.de/java8/18_002.html#u18.2
+    public void compile(File file) throws IOException {
+        //javaSource = Paths.get(file);
 
         JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<JavaFileObject>();
-        try (StandardJavaFileManager javaFileManager = javaCompiler.getStandardFileManager(diagnosticCollector, null, null)) {
-            Iterable<? extends JavaFileObject> files = javaFileManager.getJavaFileObjectsFromStrings(Collections.singleton(javaSource.toString()));
-            JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(null, javaFileManager, diagnosticCollector, null, null, files);
-            compilationTask.call();
-        }
+        StandardJavaFileManager javaFileManager = javaCompiler.getStandardFileManager(diagnosticCollector, null, null);
+        Iterable<? extends JavaFileObject> files = Arrays.asList();
+        JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(null, javaFileManager, diagnosticCollector, null, null, files);
+        compilationTask.call();
 
 
     }

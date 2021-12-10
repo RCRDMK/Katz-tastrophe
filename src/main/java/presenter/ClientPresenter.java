@@ -5,7 +5,6 @@ import controller.GameFieldPanelController;
 import game.GameCharacter;
 import game.GameField;
 import game.exceptions.*;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,7 +29,7 @@ import java.nio.file.Path;
  *
  * @since 03.11.2021
  */
-public class ClientPresenter extends Application {
+public class ClientPresenter {
 
     public static final String fxml = "/fxml/ClientView.fxml";
 
@@ -50,40 +49,19 @@ public class ClientPresenter extends Application {
     }
 
 
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
-        primaryStage.setScene(new Scene(root, 1150, 400));
-
-        primaryStage.setTitle("Katz-tastrophe");
-
-        primaryStage.show();
-
-        primaryStage.setMaxHeight(500);
-        primaryStage.setMaxWidth(primaryStage.getWidth());
-
-        primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(1150);
-
-    }
-
     public void initialize() throws IOException {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
         character = gameFieldPanelController.getCharacter();
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
-        //gameField.addObserver(changeGameFieldPresenter);
 
 
-        if (Files.notExists(Path.of("src/main/programs"))) {
-            Files.createDirectory(Path.of("src/main/programs"));
+        if (Files.notExists(Path.of("programs"))) {
+            Files.createDirectory(Path.of("programs"));
         }
 
         contextClick();
-
-        /*scrollPane.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
-        vBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());
-        hBox.setPrefSize(GameFieldPanel.getCanvas().getWidth(), GameFieldPanel.getCanvas().getHeight());*/
     }
 
     private void contextClick() {
@@ -94,6 +72,13 @@ public class ClientPresenter extends Application {
                 MenuItem menuItem = new MenuItem("test");
                 contextMenu.getItems().add(menuItem);
                 scrollPane.setContextMenu(contextMenu);
+
+                menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        System.out.println(menuItem.getText() + " clicked");
+                    }
+                });
             }
         });
     }
@@ -114,6 +99,7 @@ public class ClientPresenter extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        fileController.compileTest();
         //fileController.loadTest();
     }
 
@@ -134,8 +120,6 @@ public class ClientPresenter extends Application {
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
 
-        //gameFieldPanelController.getGameField().setRow(6);
-        //gameFieldPanelController.getGameField().setColumn(6);
     }
 
     public void onSaveXmlClicked(ActionEvent actionEvent) {
@@ -165,7 +149,10 @@ public class ClientPresenter extends Application {
      */
     public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
         try {
-            Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
+            FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
+            Parent root = loader.load();
+            ChangeGameFieldPresenter changeGameFieldPresenter = (ChangeGameFieldPresenter) loader.getController();
+            changeGameFieldPresenter.init(gameField);
             Stage stage = new Stage();
             stage.setTitle("Größe des Spielfeldes ändern");
             stage.setScene(new Scene(root));
@@ -296,7 +283,6 @@ public class ClientPresenter extends Application {
                     int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
                     gameField.placeObjectsInGameField(xAxis, yAxis, "W");
                     gameField.checkIfCharacterExists();
-                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
             }
@@ -332,7 +318,6 @@ public class ClientPresenter extends Application {
                     int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
                     gameField.placeObjectsInGameField(xAxis, yAxis, "D");
                     gameField.checkIfCharacterExists();
-                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
 
             }
@@ -361,8 +346,6 @@ public class ClientPresenter extends Application {
                     int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
                     gameField.placeObjectsInGameField(xAxis, yAxis, "x");
                     gameField.checkIfCharacterExists();
-                    gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
-                    //GameFieldPanel.drawObjectsOnGameField();
                 }
 
             }

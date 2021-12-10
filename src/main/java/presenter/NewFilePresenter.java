@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.io.File;
+import java.io.IOException;
+
 public class NewFilePresenter {
 
     @FXML
@@ -23,8 +26,9 @@ public class NewFilePresenter {
         newFileCancel.getScene().getWindow().hide();
     }
 
-    public void onNewFileAcceptedClicked(ActionEvent actionEvent) {
-        fileController.create(newFileText.getText());
+    public void onNewFileAcceptedClicked(ActionEvent actionEvent) throws IOException {
+        //fileController.create(newFileText.getText());
+        fileController.compile(new File("programs/Test.java"));
         newFileAccept.getScene().getWindow().hide();
 
     }
