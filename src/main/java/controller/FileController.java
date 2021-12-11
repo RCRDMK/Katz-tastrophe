@@ -23,6 +23,8 @@ public class FileController {
     String initialFileContent = " void main() {\n \n}";
     String fileClassEnd = "\n}";
 
+    //TODO vll nur die ScrollPane und TextArea nur abspeichern?
+
     public FileController() {
 
     }
@@ -32,7 +34,7 @@ public class FileController {
             File file = new File(directory + fileName + fileType);
             if (file.createNewFile()) {
                 System.out.println("created " + file.getName());
-                write(fileName, fileClassDeclaration + fileClassInheritance + fileName + initialFileContent + fileClassEnd);
+                write(fileName, fileClassDeclaration + fileName + fileClassInheritance + initialFileContent + fileClassEnd);
             } else {
                 System.out.println("file already created");
             }
