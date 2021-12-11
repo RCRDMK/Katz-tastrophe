@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import java.io.File;
+import javax.lang.model.SourceVersion;
 import java.io.IOException;
 
 public class NewFilePresenter {
@@ -26,10 +26,16 @@ public class NewFilePresenter {
         newFileCancel.getScene().getWindow().hide();
     }
 
+    //TODO Dynamisch Button dis- und enablen
     public void onNewFileAcceptedClicked(ActionEvent actionEvent) throws IOException {
-        //fileController.create(newFileText.getText());
-        fileController.compile(new File("programs/Test.java"));
-        newFileAccept.getScene().getWindow().hide();
+        if (validateName(newFileText.getText())) {
+            fileController.create(newFileText.getText());
+            //fileController.compile(new File("programs/Test.java"));
+            newFileAccept.getScene().getWindow().hide();
+        }
+    }
 
+    public boolean validateName(String name) {
+        return SourceVersion.isIdentifier(name) && !SourceVersion.isKeyword(name);
     }
 }

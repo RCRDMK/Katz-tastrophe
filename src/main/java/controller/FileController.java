@@ -18,11 +18,10 @@ public class FileController {
     String directory = "programs/";
     String fileType = ".java";
 
-    String fileHeader = "public class ";
-    String initialFileContent = " extends game.GameCharacter {\n \n public static void main(String[] args) {\n" +
-            "       System.out.println(\"Hello World!\");" +
-            "    \n}\n}";
-
+    String fileClassDeclaration = "public class ";
+    String fileClassInheritance = " extends game.GameCharacter {\n \n public";
+    String initialFileContent = " void main() {\n \n}";
+    String fileClassEnd = "\n}";
 
     public FileController() {
 
@@ -33,7 +32,7 @@ public class FileController {
             File file = new File(directory + fileName + fileType);
             if (file.createNewFile()) {
                 System.out.println("created " + file.getName());
-                write(fileName, fileHeader + fileName + initialFileContent);
+                write(fileName, fileClassDeclaration + fileClassInheritance + fileName + initialFileContent + fileClassEnd);
             } else {
                 System.out.println("file already created");
             }
@@ -67,7 +66,7 @@ public class FileController {
 
 
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public void compileTest() throws IOException {
+    public void compileTest() throws Exception {
         final String file1 = "programs/Test.java";
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
@@ -77,7 +76,17 @@ public class FileController {
             System.out.println(err.toString());
         } else {
             System.out.println("ok");
+            loadClass();
         }
+    }
+
+    //TODO Statt absoluter Pfad relativen nutzen
+    public void loadClass() throws Exception {
+        URL classUrl = new URL("file://///Users/joker/IdeaProjects/Katz-tastrophe/programs/");
+        URL[] urls = {classUrl};
+        URLClassLoader classLoader = new URLClassLoader(urls);
+        Class c = classLoader.loadClass("Test");
+        System.out.println("loaded");
     }
 
     //https://openbook.rheinwerk-verlag.de/java8/18_002.html#u18.2
