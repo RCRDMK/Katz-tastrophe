@@ -1,9 +1,8 @@
 package controller;
 
-import presenter.ClientPresenter;
-
 import javax.tools.*;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -15,12 +14,28 @@ public class FileController {
 
     Path javaSource = null;
 
-    String directory = "programs/";
+    File userDirectory = new File(System.getProperty("user.dir"));
+    String programFolder = "/programs/";
     String fileType = ".java";
 
+    String fileClassImport = "import game.GameField;\n" +
+            "import game.GameFieldPanel;\n";
     String fileClassDeclaration = "public class ";
-    String fileClassInheritance = " extends game.GameCharacter {\n \n public";
-    String initialFileContent = " void main() {\n \n}";
+    String fileClassInheritance = " extends game.GameCharacter {\n\n";
+    String fileContent = "GameField gameField = new GameField(6,6);" +
+            "\nGameFieldPanel gameFieldPanel = new GameFieldPanel(gameField, 250, 250);\n" +
+            "String textfieldContent;\n\n" +
+            "    public GameFieldPanel getGameFieldPanel() {\n" +
+            "        return gameFieldPanel;\n" +
+            "    }\n" +
+            "\n" +
+            "    public String getTextfieldContent() {\n" +
+            "        return textfieldContent;\n" +
+            "    }\n" +
+            "\n" +
+            "    public void setTextfieldContent(String textfieldContent) {\n" +
+            "        this.textfieldContent = textfieldContent;\n" +
+            "    }";
     String fileClassEnd = "\n}";
 
     //TODO vll nur die ScrollPane und TextArea nur abspeichern?
@@ -29,12 +44,13 @@ public class FileController {
 
     }
 
-    public void create(String fileName) {
+    public void create(String fileName//, GameFieldPanel gameFieldPanel
+    ) {
         try {
-            File file = new File(directory + fileName + fileType);
+            File file = new File(userDirectory + programFolder + fileName + fileType);
             if (file.createNewFile()) {
                 System.out.println("created " + file.getName());
-                write(fileName, fileClassDeclaration + fileName + fileClassInheritance + initialFileContent + fileClassEnd);
+                write(fileName, fileClassImport + fileClassDeclaration + fileName + fileClassInheritance + fileContent + fileClassEnd);
             } else {
                 System.out.println("file already created");
             }
@@ -45,7 +61,7 @@ public class FileController {
 
     public void write(String fileName, String contentToWrite) {
         try {
-            FileWriter writer = new FileWriter(directory + fileName + fileType);
+            FileWriter writer = new FileWriter(userDirectory + programFolder + fileName + fileType);
             writer.write(contentToWrite);
             writer.close();
             System.out.println("written");
@@ -82,13 +98,16 @@ public class FileController {
         }
     }
 
-    //TODO Statt absoluter Pfad relativen nutzen
     public void loadClass() throws Exception {
-        URL classUrl = new URL("file://///Users/joker/IdeaProjects/Katz-tastrophe/programs/");
+        URL classUrl = new URL("file:///" + userDirectory + programFolder);
         URL[] urls = {classUrl};
         URLClassLoader classLoader = new URLClassLoader(urls);
         Class c = classLoader.loadClass("Test");
         System.out.println("loaded");
+        Method method = c.getMethod("te", String.class);
+        Object o = method.invoke(c.getDeclaredConstructor().newInstance(), "hi");
+
+
     }
 
     //https://openbook.rheinwerk-verlag.de/java8/18_002.html#u18.2
@@ -114,20 +133,6 @@ public class FileController {
         }
         Files.delete(javaSource);
         return null;
-    }
-
-    public void saveTest(int row) throws IOException {
-        FileOutputStream saveFile = new FileOutputStream("src/main/programs/obj.sav");
-        ObjectOutputStream saveObject = new ObjectOutputStream(saveFile);
-        saveObject.writeObject(ClientPresenter.class);
-        saveObject.close();
-    }
-
-    public void loadTest() throws Exception {
-        FileInputStream readFile = new FileInputStream("src/main/programs/obj.sav");
-        ObjectInputStream readObject = new ObjectInputStream(readFile);
-        System.out.println(readObject.readObject());
-
     }
 
 }

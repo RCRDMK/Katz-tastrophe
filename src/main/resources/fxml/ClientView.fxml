@@ -412,10 +412,10 @@
         <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0"
                    fx:id="splitPane">
             <items>
-                <TextArea prefHeight="200.0" prefWidth="200.0"/>
+                <TextArea prefHeight="200.0" prefWidth="200.0" fx:id="textInput"/>
                 <VBox alignment="CENTER" fx:id="vBox">
                     <HBox alignment="CENTER" fx:id="hBox">
-                        <ScrollPane fx:id="scrollPane"/>
+                        <ScrollPane fx:id="scrollPane" onDragDetected="#onDragClick" onDragDone="#onDragClickDone"/>
                     </HBox>
                 </VBox>
             </items>

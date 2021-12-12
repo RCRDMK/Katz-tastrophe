@@ -78,16 +78,25 @@ public class GameCharacter extends ObservedObject {
      * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move upwards
      * @since 05.11.2021
      */
-    //TODO Permanenz der Objekte in den Indices beim Bewegen wahren. Es darf keine Katze oder Trinken überschrieben, wenn der Spieler auf dem selben Feld ist
+    //TODO Spieler darf nicht auf das selbe Feld wie Trinken
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         try {
             for (int i = 0; i < gameField.getRow(); i++) {
                 for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameFieldArray()[i][j].equals("C^")) {
+                        gameField.getGameFieldArray()[i][j] = "C";
+                        gameField.placeObjectsInGameField(i - 1, j, "^");
+                        break;
+                    }
                     if (gameField.getGameFieldArray()[i][j].equals("^")) {
                         if (i == gameField.getRow() / gameField.getRow() - 1) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i - 1][j].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i - 1][j].equals("C")) {
+                            gameField.getGameFieldArray()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i - 1, j, "C^");
+                            break;
                         } else {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i - 1, j, "^");
@@ -118,11 +127,22 @@ public class GameCharacter extends ObservedObject {
         try {
             for (int i = 0; i < gameField.getRow(); i++) {
                 for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameFieldArray()[i][j].equals("Cv")) {
+                        gameField.getGameFieldArray()[i][j] = "C";
+                        gameField.placeObjectsInGameField(i + 1, j, "v");
+                        i = gameField.getRow() - 1;
+                        break;
+                    }
                     if (gameField.getGameFieldArray()[i][j].equals("v")) {
                         if (i + 1 == gameField.getRow()) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i + 1][j].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i + 1][j].equals("C")) {
+                            gameField.getGameFieldArray()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i + 1, j, "Cv");
+                            i = gameField.getRow() - 1;
+                            break;
                         } else {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i + 1, j, "v");
@@ -154,11 +174,20 @@ public class GameCharacter extends ObservedObject {
         try {
             for (int i = 0; i < gameField.getRow(); i++) {
                 for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameFieldArray()[i][j].equals("C>")) {
+                        gameField.getGameFieldArray()[i][j] = "C";
+                        gameField.placeObjectsInGameField(i, j + 1, ">");
+                        break;
+                    }
                     if (gameField.getGameFieldArray()[i][j].equals(">")) {
                         if (j + 1 == gameField.getColumn()) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i][j + 1].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i][j + 1].equals("C")) {
+                            gameField.getGameFieldArray()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i, j + 1, "C>");
+                            break;
                         } else {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i, j + 1, ">");
@@ -189,11 +218,20 @@ public class GameCharacter extends ObservedObject {
         try {
             for (int i = 0; i < gameField.getRow(); i++) {
                 for (int j = 0; j < gameField.getColumn(); j++) {
+                    if (gameField.getGameFieldArray()[i][j].equals("C<")) {
+                        gameField.getGameFieldArray()[i][j] = "C";
+                        gameField.placeObjectsInGameField(i, j - 1, "<");
+                        break;
+                    }
                     if (gameField.getGameFieldArray()[i][j].equals("<")) {
                         if (j == gameField.getColumn() / gameField.getColumn() - 1) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i][j - 1].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i][j - 1].equals("C")) {
+                            gameField.getGameFieldArray()[i][j] = "x";
+                            gameField.placeObjectsInGameField(i, j - 1, "C<");
+                            break;
                         } else {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i, j - 1, "<");

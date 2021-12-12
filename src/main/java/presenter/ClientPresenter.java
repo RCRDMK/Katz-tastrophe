@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 
@@ -38,6 +35,9 @@ public class ClientPresenter {
 
     @FXML
     ScrollPane scrollPane;
+
+    @FXML
+    TextArea textInput;
 
 
     private GameField gameField;
@@ -111,6 +111,9 @@ public class ClientPresenter {
         primaryStage.setScene(new Scene(root, 1150, 400));
 
         primaryStage.setTitle("Katz-tastrophe");
+        //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
+        scrollPane.setContent(gameFieldPanelController.te());
+        textInput.setText("das ist ein Text");
 
         primaryStage.show();
 
@@ -434,5 +437,14 @@ public class ClientPresenter {
      */
     public void onPutDrinkDownClicked(ActionEvent actionEvent) throws WallInFrontException, NoDrinkInHandException, CatInFrontException {
         character.putDrinkDown();
+    }
+
+    //TODO Drop endlich ma hinbekommen
+    public void onDragClick(MouseEvent mouseEvent) {
+        System.out.println("drag");
+    }
+
+    public void onDragClickDone(DragEvent dragEvent) {
+        System.out.println("done");
     }
 }

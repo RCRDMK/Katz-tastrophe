@@ -55,4 +55,10 @@ public class GameFieldPanelController extends ObservedObject {
     public GameCharacter getCharacter() {
         return character;
     }
+
+    public GameFieldPanel te() {
+        GameFieldPanel gfp = new GameFieldPanel(gameField, 200, 200);
+        notifyRegisteredObservers(this);
+        return gfp;
+    }
 }
