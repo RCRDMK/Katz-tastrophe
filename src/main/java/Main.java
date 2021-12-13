@@ -12,7 +12,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
+        FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
+        Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
         primaryStage.setTitle("Katz-tastrophe");

@@ -94,18 +94,18 @@ public class FileController {
             System.out.println(err.toString());
         } else {
             System.out.println("ok");
-            loadClass();
         }
     }
 
-    public void loadClass() throws Exception {
+    public Class loadClass(String className) throws Exception {
         URL classUrl = new URL("file:///" + userDirectory + programFolder);
         URL[] urls = {classUrl};
         URLClassLoader classLoader = new URLClassLoader(urls);
-        Class c = classLoader.loadClass("Test");
+        Class c = classLoader.loadClass(className);
         System.out.println("loaded");
         Method method = c.getMethod("te", String.class);
         Object o = method.invoke(c.getDeclaredConstructor().newInstance(), "hi");
+        return c;
 
 
     }

@@ -90,7 +90,8 @@ public class ClientPresenter {
     public void onNewFileClicked(ActionEvent actionEvent) throws Exception {
 
         try {
-            Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
+            FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
+            Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Neue Datei erstellen");
             stage.setScene(new Scene(root));

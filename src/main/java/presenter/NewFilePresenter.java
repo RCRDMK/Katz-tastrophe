@@ -30,7 +30,6 @@ public class NewFilePresenter {
     public void onNewFileAcceptedClicked(ActionEvent actionEvent) throws IOException {
         if (validateName(newFileText.getText())) {
             fileController.create(newFileText.getText());
-            //fileController.compile(new File("programs/Test.java"));
             newFileAccept.getScene().getWindow().hide();
         }
     }
