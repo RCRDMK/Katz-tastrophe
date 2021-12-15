@@ -50,8 +50,10 @@ public class ChangeGameFieldPresenter {
         changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (Pattern.matches("[2-9]", changeViewTextFieldRow.getText())) {
+                if (Pattern.matches("^[2-9]$", changeViewTextFieldRow.getText())) {
                     changeViewAccept.setDisable(false);
+                } else {
+                    changeViewAccept.setDisable(true);
                 }
             }
         });
@@ -63,17 +65,11 @@ public class ChangeGameFieldPresenter {
     }
 
     public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
-        if (changeViewTextFieldRow.getText().matches("^[2 - 9]$") && changeViewTextFieldColumn.getText().matches("^[2 - 9]$")) {
-            changeViewAccept.setDisable(false);
-            int rows = Integer.valueOf(changeViewTextFieldRow.getText());
-            int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
-            gameField.resizeGameFieldSize(rows, columns);
-            gameField.checkIfCharacterExists();
-            changeViewAccept.getScene().getWindow().hide();
-        } else {
-            changeViewErrorLabel.setVisible(true);
-        }
+        changeViewAccept.setDisable(false);
+        int rows = Integer.valueOf(changeViewTextFieldRow.getText());
+        int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
+        gameField.resizeGameFieldSize(rows, columns);
+        gameField.checkIfCharacterExists();
+        changeViewAccept.getScene().getWindow().hide();
     }
-
-
 }

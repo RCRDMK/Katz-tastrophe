@@ -2,7 +2,6 @@ package controller;
 
 import javax.tools.*;
 import java.io.*;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -24,7 +23,7 @@ public class FileController {
     String fileClassInheritance = " extends game.GameCharacter {\n\n";
     String fileContent = "GameField gameField = new GameField(6,6);" +
             "\nGameFieldPanel gameFieldPanel = new GameFieldPanel(gameField, 250, 250);\n" +
-            "String textfieldContent;\n\n" +
+            "String textfieldContent = \"void main(){  }\";\n\n" +
             "    public GameFieldPanel getGameFieldPanel() {\n" +
             "        return gameFieldPanel;\n" +
             "    }\n" +
@@ -51,10 +50,13 @@ public class FileController {
             if (file.createNewFile()) {
                 System.out.println("created " + file.getName());
                 write(fileName, fileClassImport + fileClassDeclaration + fileName + fileClassInheritance + fileContent + fileClassEnd);
+                loadClass(fileName);
             } else {
                 System.out.println("file already created");
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -85,7 +87,7 @@ public class FileController {
 
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
     public void compileTest() throws Exception {
-        final String file1 = "programs/Test.java";
+        final String file1 = "programs/tes.java";
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
         boolean success =
@@ -94,6 +96,7 @@ public class FileController {
             System.out.println(err.toString());
         } else {
             System.out.println("ok");
+            loadClass("tes");
         }
     }
 
@@ -103,8 +106,6 @@ public class FileController {
         URLClassLoader classLoader = new URLClassLoader(urls);
         Class c = classLoader.loadClass(className);
         System.out.println("loaded");
-        Method method = c.getMethod("te", String.class);
-        Object o = method.invoke(c.getDeclaredConstructor().newInstance(), "hi");
         return c;
 
 

@@ -1,3 +1,4 @@
+import controller.Program;
 import game.GameField;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -16,7 +17,8 @@ public class Main extends Application {
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
-        primaryStage.setTitle("Katz-tastrophe");
+        Program program = new Program();
+        primaryStage.setTitle(program.getProgramName());
 
         primaryStage.show();
 

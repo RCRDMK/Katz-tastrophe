@@ -2,6 +2,7 @@ package presenter;
 
 import controller.FileController;
 import controller.GameFieldPanelController;
+import controller.Program;
 import game.GameCharacter;
 import game.GameField;
 import game.exceptions.*;
@@ -14,8 +15,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
+import pattern.ObserverInterface;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -26,7 +29,7 @@ import java.nio.file.Path;
  *
  * @since 03.11.2021
  */
-public class ClientPresenter {
+public class ClientPresenter implements ObserverInterface {
 
     public static final String fxml = "/fxml/ClientView.fxml";
 
@@ -45,6 +48,8 @@ public class ClientPresenter {
     private GameFieldPanelController gameFieldPanelController;
     private FileController fileController = new FileController();
 
+    private Program program = new Program();
+
     public ClientPresenter() {
     }
 
@@ -55,6 +60,7 @@ public class ClientPresenter {
         character = gameFieldPanelController.getCharacter();
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
+        gameField.addObserver(this);
 
 
         if (Files.notExists(Path.of("programs"))) {
@@ -100,8 +106,14 @@ public class ClientPresenter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fileController.compileTest();
-        //fileController.loadTest();
+
+
+        System.out.println(program.getProgramName());
+        program.saveFile("neu", "void main(){}");
+        program.compileFile("te");
+        //fileTest.compile("neu");
+        //fileController.compileTest();
+
     }
 
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
@@ -114,7 +126,12 @@ public class ClientPresenter {
         primaryStage.setTitle("Katz-tastrophe");
         //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
         scrollPane.setContent(gameFieldPanelController.te());
-        textInput.setText("das ist ein Text");
+        Class cl = fileController.loadClass("tes");
+        Method me = cl.getMethod("getTextfieldContent");
+
+        textInput.setText((String) me.invoke(cl.getDeclaredConstructor().newInstance()));
+
+        //fileController.write("tes", "test");
 
         primaryStage.show();
 
@@ -216,17 +233,7 @@ public class ClientPresenter {
                 event.consume();
             }
         });
-
-        scrollPane.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                if (event.getGestureSource() == scrollPane) {
-                    event.acceptTransferModes(TransferMode.MOVE);
-                    System.out.println("over");
-                }
-
-            }
-        });
+        //Nur Mouseevent
 
         scrollPane.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
             @Override
@@ -447,5 +454,12 @@ public class ClientPresenter {
 
     public void onDragClickDone(DragEvent dragEvent) {
         System.out.println("done");
+    }
+
+    @Override
+    public void update(Object object) {
+        if (object.equals("hi")) {
+
+        }
     }
 }

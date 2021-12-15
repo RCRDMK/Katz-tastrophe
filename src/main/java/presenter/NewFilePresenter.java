@@ -1,6 +1,8 @@
 package presenter;
 
 import controller.FileController;
+import controller.FileTest;
+import controller.Program;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +24,10 @@ public class NewFilePresenter {
 
     FileController fileController = new FileController();
 
+    FileTest fileTest = new FileTest();
+
+    Program program = new Program();
+
     public void onNewFileCancelClicked(ActionEvent actionEvent) {
         newFileCancel.getScene().getWindow().hide();
     }
@@ -29,7 +35,8 @@ public class NewFilePresenter {
     //TODO Dynamisch Button dis- und enablen
     public void onNewFileAcceptedClicked(ActionEvent actionEvent) throws IOException {
         if (validateName(newFileText.getText())) {
-            fileController.create(newFileText.getText());
+
+            program.createFile(newFileText.getText());
             newFileAccept.getScene().getWindow().hide();
         }
     }
