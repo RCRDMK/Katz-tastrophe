@@ -1,7 +1,5 @@
 package presenter;
 
-import controller.FileController;
-import controller.FileTest;
 import controller.Program;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,10 +19,6 @@ public class NewFilePresenter {
 
     @FXML
     TextField newFileText;
-
-    FileController fileController = new FileController();
-
-    FileTest fileTest = new FileTest();
 
     Program program = new Program();
 

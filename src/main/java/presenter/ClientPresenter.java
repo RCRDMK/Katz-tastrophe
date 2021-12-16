@@ -1,6 +1,5 @@
 package presenter;
 
-import controller.FileController;
 import controller.GameFieldPanelController;
 import controller.Program;
 import game.GameCharacter;
@@ -12,13 +11,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 import pattern.ObserverInterface;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -34,9 +35,6 @@ public class ClientPresenter implements ObserverInterface {
     public static final String fxml = "/fxml/ClientView.fxml";
 
     @FXML
-    SplitPane splitPane;
-
-    @FXML
     ScrollPane scrollPane;
 
     @FXML
@@ -46,7 +44,6 @@ public class ClientPresenter implements ObserverInterface {
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
-    private FileController fileController = new FileController();
 
     private Program program = new Program();
 
@@ -101,19 +98,13 @@ public class ClientPresenter implements ObserverInterface {
             Stage stage = new Stage();
             stage.setTitle("Neue Datei erstellen");
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            onLoadFileClicked(actionEvent);
         }
-
-
-        System.out.println(program.getProgramName());
-        program.saveFile("neu", "void main(){}");
-        program.compileFile("te");
-        //fileTest.compile("neu");
-        //fileController.compileTest();
-
     }
 
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
@@ -123,15 +114,10 @@ public class ClientPresenter implements ObserverInterface {
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
         primaryStage.setScene(new Scene(root, 1150, 400));
 
-        primaryStage.setTitle("Katz-tastrophe");
+        primaryStage.setTitle(program.getProgramName());
+        textInput.setText(program.loadTextForEditor("neu"));
         //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
-        scrollPane.setContent(gameFieldPanelController.te());
-        Class cl = fileController.loadClass("tes");
-        Method me = cl.getMethod("getTextfieldContent");
-
-        textInput.setText((String) me.invoke(cl.getDeclaredConstructor().newInstance()));
-
-        //fileController.write("tes", "test");
+        //scrollPane.setContent(gameFieldPanelController.te());
 
         primaryStage.show();
 

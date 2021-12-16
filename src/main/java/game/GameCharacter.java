@@ -21,6 +21,15 @@ public class GameCharacter extends ObservedObject {
 
     }
 
+    public void setGameCharacter(GameField gameField, GameCharacter gameCharacter) {
+        this.gameField = gameField;
+        this.handsFull = gameCharacter.handsFull;
+        this.drinkInHand = gameCharacter.drinkInHand;
+        this.catInHand = gameCharacter.catInHand;
+        this.copy(gameCharacter);
+        gameCharacter.clear();
+    }
+
     public GameCharacter(GameField gameField) {
         this.gameField = gameField;
     }

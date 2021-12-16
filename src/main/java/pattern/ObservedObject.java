@@ -19,4 +19,14 @@ public class ObservedObject {
             observer.update(this);
         }
     }
+
+    public void copy(ObservedObject observedObject) {
+        for (ObserverInterface observer : observedObject.registeredObservers) {
+            this.addObserver(observer);
+        }
+    }
+
+    public void clear() {
+        registeredObservers.clear();
+    }
 }

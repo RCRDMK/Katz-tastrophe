@@ -1,8 +1,11 @@
 package controller;
 
+import game.CharaWrapper;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -45,21 +48,23 @@ public class Program {
         writeInFile(fileName, contentToSave);
     }
 
-    public void loadFile(String fileName) {
+    public String loadTextForEditor(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
+        String replacePostfix = "";
         try (FileReader reader = new FileReader(file)) {
             char[] strings = new char[(int) file.length()];
             reader.read(strings);
 
             String charToString = String.valueOf(strings);
             String replacePrefix = charToString.replace(getPrefix(fileName), "");
-            String replacePostfix = replacePrefix.replace(getPostfix(), "");
+            replacePostfix = replacePrefix.replace(getPostfix(), "");
             programName = fileName;
-            System.out.println(replacePostfix);
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return replacePostfix;
     }
 
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
@@ -80,6 +85,19 @@ public class Program {
         URLClassLoader classLoader = new URLClassLoader(urls);
         Class c = classLoader.loadClass(fileName);
         System.out.println("loaded");
+        CharaWrapper newActor = null;
+        try {
+            newActor = (CharaWrapper) c.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        //newActor.setGameCharacter(gamefield, gameCharacter);//Alten Character austauschen durch newActor. Vll als Return
         return c;
     }
 
