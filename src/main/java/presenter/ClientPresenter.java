@@ -91,7 +91,7 @@ public class ClientPresenter implements ObserverInterface {
     //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/FileChooser.html
     private void loadWindows(Stage stage) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("/Users/joker/IdeaProjects/Katz-tastrophe/programs"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.setTitle("Programm öffnen");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Files", "*.java"));
         File selectedFile = fileChooser.showOpenDialog(stage);

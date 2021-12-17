@@ -70,7 +70,7 @@ public class Program {
     }
 
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public Class compileFile(String fileName, GameField gameField, GameCharacter gameCharacter) {
+    public CharaWrapper compileFile(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
@@ -110,7 +110,7 @@ public class Program {
             e.printStackTrace();
         }
         newActor.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newActor. Vll als Return
-        return c;
+        return newActor;
     }
 
 
