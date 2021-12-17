@@ -31,7 +31,7 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                //TODO Save Methode schreiben und hier implementieren
+                //program.saveFile(program.getProgramName(), );
             }
         });
     }

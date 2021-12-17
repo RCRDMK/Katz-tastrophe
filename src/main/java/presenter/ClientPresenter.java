@@ -96,11 +96,16 @@ public class ClientPresenter implements ObserverInterface {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Files", "*.java"));
         File selectedFile = fileChooser.showOpenDialog(stage);
 
+
         if (selectedFile != null) {
             System.out.println("etwas");
+            program.setProgramName(selectedFile.getName().replace(".java", ""));
+            System.out.println(program.getProgramName());
         } else {
             System.out.println("nix");
         }
+
+
     }
 
     public void onNewFileClicked(ActionEvent actionEvent) throws Exception {
@@ -115,8 +120,6 @@ public class ClientPresenter implements ObserverInterface {
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            onLoadFileClicked(actionEvent);
         }
     }
 
@@ -127,10 +130,16 @@ public class ClientPresenter implements ObserverInterface {
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
         primaryStage.setScene(new Scene(root, 1150, 400));
 
+
         primaryStage.setTitle(program.getProgramName());
-        //textInput.setText(program.loadTextForEditor("neu"));
+        //character = program.compileFile(program.getProgramName(), gameField, character);
+        /*if (!program.getProgramName().contains("Katz-tastrophe")){
+            textInput.setText(program.loadTextForEditor(program.getProgramName().replace(" Katz-tastrophe", "")));
+        } else {
+            textInput.setText(program.loadTextForEditor(program.getProgramName()));
+        }*/
+        textInput.setText(program.loadTextForEditor(program.getProgramName()));
         //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
-        //scrollPane.setContent(gameFieldPanelController.te());
 
 
         primaryStage.show();
@@ -144,7 +153,7 @@ public class ClientPresenter implements ObserverInterface {
     }
 
     public void onSaveXmlClicked(ActionEvent actionEvent) {
-
+        program.saveFile(program.getProgramName(), textInput.getText());
     }
 
     /**

@@ -97,7 +97,7 @@ public class Program {
             e.printStackTrace();
         }
         System.out.println("loaded");
-        CharaWrapper newActor = null;
+        CharaWrapper newActor = new CharaWrapper();
         try {
             newActor = (CharaWrapper) c.getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
@@ -124,5 +124,13 @@ public class Program {
 
     public String getProgramName() {
         return programName;
+    }
+
+    public void setProgramName(String programName) {
+        if (!programName.contains("Katz-tastrophe")) {
+            this.programName = programName + " Katz-tastrophe";
+        } else {
+            this.programName = programName;
+        }
     }
 }

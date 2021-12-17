@@ -44,21 +44,11 @@ public class GameFieldPanelController extends ObservedObject {
         return gameField;
     }
 
-    public void setGameField(GameField gameField) {
-        this.gameField = gameField;
-    }
-
     public GameFieldPanel getGameFieldPanel() {
         return gameFieldPanel;
     }
 
     public GameCharacter getCharacter() {
         return character;
-    }
-
-    public GameFieldPanel te() {
-        GameFieldPanel gfp = new GameFieldPanel(gameField, 200, 200);
-        notifyRegisteredObservers(this);
-        return gfp;
     }
 }
