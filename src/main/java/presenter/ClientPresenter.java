@@ -16,9 +16,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pattern.ObserverInterface;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -86,8 +88,19 @@ public class ClientPresenter implements ObserverInterface {
         });
     }
 
-    private void loadWindows() {
+    //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/FileChooser.html
+    private void loadWindows(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("/Users/joker/IdeaProjects/Katz-tastrophe/programs"));
+        fileChooser.setTitle("Programm öffnen");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Java Files", "*.java"));
+        File selectedFile = fileChooser.showOpenDialog(stage);
 
+        if (selectedFile != null) {
+            System.out.println("etwas");
+        } else {
+            System.out.println("nix");
+        }
     }
 
     public void onNewFileClicked(ActionEvent actionEvent) throws Exception {
@@ -110,14 +123,15 @@ public class ClientPresenter implements ObserverInterface {
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
 
         Stage primaryStage = new Stage();
-
+        loadWindows(primaryStage);
         Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
         primaryStage.setScene(new Scene(root, 1150, 400));
 
         primaryStage.setTitle(program.getProgramName());
-        textInput.setText(program.loadTextForEditor("neu"));
+        //textInput.setText(program.loadTextForEditor("neu"));
         //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
         //scrollPane.setContent(gameFieldPanelController.te());
+
 
         primaryStage.show();
 

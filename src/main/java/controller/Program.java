@@ -1,6 +1,8 @@
 package controller;
 
 import game.CharaWrapper;
+import game.GameCharacter;
+import game.GameField;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -68,7 +70,7 @@ public class Program {
     }
 
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public Class compileFile(String fileName) throws ClassNotFoundException, MalformedURLException {
+    public Class compileFile(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
@@ -80,10 +82,20 @@ public class Program {
             System.out.println("ok");
         }
 
-        URL classUrl = new URL("file:///" + userDirectory + programFolder);
+        URL classUrl = null;
+        try {
+            classUrl = new URL("file:///" + userDirectory + programFolder);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         URL[] urls = {classUrl};
         URLClassLoader classLoader = new URLClassLoader(urls);
-        Class c = classLoader.loadClass(fileName);
+        Class c = null;
+        try {
+            c = classLoader.loadClass(fileName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("loaded");
         CharaWrapper newActor = null;
         try {
@@ -97,7 +109,7 @@ public class Program {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        //newActor.setGameCharacter(gamefield, gameCharacter);//Alten Character austauschen durch newActor. Vll als Return
+        newActor.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newActor. Vll als Return
         return c;
     }
 
