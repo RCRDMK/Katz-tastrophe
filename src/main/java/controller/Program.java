@@ -26,6 +26,7 @@ public class Program {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
             programName = fileName;
+            System.out.println(programName);
             stringBuilder.append(getPrefix(fileName) + " void main(){   }" + getPostfix());
             writer.write(stringBuilder.toString());
 
@@ -52,15 +53,16 @@ public class Program {
 
     public String loadTextForEditor(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
+        programName = fileName;
+        String replacePrefix = "";
         String replacePostfix = "";
         try (FileReader reader = new FileReader(file)) {
             char[] strings = new char[(int) file.length()];
             reader.read(strings);
 
             String charToString = String.valueOf(strings);
-            String replacePrefix = charToString.replace(getPrefix(fileName), "");
+            replacePrefix = charToString.replace(getPrefix(fileName), "");
             replacePostfix = replacePrefix.replace(getPostfix(), "");
-            programName = fileName;
 
 
         } catch (IOException e) {
@@ -72,6 +74,7 @@ public class Program {
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
     public CharaWrapper compileFile(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
+        programName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
         boolean success =
@@ -122,15 +125,19 @@ public class Program {
         return "\n}";
     }
 
+    public String getProgramTitleName() {
+        if (!programName.contains("Katz-tastrophe")) {
+            return programName + " Katz-tastrophe";
+        } else {
+            return programName;
+        }
+    }
+
     public String getProgramName() {
         return programName;
     }
 
     public void setProgramName(String programName) {
-        if (!programName.contains("Katz-tastrophe")) {
-            this.programName = programName + " Katz-tastrophe";
-        } else {
-            this.programName = programName;
-        }
+        this.programName = programName;
     }
 }

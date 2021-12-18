@@ -108,6 +108,10 @@ public class ClientPresenter implements ObserverInterface {
 
     }
 
+    public void onCompileFileClicked(ActionEvent actionEvent) {
+        character = program.compileFile(program.getProgramName(), gameField, character);
+    }
+
     public void onNewFileClicked(ActionEvent actionEvent) throws Exception {
 
         try {
@@ -131,14 +135,14 @@ public class ClientPresenter implements ObserverInterface {
         primaryStage.setScene(new Scene(root, 1150, 400));
 
 
-        primaryStage.setTitle(program.getProgramName());
+        primaryStage.setTitle(program.getProgramTitleName());
         //character = program.compileFile(program.getProgramName(), gameField, character);
-        /*if (!program.getProgramName().contains("Katz-tastrophe")){
+        if (!program.getProgramName().contains("Katz-tastrophe")) {
             textInput.setText(program.loadTextForEditor(program.getProgramName().replace(" Katz-tastrophe", "")));
-        } else {
+        }/* else {
             textInput.setText(program.loadTextForEditor(program.getProgramName()));
         }*/
-        textInput.setText(program.loadTextForEditor(program.getProgramName()));
+        //textInput.setText(program.loadTextForEditor(program.getProgramName()));
         //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
 
 
