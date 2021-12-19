@@ -72,7 +72,7 @@ public class Program {
     }
 
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public CharaWrapper compileFile(String fileName, GameField gameField, GameCharacter gameCharacter) {
+    public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
         programName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
@@ -114,6 +114,24 @@ public class Program {
         }
         newActor.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newActor. Vll als Return
         return newActor;
+    }
+
+    public Class compiledMethods(String fileName) {
+        URL classUrl = null;
+        try {
+            classUrl = new URL("file:///" + userDirectory + programFolder);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        URL[] urls = {classUrl};
+        URLClassLoader classLoader = new URLClassLoader(urls);
+        Class c = null;
+        try {
+            c = classLoader.loadClass(fileName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 
 
