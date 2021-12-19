@@ -12,6 +12,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+/**
+ * This class is responsible managing and creating new files which are mandatory to run the code the user inputs into
+ * the textarea in the client
+ *
+ * @since 15.12.2021
+ */
+
 public class Program {
 
     String programName = "neue Katz-tastrophe";
@@ -22,6 +29,14 @@ public class Program {
 
     StringBuilder stringBuilder = new StringBuilder();
 
+    /**
+     * Responsible for creating a new file
+     * <p>
+     * When called, this method creates a new file with all the content it needs.
+     *
+     * @param fileName the name of the new file
+     * @since 15.12.2021
+     */
     public void createFile(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
@@ -35,6 +50,13 @@ public class Program {
         }
     }
 
+    /**
+     * Responsible for writing the contents of the textarea in the current file.
+     *
+     * @param fileName       name of the file in which is being written
+     * @param contentToWrite content which is about to be written in the file
+     * @since 15.12.2021
+     */
     private void writeInFile(String fileName, String contentToWrite) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
@@ -47,6 +69,13 @@ public class Program {
         }
     }
 
+    /**
+     * Responsible for calling the writeInFile method.
+     *
+     * @param fileName      name of the file which is being saved
+     * @param contentToSave content which is to be saved
+     * @since 15.12.2021
+     */
     public void saveFile(String fileName, String contentToSave) {
         writeInFile(fileName, contentToSave);
     }
@@ -71,6 +100,16 @@ public class Program {
         return replacePostfix;
     }
 
+    /**
+     * Responsible for compiling .java files into .class files and replacing the current game character instance with
+     * the newly created one.
+     *
+     * @param fileName      name of the .java file which is to be compiled
+     * @param gameField     value of the gameField instance to create a new game character
+     * @param gameCharacter value of the gameCharacter instance to create a new game character
+     * @return value of the newly created game character
+     * @since 15.12.2021
+     */
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
     public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
@@ -100,9 +139,9 @@ public class Program {
             e.printStackTrace();
         }
         System.out.println("loaded");
-        CharaWrapper newActor = new CharaWrapper();
+        CharaWrapper newCharacter = new CharaWrapper();
         try {
-            newActor = (CharaWrapper) c.getDeclaredConstructor().newInstance();
+            newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -112,10 +151,18 @@ public class Program {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        newActor.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newActor. Vll als Return
-        return newActor;
+        newCharacter.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newCharacter. Vll als Return
+        return newCharacter;
     }
 
+    /**
+     * Responsible for compiling .java files to .class files to, later then, read the, from the user, declared methods in
+     * the .class file.
+     *
+     * @param fileName name of the .java file which is to be compiled
+     * @return compiled .class file from which the declared methods can be read
+     * @since 18.12.2021
+     */
     public Class compiledMethods(String fileName) {
         URL classUrl = null;
         try {

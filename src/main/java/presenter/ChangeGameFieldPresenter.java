@@ -11,6 +11,12 @@ import javafx.scene.control.TextField;
 
 import java.util.regex.Pattern;
 
+/**
+ * This class is responsible for the fxml view in case the user decides to change the size of the gamefield.
+ *
+ * @since 21.11.2021
+ */
+
 public class ChangeGameFieldPresenter {
 
     private GameField gameField;
@@ -36,7 +42,6 @@ public class ChangeGameFieldPresenter {
     @FXML
     Label changeViewColumnCurrently;
 
-    //TODO Button dynamisch en- und disablen
 
     public void init(GameField gameField) {
         this.gameField = gameField;
@@ -46,8 +51,13 @@ public class ChangeGameFieldPresenter {
         validateTextField();
     }
 
+    /**
+     * Responsible for validating if the textfields are containing valid entries. If so, it enables the accept button.
+     *
+     * @since 21.11.2021
+     */
     public void validateTextField() {
-        changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {
+        changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {//TODO TextFieldColumn hinzufügen
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (Pattern.matches("^[2-9]$", changeViewTextFieldRow.getText())) {
@@ -60,12 +70,27 @@ public class ChangeGameFieldPresenter {
 
     }
 
+    /**
+     * Responsible for handling the action event when the cancel button was being clicked.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 21.11.2021
+     */
     public void onChangeViewCancelClicked(ActionEvent actionEvent) {
         changeViewCancel.getScene().getWindow().hide();
     }
 
+    /**
+     * Responsible for handling the action event when the accept button was being clicked.
+     * <p>
+     * When this method is being called, it converts the entries in the textfields into int values. It then calls the
+     * resize method of the GameField class while using the before created int values as parameters. Afterwards, it calls
+     * the checkCharacter method of the GameField class before it hides the fxml view.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 21.11.2021
+     */
     public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
-        changeViewAccept.setDisable(false);
         int rows = Integer.valueOf(changeViewTextFieldRow.getText());
         int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
         gameField.resizeGameFieldSize(rows, columns);

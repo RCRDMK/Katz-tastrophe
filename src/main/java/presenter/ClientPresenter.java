@@ -72,6 +72,16 @@ public class ClientPresenter implements ObserverInterface {
         contextClick();
     }
 
+    /**
+     * Responsible for handling request for a context menu made by the user.
+     * <p>
+     * When this method is being called, it compiles the current program and writes all of its declared methods into an
+     * array. It then iterates through the array and creates for each method a new menu item. Afterwards it does the same
+     * for the parent class of the file, so that in the context menu are menu items from both the file itself and its
+     * parent class.
+     *
+     * @since 18.12.2021
+     */
     private void contextClick() {
         scrollPane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
@@ -116,6 +126,13 @@ public class ClientPresenter implements ObserverInterface {
         });
     }
 
+    /**
+     * Responsible for presenting the user his/her file explorer in which he/she can choose which file to load.
+     *
+     * @param stage stage to represent the fileChooser
+     * @return boolean value if the user has chosen a file or cancelled out of the window
+     * @since 17.12.2021
+     */
     //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/FileChooser.html
     private boolean loadWindows(Stage stage) {
         FileChooser fileChooser = new FileChooser();
@@ -138,11 +155,25 @@ public class ClientPresenter implements ObserverInterface {
 
     }
 
+    /**
+     * Responsible handling the request of the user to compile the current file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 16.12.2021
+     */
     public void onCompileFileClicked(ActionEvent actionEvent) {
         character = program.compileFileAndSetNewCharacter(program.getProgramName(), gameField, character);
     }
 
-    public void onNewFileClicked(ActionEvent actionEvent) throws Exception {
+    /**
+     * Responsible for handling the request of the user to create a new file.
+     * <p>
+     * When this method is called, a window will pop up, asking to input the name for the new file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 03.12.2021
+     */
+    public void onNewFileClicked(ActionEvent actionEvent) {
 
         try {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
@@ -157,6 +188,16 @@ public class ClientPresenter implements ObserverInterface {
         }
     }
 
+    /**
+     * Responsible for handling the action event to load a file requested by the user.
+     * <p>
+     * When this method is called, it first asks the user which file to load. If the user has chosen a file, it will
+     * then proceed to load a new ClientView instance and filling it with the values of the chosen file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @throws Exception possible exception which can be thrown when loading a new fxml view
+     * @since 10.12.2021
+     */
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
 
         Stage primaryStage = new Stage();
@@ -501,7 +542,7 @@ public class ClientPresenter implements ObserverInterface {
         System.out.println("done");
     }
 
-    @Override
+    @Override //TODO Update muss etwas setzen
     public void update(Object object) {
         if (object.equals("hi")) {
 
