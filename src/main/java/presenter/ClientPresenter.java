@@ -544,8 +544,6 @@ public class ClientPresenter implements ObserverInterface {
 
     @Override //TODO Update muss etwas setzen
     public void update(Object object) {
-        if (object.equals("hi")) {
 
-        }
     }
 }
