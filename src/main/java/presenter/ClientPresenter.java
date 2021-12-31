@@ -67,7 +67,14 @@ public class ClientPresenter implements ObserverInterface {
 
         if (Files.notExists(Path.of("programs"))) {
             Files.createDirectory(Path.of("programs"));
+
         }
+        program.fileWhenFirstOpened();
+        textInput.setText(program.loadTextForEditor(program.getProgramName()));
+        //TODO Checken, ob beim Speichern der Standard Name verwendet wird oder nicht. Wenn ja,
+        // dann muss ein Fenster sich öffnen und die Datei muss benannt werden. Das darf aber nur beim Anlicken des
+        // Speicher Buttons passieren. Das Kompilieren, wo das Speichern schon mit inbegriffen ist, ist davon ausgenommen.
+        // Es kann ohne umbenennen eine Datei mit dem Standard Namen kompiliert werden.
 
         contextClick();
     }
@@ -97,7 +104,8 @@ public class ClientPresenter implements ObserverInterface {
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                met.invoke(c.getDeclaredConstructor().newInstance());
+                                Method metExc = c.getMethod(met.getName());
+                                metExc.invoke(c.getDeclaredConstructor().newInstance());
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
                             } catch (InvocationTargetException e) {
@@ -118,7 +126,23 @@ public class ClientPresenter implements ObserverInterface {
                 ) {
                     MenuItem menuItem = new MenuItem(met.toString().replace("game.CharaWrapper.", ""));
                     contextMenu.getItems().add(menuItem);
-
+                    menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            try {
+                                Method metExc = c.getMethod(met.getName());
+                                metExc.invoke(c.getDeclaredConstructor().newInstance());
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            } catch (InstantiationException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchMethodException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
 
                 scrollPane.setContextMenu(contextMenu);

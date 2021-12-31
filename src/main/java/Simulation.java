@@ -1,18 +1,28 @@
+/*
 import game.GameField;
+import javafx.application.Platform;
+import pattern.ObserverInterface;
 
-public class Simulation extends Thread {//implements ObserverInterface {
+public class Simulation extends Thread implements ObserverInterface {
     GameField gameField;
     SimulationController simulationController;
     volatile boolean pause;
     volatile boolean stop;
 
-   /* @Override
+    public Simulation(GameField gameField) {
+        this.gameField = gameField;
+    }
+
+    @Override
     public void run() {
         gameField.addObserver(this);
         try {
             gameField.getCharacter();
-        } catch (stopException e) {
-        } finally {
+        } */
+/*catch (InterruptedException e) {
+            e.printStackTrace();
+        }*//*
+ finally {
             gameField.removeObserver(this);
             simulationController.simulationEnded();
         }
@@ -20,10 +30,15 @@ public class Simulation extends Thread {//implements ObserverInterface {
 
     @Override
     public void update(Object object) {
-        if (!Thread.isFXApplicationThread()) {
+        if (!Platform.isFxApplicationThread()) {
             return;
         }
-        sleep(500);
+        try {
+            sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ;
         if (stop) {
             throw new stopexception;
         }
@@ -33,7 +48,8 @@ public class Simulation extends Thread {//implements ObserverInterface {
                 throw new stopexception;
             }
         }
-    }*/
+    }
 }
 
 
+*/

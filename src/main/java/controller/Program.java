@@ -21,13 +21,16 @@ import java.net.URLClassLoader;
 
 public class Program {
 
-    String programName = "neue Katz-tastrophe";
+    String programName = "neue_Katztastrophe";
 
     File userDirectory = new File(System.getProperty("user.dir"));
     String programFolder = "/programs/";
     String fileType = ".java";
 
-    StringBuilder stringBuilder = new StringBuilder();
+
+    public void fileWhenFirstOpened() {
+        createFile(programName);
+    }
 
     /**
      * Responsible for creating a new file
@@ -42,6 +45,7 @@ public class Program {
         try (FileWriter writer = new FileWriter(file)) {
             programName = fileName;
             System.out.println(programName);
+            StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getPrefix(fileName) + " void main(){   }" + getPostfix());
             writer.write(stringBuilder.toString());
 
@@ -61,8 +65,8 @@ public class Program {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
             programName = fileName;
-            stringBuilder.append(getPrefix(fileName) + " " + contentToWrite + getPostfix());
-            writer.write(stringBuilder.toString());
+            String s = getPrefix(fileName) + contentToWrite + getPostfix();
+            writer.write(s);
 
         } catch (IOException e) {
             e.printStackTrace();

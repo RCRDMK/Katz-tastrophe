@@ -1,6 +1,15 @@
+/*
+import game.GameField;
+import javafx.application.Platform;
+
 public class SimulationController {
-   /* Simulation simulation = new Simulation(gamefield);
+    GameField gameField;
+    Simulation simulation = new Simulation(gameField);
     volatile int speed;
+
+    public SimulationController(GameField gameField) {
+        this.gameField = gameField;
+    }
 
     public void simulationEnded() {
         Platform.runLater(new Runnable() {
@@ -37,6 +46,7 @@ public class SimulationController {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }*/
+    }
 }
 
+*/
