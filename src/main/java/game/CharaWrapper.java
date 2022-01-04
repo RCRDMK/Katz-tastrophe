@@ -14,6 +14,16 @@ import game.exceptions.*;
 
 public class CharaWrapper extends GameCharacter {
 
+    GameField gameField;
+
+    public CharaWrapper(GameField gameField) {
+        this.gameField = gameField;
+    }
+
+    public CharaWrapper() {
+
+    }
+
     @Override
     public void moveUp() {
         try {

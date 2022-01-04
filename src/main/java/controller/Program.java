@@ -19,7 +19,7 @@ import java.net.URLClassLoader;
  * @since 15.12.2021
  */
 
-public class Program {
+public class Program implements Serializable {
 
     String programName = "neue_Katztastrophe";
 
@@ -143,7 +143,7 @@ public class Program {
             e.printStackTrace();
         }
         System.out.println("loaded");
-        CharaWrapper newCharacter = new CharaWrapper();
+        CharaWrapper newCharacter = new CharaWrapper(gameField);
         try {
             newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {

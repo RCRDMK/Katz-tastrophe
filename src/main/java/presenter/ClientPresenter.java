@@ -6,21 +6,26 @@ import game.CharaWrapper;
 import game.GameCharacter;
 import game.GameField;
 import game.exceptions.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.print.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pattern.ObserverInterface;
 
+import javax.imageio.ImageIO;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -175,8 +180,6 @@ public class ClientPresenter implements ObserverInterface {
             System.out.println("nix");
             return false;
         }
-
-
     }
 
     /**
@@ -187,6 +190,45 @@ public class ClientPresenter implements ObserverInterface {
      */
     public void onCompileFileClicked(ActionEvent actionEvent) {
         character = program.compileFileAndSetNewCharacter(program.getProgramName(), gameField, character);
+    }
+
+    //https://stackoverflow.com/questions/38028825/javafx-save-view-of-pane-to-image
+    public void createPngImage() {
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png Dateien", "*.png"));
+
+        //Prompt user to select a file
+        File file = fileChooser.showSaveDialog(null);
+
+        if (file != null) {
+            try {
+                //Pad the capture area
+                WritableImage writableImage = new WritableImage((int) scrollPane.getWidth() + 20,
+                        (int) scrollPane.getHeight() + 20);
+                scrollPane.snapshot(null, writableImage);
+                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                //Write the snapshot to the chosen file
+                ImageIO.write(renderedImage, "png", file);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    //https://stackoverflow.com/questions/54789373/how-to-print-pane-in-javafx
+    public void printGameFieldAndUserCode(Stage stage) {
+        PrinterJob pj = PrinterJob.createPrinterJob();
+        pj.showPrintDialog(stage);
+        Printer printer = Printer.getDefaultPrinter();
+        PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, 0, 0, 0, 0);
+        JobSettings jobSettings = pj.getJobSettings();
+        jobSettings.setPageLayout(pageLayout);
+        boolean wasPrinted = pj.printPage(textInput);
+        if (wasPrinted) {
+            pj.endJob();
+        }
     }
 
     /**
@@ -250,6 +292,7 @@ public class ClientPresenter implements ObserverInterface {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
+        printGameFieldAndUserCode(primaryStage);
 
     }
 
