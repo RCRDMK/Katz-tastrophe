@@ -44,7 +44,6 @@ public class Program implements Serializable {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
             programName = fileName;
-            System.out.println(programName);
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getPrefix(fileName) + "public void main(){   }" + getPostfix());
             writer.write(stringBuilder.toString());

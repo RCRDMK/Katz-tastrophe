@@ -178,12 +178,10 @@ public class ClientPresenter implements ObserverInterface {
 
 
         if (selectedFile != null) {
-            System.out.println("etwas");
             program.setProgramName(selectedFile.getName().replace(".java", ""));
             System.out.println("Load Win " + program.getProgramName());
             return true;
         } else {
-            System.out.println("nix");
             return false;
         }
     }
@@ -284,9 +282,6 @@ public class ClientPresenter implements ObserverInterface {
 //TODO Code im richtigen Fenster laden und nicht im Fenster, durch das geladen wird
         primaryStage.setTitle(program.getProgramTitleName());
         System.out.println("Load " + program.getProgramName());
-        /*if (!program.getProgramName().contains("Katz-tastrophe")) {
-            textInput.setText(program.loadTextForEditor(program.getProgramName().replace(" Katz-tastrophe", "")));
-        }*/
 
         primaryStage.show();
 
@@ -295,15 +290,17 @@ public class ClientPresenter implements ObserverInterface {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
+        stage = primaryStage;
         LoadedFilePresenter lfp = loader.getController();
-        lfp.setTextInput(program.loadTextForEditor(program.getProgramName()));
-        //stage = primaryStage;
+        lfp.setTextInput(program.loadTextForEditor(program.getProgramName()), program.getProgramName(), program);
+
 
     }
 
     //TODO Bug: Dateiname wird nicht richtig gesetzt. Liegt wahrscheinlich an getProgramName. Wird es durch Dateinamen ersetzt funktioniert es
     public void onSaveFileClicked(ActionEvent actionEvent) {
-        program.saveFile(program.getProgramName(), textInput.getText());
+        program.setProgramName(program.getProgramName());
+        //program.saveFile(program.getProgramName(), textInput.getText());
         System.out.println("Save " + program.getProgramName());
     }
 
@@ -324,7 +321,7 @@ public class ClientPresenter implements ObserverInterface {
      * @since 19.11.2021
      */
     public void onQuitClicked(ActionEvent actionEvent) {
-        System.exit(0);
+        stage.hide();
     }
 
     /**

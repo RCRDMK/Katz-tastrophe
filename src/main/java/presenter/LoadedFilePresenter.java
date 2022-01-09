@@ -1,18 +1,22 @@
 package presenter;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import controller.Program;
+import javafx.event.ActionEvent;
 
 public class LoadedFilePresenter extends ClientPresenter {
-    @FXML
-    ScrollPane scrollPane;
 
-    @FXML
-    TextArea textInput;
+    String s;
+    Program p;
 
-
-    public void setTextInput(String code) {
+    public void setTextInput(String code, String programName, Program program) {
         textInput.setText(code);
+        s = programName;
+        p = program;
+    }
+
+    @Override
+    public void onSaveFileClicked(ActionEvent actionEvent) {
+        p.saveFile(s, textInput.getText());
+        System.out.println("Save " + p.getProgramName());
     }
 }
