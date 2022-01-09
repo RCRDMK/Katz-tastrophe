@@ -46,7 +46,7 @@ public class Program implements Serializable {
             programName = fileName;
             System.out.println(programName);
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(getPrefix(fileName) + " void main(){   }" + getPostfix());
+            stringBuilder.append(getPrefix(fileName) + "public void main(){   }" + getPostfix());
             writer.write(stringBuilder.toString());
 
         } catch (IOException e) {
@@ -187,7 +187,7 @@ public class Program implements Serializable {
 
 
     public String getPrefix(String fileName) {
-        return "public class " + fileName + " extends game.CharaWrapper {\n\n public";
+        return "public class " + fileName + " extends game.CharaWrapper {\n\n";
     }
 
     public String getPostfix() {

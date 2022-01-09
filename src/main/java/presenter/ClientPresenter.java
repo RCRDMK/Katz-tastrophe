@@ -57,9 +57,15 @@ public class ClientPresenter implements ObserverInterface {
 
     private Program program = new Program();
 
+    //TODO Dibo fragen, ob sinnvoll
+    Stage stage;
+
     public ClientPresenter() {
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     public void initialize() throws IOException {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
@@ -174,7 +180,7 @@ public class ClientPresenter implements ObserverInterface {
         if (selectedFile != null) {
             System.out.println("etwas");
             program.setProgramName(selectedFile.getName().replace(".java", ""));
-            System.out.println(program.getProgramName());
+            System.out.println("Load Win " + program.getProgramName());
             return true;
         } else {
             System.out.println("nix");
@@ -182,22 +188,12 @@ public class ClientPresenter implements ObserverInterface {
         }
     }
 
-    /**
-     * Responsible handling the request of the user to compile the current file.
-     *
-     * @param actionEvent the interaction of the user with the FXML Element
-     * @since 16.12.2021
-     */
-    public void onCompileFileClicked(ActionEvent actionEvent) {
-        character = program.compileFileAndSetNewCharacter(program.getProgramName(), gameField, character);
-    }
-
     //https://stackoverflow.com/questions/38028825/javafx-save-view-of-pane-to-image
     public void createPngImage() {
         FileChooser fileChooser = new FileChooser();
 
         //Set extension filter
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png Dateien", "*.png"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".png", "*.png"));
 
         //Prompt user to select a file
         File file = fileChooser.showSaveDialog(null);
@@ -229,6 +225,16 @@ public class ClientPresenter implements ObserverInterface {
         if (wasPrinted) {
             pj.endJob();
         }
+    }
+
+    /**
+     * Responsible handling the request of the user to compile the current file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 16.12.2021
+     */
+    public void onCompileFileClicked(ActionEvent actionEvent) {
+        character = program.compileFileAndSetNewCharacter(program.getProgramName(), gameField, character);
     }
 
     /**
@@ -270,20 +276,17 @@ public class ClientPresenter implements ObserverInterface {
         if (!loadWindows(primaryStage)) {
             return;
         }
-        Parent root = FXMLLoader.load(GameField.class.getClassLoader().getResource("fxml/ClientView.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/LoadedView.fxml"));
+        Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
-
+//TODO Code im richtigen Fenster laden und nicht im Fenster, durch das geladen wird
         primaryStage.setTitle(program.getProgramTitleName());
-        //character = program.compileFile(program.getProgramName(), gameField, character);
-        if (!program.getProgramName().contains("Katz-tastrophe")) {
+        System.out.println("Load " + program.getProgramName());
+        /*if (!program.getProgramName().contains("Katz-tastrophe")) {
             textInput.setText(program.loadTextForEditor(program.getProgramName().replace(" Katz-tastrophe", "")));
-        }/* else {
-            textInput.setText(program.loadTextForEditor(program.getProgramName()));
         }*/
-        //textInput.setText(program.loadTextForEditor(program.getProgramName()));
-        //Panel und Textfeld speichern, Kompilieren und über den Classloader sich die Methoden holen(?), über die Methoden Panel und Textfeld setzen
-
 
         primaryStage.show();
 
@@ -292,12 +295,24 @@ public class ClientPresenter implements ObserverInterface {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
-        printGameFieldAndUserCode(primaryStage);
+        LoadedFilePresenter lfp = loader.getController();
+        lfp.setTextInput(program.loadTextForEditor(program.getProgramName()));
+        //stage = primaryStage;
 
     }
 
-    public void onSaveXmlClicked(ActionEvent actionEvent) {
+    //TODO Bug: Dateiname wird nicht richtig gesetzt. Liegt wahrscheinlich an getProgramName. Wird es durch Dateinamen ersetzt funktioniert es
+    public void onSaveFileClicked(ActionEvent actionEvent) {
         program.saveFile(program.getProgramName(), textInput.getText());
+        System.out.println("Save " + program.getProgramName());
+    }
+
+    public void onSaveAsXmlClicked(ActionEvent actionEvent) {
+
+    }
+
+    public void onSaveAsImageClicked(ActionEvent actionEvent) {
+        createPngImage();
     }
 
     /**
@@ -514,6 +529,11 @@ public class ClientPresenter implements ObserverInterface {
 
             }
         });
+    }
+
+    public void onPrintClicked(ActionEvent actionEvent) {
+        //stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        printGameFieldAndUserCode(stage);
     }
 
     /**
