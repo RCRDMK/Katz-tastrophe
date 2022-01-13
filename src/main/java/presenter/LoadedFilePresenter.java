@@ -3,7 +3,7 @@ package presenter;
 import controller.Program;
 import javafx.event.ActionEvent;
 
-public class LoadedFilePresenter extends ClientPresenter {
+public class LoadedFilePresenter extends MainPresenter {
 
     String s;
     Program p;

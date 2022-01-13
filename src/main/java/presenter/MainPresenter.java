@@ -40,9 +40,9 @@ import java.nio.file.Path;
  *
  * @since 03.11.2021
  */
-public class ClientPresenter implements ObserverInterface {
+public class MainPresenter implements ObserverInterface {
 
-    public static final String fxml = "/fxml/ClientView.fxml";
+    public static final String fxml = "/fxml/MainView.fxml";
 
     @FXML
     ScrollPane scrollPane;
@@ -60,7 +60,7 @@ public class ClientPresenter implements ObserverInterface {
     //TODO Dibo fragen, ob sinnvoll
     Stage stage;
 
-    public ClientPresenter() {
+    public MainPresenter() {
     }
 
     public void setStage(Stage stage) {
@@ -74,6 +74,7 @@ public class ClientPresenter implements ObserverInterface {
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
         gameField.addObserver(this);
+        //stage = (Stage) textInput.getScene().getWindow();
 
 
         if (Files.notExists(Path.of("programs"))) {
@@ -192,19 +193,32 @@ public class ClientPresenter implements ObserverInterface {
 
         //Set extension filter
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".png", "*.png"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".gif", "*.gif"));
 
         //Prompt user to select a file
         File file = fileChooser.showSaveDialog(null);
 
-        if (file != null) {
+        if (file != null && file.getName().endsWith(".png")) {
             try {
                 //Pad the capture area
-                WritableImage writableImage = new WritableImage((int) scrollPane.getWidth() + 20,
-                        (int) scrollPane.getHeight() + 20);
+                WritableImage writableImage = new WritableImage((int) scrollPane.getWidth(),
+                        (int) scrollPane.getHeight());
                 scrollPane.snapshot(null, writableImage);
                 RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
                 //Write the snapshot to the chosen file
                 ImageIO.write(renderedImage, "png", file);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        if (file != null && file.getName().endsWith(".gif")) {
+            try {
+                WritableImage writableImage = new WritableImage((int) scrollPane.getWidth(),
+                        (int) scrollPane.getHeight());
+                scrollPane.snapshot(null, writableImage);
+                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                ImageIO.write(renderedImage, "gif", file);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -279,7 +293,6 @@ public class ClientPresenter implements ObserverInterface {
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
-//TODO Code im richtigen Fenster laden und nicht im Fenster, durch das geladen wird
         primaryStage.setTitle(program.getProgramTitleName());
         System.out.println("Load " + program.getProgramName());
 
@@ -297,7 +310,7 @@ public class ClientPresenter implements ObserverInterface {
 
     }
 
-    //TODO Bug: Dateiname wird nicht richtig gesetzt. Liegt wahrscheinlich an getProgramName. Wird es durch Dateinamen ersetzt funktioniert es
+    //TODO Fenster dürfen nur ihre Datei speichern und nicht in denen, welche sie laden
     public void onSaveFileClicked(ActionEvent actionEvent) {
         program.setProgramName(program.getProgramName());
         //program.saveFile(program.getProgramName(), textInput.getText());
@@ -321,6 +334,7 @@ public class ClientPresenter implements ObserverInterface {
      * @since 19.11.2021
      */
     public void onQuitClicked(ActionEvent actionEvent) {
+        stage = (Stage) textInput.getScene().getWindow();
         stage.hide();
     }
 
@@ -529,6 +543,7 @@ public class ClientPresenter implements ObserverInterface {
     }
 
     public void onPrintClicked(ActionEvent actionEvent) {
+        stage = (Stage) scrollPane.getScene().getWindow();
         //stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         printGameFieldAndUserCode(stage);
     }
