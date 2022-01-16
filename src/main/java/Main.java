@@ -1,4 +1,4 @@
-import controller.Program;
+import controller.FileController;
 import game.GameField;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -17,8 +17,8 @@ public class Main extends Application {
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
-        Program program = new Program();
-        primaryStage.setTitle(program.getProgramName().replace("_", " "));
+        FileController fileController = new FileController();
+        primaryStage.setTitle(fileController.getProgramName().replace("_", " "));
 
         primaryStage.show();
 
@@ -31,7 +31,7 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                //program.saveFile(program.getProgramName(), );
+                //fileController.saveFile(fileController.getProgramName(), );
             }
         });
     }

@@ -90,7 +90,7 @@ public class ChangeGameFieldPresenter {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 21.11.2021
      */
-    public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
+    public void onChangeViewAcceptClicked(ActionEvent actionEvent) {//TODO NPE wenn das Spielfeld von 6 auf 7 geändert wird
         int rows = Integer.valueOf(changeViewTextFieldRow.getText());
         int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
         gameField.resizeGameFieldSize(rows, columns);

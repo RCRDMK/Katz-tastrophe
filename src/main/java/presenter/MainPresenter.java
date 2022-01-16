@@ -1,7 +1,8 @@
 package presenter;
 
+import controller.FileController;
 import controller.GameFieldPanelController;
-import controller.Program;
+import controller.XMLController;
 import game.CharaWrapper;
 import game.GameCharacter;
 import game.GameField;
@@ -26,8 +27,7 @@ import pattern.ObserverInterface;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -42,6 +42,8 @@ import java.nio.file.Path;
  */
 public class MainPresenter implements ObserverInterface {
 
+    //TODO Es darf eine Instanz nur einmal offen sein und nicht fünf Fenster mit dem selben Namen
+
     public static final String fxml = "/fxml/MainView.fxml";
 
     @FXML
@@ -54,18 +56,14 @@ public class MainPresenter implements ObserverInterface {
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
+    private StartStop startStop;
 
-    private Program program = new Program();
+    private FileController fileController = new FileController();
 
-    //TODO Dibo fragen, ob sinnvoll
-    Stage stage;
 
     public MainPresenter() {
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 
     public void initialize() throws IOException {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
@@ -73,6 +71,7 @@ public class MainPresenter implements ObserverInterface {
         character = gameFieldPanelController.getCharacter();
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
+        startStop = new StartStop(gameFieldPanelController);
         gameField.addObserver(this);
         //stage = (Stage) textInput.getScene().getWindow();
 
@@ -81,8 +80,8 @@ public class MainPresenter implements ObserverInterface {
             Files.createDirectory(Path.of("programs"));
 
         }
-        program.fileWhenFirstOpened();
-        textInput.setText(program.loadTextForEditor(program.getProgramName()));
+        fileController.fileWhenFirstOpened();
+        textInput.setText(fileController.loadTextForEditor(fileController.getProgramName()));
         //TODO Checken, ob beim Speichern der Standard Name verwendet wird oder nicht. Wenn ja,
         // dann muss ein Fenster sich öffnen und die Datei muss benannt werden. Das darf aber nur beim Anlicken des
         // Speicher Buttons passieren. Das Kompilieren, wo das Speichern schon mit inbegriffen ist, ist davon ausgenommen.
@@ -94,7 +93,7 @@ public class MainPresenter implements ObserverInterface {
     /**
      * Responsible for handling request for a context menu made by the user.
      * <p>
-     * When this method is being called, it compiles the current program and writes all of its declared methods into an
+     * When this method is being called, it compiles the current fileController and writes all of its declared methods into an
      * array. It then iterates through the array and creates for each method a new menu item. Afterwards it does the same
      * for the parent class of the file, so that in the context menu are menu items from both the file itself and its
      * parent class.
@@ -106,7 +105,7 @@ public class MainPresenter implements ObserverInterface {
             @Override
             public void handle(ContextMenuEvent event) {
                 ContextMenu contextMenu = new ContextMenu();
-                Class c = program.compiledMethods(program.getProgramName());
+                Class c = fileController.compiledMethods(fileController.getProgramName());
                 Method[] m = c.getDeclaredMethods();
                 for (Method met : m//TODO Besseren Code schreiben
                 ) {
@@ -143,15 +142,44 @@ public class MainPresenter implements ObserverInterface {
                         public void handle(ActionEvent event) {
                             try {
                                 Method metExc = c.getMethod(met.getName());
-                                metExc.invoke(c.getDeclaredConstructor().newInstance());
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
-                                e.printStackTrace();
-                            } catch (InstantiationException e) {
-                                e.printStackTrace();
-                            } catch (NoSuchMethodException e) {
-                                e.printStackTrace();
+                                System.out.println(metExc.getName());
+                                switch (metExc.getName()) {//TODO Besseren Code schreiben
+                                    case "moveUp":
+                                        onMoveUpClicked(event);
+                                        break;
+                                    case "moveDown":
+                                        onMoveDownClicked(event);
+                                        break;
+                                    case "moveLeft":
+                                        onMoveLeftClicked(event);
+                                        break;
+                                    case "moveRight":
+                                        onMoveRightClicked(event);
+                                        break;
+                                    case "takeCat":
+                                        onPickCatUpClicked(event);
+                                        break;
+                                    case "takeDrink":
+                                        onPickDrinkUpClicked(event);
+                                        break;
+                                    case "putCatDown":
+                                        onPutCatDownClicked(event);
+                                        break;
+                                    case "putDrinkDown":
+                                        onPutDrinkDownClicked(event);
+                                        break;
+                                    /*case "handsFree":
+                                        onMoveUpClicked(event);
+                                        break;
+                                    case "catThere":
+                                        onMoveUpClicked(event);
+                                        break;
+                                    case "stepOverCatPossible":
+                                        onMoveUpClicked(event);
+                                        break;*/
+                                }
+                            } catch (Throwable t) {
+                                t.printStackTrace();
                             }
                         }
                     });
@@ -179,8 +207,12 @@ public class MainPresenter implements ObserverInterface {
 
 
         if (selectedFile != null) {
-            program.setProgramName(selectedFile.getName().replace(".java", ""));
-            System.out.println("Load Win " + program.getProgramName());
+            if (selectedFile.getName().replace(".java", "") == fileController.getProgramName()) {
+                System.out.println("hi");
+                return false;
+            }
+            fileController.setProgramName(selectedFile.getName().replace(".java", ""));
+            System.out.println("Load Win " + fileController.getProgramName());
             return true;
         } else {
             return false;
@@ -246,7 +278,7 @@ public class MainPresenter implements ObserverInterface {
      * @since 16.12.2021
      */
     public void onCompileFileClicked(ActionEvent actionEvent) {
-        character = program.compileFileAndSetNewCharacter(program.getProgramName(), gameField, character);
+        character = fileController.compileFileAndSetNewCharacter(fileController.getProgramName(), gameField, character);
     }
 
     /**
@@ -293,8 +325,8 @@ public class MainPresenter implements ObserverInterface {
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
-        primaryStage.setTitle(program.getProgramTitleName());
-        System.out.println("Load " + program.getProgramName());
+        primaryStage.setTitle(fileController.getProgramTitleName());
+        System.out.println("Load " + fileController.getProgramName());
 
         primaryStage.show();
 
@@ -303,21 +335,26 @@ public class MainPresenter implements ObserverInterface {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
-        stage = primaryStage;
         LoadedFilePresenter lfp = loader.getController();
-        lfp.setTextInput(program.loadTextForEditor(program.getProgramName()), program.getProgramName(), program);
+        lfp.setTextInput(fileController.loadTextForEditor(fileController.getProgramName()), fileController.getProgramName(), fileController);
 
 
     }
 
     //TODO Fenster dürfen nur ihre Datei speichern und nicht in denen, welche sie laden
     public void onSaveFileClicked(ActionEvent actionEvent) {
-        program.setProgramName(program.getProgramName());
-        //program.saveFile(program.getProgramName(), textInput.getText());
-        System.out.println("Save " + program.getProgramName());
+        fileController.setProgramName(fileController.getProgramName());
+        System.out.println("Save " + fileController.getProgramName());
     }
 
     public void onSaveAsXmlClicked(ActionEvent actionEvent) {
+        XMLController xmlController = new XMLController();
+        xmlController.saveAsXML();
+    }
+
+
+    public void readXML() {
+
 
     }
 
@@ -334,7 +371,7 @@ public class MainPresenter implements ObserverInterface {
      * @since 19.11.2021
      */
     public void onQuitClicked(ActionEvent actionEvent) {
-        stage = (Stage) textInput.getScene().getWindow();
+        Stage stage = (Stage) textInput.getScene().getWindow();
         stage.hide();
     }
 
@@ -543,9 +580,7 @@ public class MainPresenter implements ObserverInterface {
     }
 
     public void onPrintClicked(ActionEvent actionEvent) {
-        stage = (Stage) scrollPane.getScene().getWindow();
-        //stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        printGameFieldAndUserCode(stage);
+        printGameFieldAndUserCode((Stage) scrollPane.getScene().getWindow());
     }
 
     /**
@@ -554,9 +589,14 @@ public class MainPresenter implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onMoveUpClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException {
-        character.lookHere("up");
-        character.moveUp();
+    public void onMoveUpClicked(ActionEvent actionEvent) {
+        try {
+            character.lookHere("up");
+            character.moveUp();
+        } catch (Throwable t) {
+            System.out.println("Fehler");
+        }
+
     }
 
     /**
@@ -644,5 +684,58 @@ public class MainPresenter implements ObserverInterface {
     @Override //TODO Update muss etwas setzen
     public void update(Object object) {
 
+    }
+
+    public void start(ActionEvent actionEvent) {
+        startStop.start();
+    }
+
+    public void stop(ActionEvent actionEvent) {
+        startStop.stop();
+    }
+
+    public void onSaveAsSerialClicked(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
+
+        //Prompt user to select a file
+        File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
+
+        if (file != null && file.getName().endsWith(".rsm")) {
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
+                objectOutputStream.writeObject(gameField);
+                objectOutputStream.writeUTF(textInput.getText());
+                objectOutputStream.writeObject(character);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void loadSerial() {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
+        fileChooser.setTitle("Programm öffnen");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
+        File file = fileChooser.showOpenDialog(scrollPane.getScene().getWindow());
+
+        if (file != null && file.getName().endsWith(".rsm")) {
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+                gameFieldPanelController.getGameFieldPanel().setGameField((GameField) objectInputStream.readObject());
+                gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
+                textInput.setText(objectInputStream.readUTF());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void onLoadSerClicked(ActionEvent actionEvent) {
+        loadSerial();
     }
 }

@@ -1,6 +1,6 @@
 package presenter;
 
-import controller.Program;
+import controller.FileController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -25,7 +25,7 @@ public class NewFilePresenter {
     @FXML
     TextField newFileText;
 
-    Program program = new Program();
+    FileController fileController = new FileController();
 
     /**
      * Responsible for handling the action event when the cancel button was being clicked.
@@ -41,7 +41,7 @@ public class NewFilePresenter {
      * Responsible for handling the action event when the cancel button was being clicked.
      * <p>
      * When this method is called, it first checks if the entered name is valid as name. If so, it then calls the
-     * create method of the Program class. After that, it hides the fxml view.
+     * create method of the FileController class. After that, it hides the fxml view.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 03.12.2021
@@ -50,7 +50,7 @@ public class NewFilePresenter {
     public void onNewFileAcceptedClicked(ActionEvent actionEvent) {
         if (validateName(newFileText.getText())) {
 
-            program.createFile(newFileText.getText());
+            fileController.createFile(newFileText.getText());
             newFileAccept.getScene().getWindow().hide();
         }
     }

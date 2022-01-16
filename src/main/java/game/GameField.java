@@ -2,6 +2,7 @@ package game;
 
 import pattern.ObservedObject;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -10,15 +11,15 @@ import java.util.Arrays;
  *
  * @since 03.11.2021
  */
-public class GameField extends ObservedObject {
+public class GameField extends ObservedObject implements Serializable {
 
-    private int row;
-    private String[][] gameFieldArray;
-    private int column;
-    private String cat = "C";
-    private String wall = "W";
-    private String drink = "D";
-    private String character = "^";
+    private volatile int row;
+    private volatile String[][] gameFieldArray;
+    private volatile int column;
+    private volatile String cat = "C";
+    private volatile String wall = "W";
+    private volatile String drink = "D";
+    private volatile String character = "^";
 
     // tip points to where the character is looking. Initially the character looks up (^) but depending on the
     // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)

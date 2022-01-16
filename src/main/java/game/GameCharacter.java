@@ -3,19 +3,21 @@ package game;
 import game.exceptions.*;
 import pattern.ObservedObject;
 
+import java.io.Serializable;
+
 /**
  * This class is responsible handling every action the game character can do.
  *
  * @since 03.11.2021
  */
 
-public class GameCharacter extends ObservedObject {
+public class GameCharacter extends ObservedObject implements Serializable {
 
-    private GameField gameField;
+    private volatile GameField gameField;
 
-    private boolean handsFull = false;
-    private boolean drinkInHand = false;
-    private boolean catInHand = false;
+    private volatile boolean handsFull = false;
+    private volatile boolean drinkInHand = false;
+    private volatile boolean catInHand = false;
 
     public GameCharacter() {
 
@@ -90,6 +92,7 @@ public class GameCharacter extends ObservedObject {
     //TODO Spieler darf nicht auf das selbe Feld wie Trinken
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         try {
+            //TODO Rausfinden warum ab hier gameField null beim Contextcklick wird
             for (int i = 0; i < gameField.getRow(); i++) {
                 for (int j = 0; j < gameField.getColumn(); j++) {
                     if (gameField.getGameFieldArray()[i][j].equals("C^")) {
@@ -116,9 +119,9 @@ public class GameCharacter extends ObservedObject {
             }
             gameField.fillUpGameField();
             notifyRegisteredObservers(this);
-        } catch (EndOfGameFieldException eogfe) {
+        } /*catch (EndOfGameFieldException eogfe) {
             System.out.println("Edge of gamefield is reached");
-        } catch (WallInFrontException wife) {
+        } */ catch (WallInFrontException wife) {
             System.out.println("Can't move in this direction. Wall in front");
         }
     }

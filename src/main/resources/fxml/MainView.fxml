@@ -35,6 +35,14 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
+                        <MenuItem mnemonicParsing="false" fx:id="loadSer" text="DeSeri" accelerator="Shortcut+O"
+                                  onAction="#onLoadSerClicked">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@../images/menuItems/loadFileMenu.png"></Image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
                         <MenuItem mnemonicParsing="false" fx:id="compileFile" text="Kompilieren"
                                   accelerator="Shortcut+C"
                                   onAction="#onCompileFileClicked">
@@ -70,7 +78,8 @@
                                 <MenuItem mnemonicParsing="false" fx:id="saveAsXml" text="XML"
                                           onAction="#onSaveAsXmlClicked"/>
                                 <MenuItem mnemonicParsing="false" fx:id="saveAsJaxb" text="JAXB"/>
-                                <MenuItem mnemonicParsing="false" fx:id="saveAsSerial" text="Serialisieren"/>
+                                <MenuItem mnemonicParsing="false" fx:id="saveAsSerial" text="Serialisieren"
+                                          onAction="#onSaveAsSerialClicked"/>
                                 <MenuItem mnemonicParsing="false" fx:id="saveAsImage" text="Bild"
                                           onAction="#onSaveAsImageClicked"/>
                             </items>
@@ -388,6 +397,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="1018.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"
+                              onAction="#start"
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
@@ -412,6 +422,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="1130.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"
+                              onAction="#stop"
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>

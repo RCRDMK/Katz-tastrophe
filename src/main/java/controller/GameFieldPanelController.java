@@ -51,4 +51,5 @@ public class GameFieldPanelController extends ObservedObject {
     public GameCharacter getCharacter() {
         return character;
     }
+    
 }

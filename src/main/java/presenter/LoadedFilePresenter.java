@@ -1,22 +1,22 @@
 package presenter;
 
-import controller.Program;
+import controller.FileController;
 import javafx.event.ActionEvent;
 
 public class LoadedFilePresenter extends MainPresenter {
 
-    String s;
-    Program p;
+    String loadedProgramName;
+    FileController fileController;
 
-    public void setTextInput(String code, String programName, Program program) {
+    public void setTextInput(String code, String programName, FileController fileController) {
         textInput.setText(code);
-        s = programName;
-        p = program;
+        loadedProgramName = programName;
+        this.fileController = fileController;
     }
 
     @Override
     public void onSaveFileClicked(ActionEvent actionEvent) {
-        p.saveFile(s, textInput.getText());
-        System.out.println("Save " + p.getProgramName());
+        fileController.saveFile(loadedProgramName, textInput.getText());
+        System.out.println("Save " + fileController.getProgramName());
     }
 }

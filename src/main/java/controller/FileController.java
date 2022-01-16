@@ -1,6 +1,5 @@
 package controller;
 
-import game.CharaWrapper;
 import game.GameCharacter;
 import game.GameField;
 
@@ -19,7 +18,7 @@ import java.net.URLClassLoader;
  * @since 15.12.2021
  */
 
-public class Program implements Serializable {
+public class FileController {
 
     String programName = "neue_Katztastrophe";
 
@@ -114,7 +113,7 @@ public class Program implements Serializable {
      * @since 15.12.2021
      */
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
+    public GameCharacter compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
         programName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
@@ -142,9 +141,9 @@ public class Program implements Serializable {
             e.printStackTrace();
         }
         System.out.println("loaded");
-        CharaWrapper newCharacter = new CharaWrapper(gameField);
+        GameCharacter newCharacter = new GameCharacter(gameField);
         try {
-            newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
+            newCharacter = (GameCharacter) c.getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
