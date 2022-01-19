@@ -8,7 +8,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400"
             minWidth="1150"
             prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2"
-            fx:controller="presenter.LoadedFilePresenter" stylesheets="@../css/stylesheet.css" fx:id="test">
+            fx:controller="viewController.LoadedFileViewController" stylesheets="@../css/stylesheet.css">
     <children>
 
         <fx:define>
@@ -27,14 +27,20 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" fx:id="loadFile" text="Öffnen" accelerator="Shortcut+O"
-                                  onAction="#onLoadFileClicked">
+                        <Menu mnemonicParsing="false" text="Laden">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/loadFileMenu.png"></Image>
                                 </ImageView>
                             </graphic>
-                        </MenuItem>
+                            <items>
+                                <MenuItem mnemonicParsing="false" fx:id="loadFile" text="Öffnen"
+                                          accelerator="Shortcut+O"
+                                          onAction="#onLoadFileClicked"/>
+                                <MenuItem mnemonicParsing="false" fx:id="loadXML" text="XML-Datei laden"
+                                          onAction="#onLoadXmlClicked"/>
+                            </items>
+                        </Menu>
                         <MenuItem mnemonicParsing="false" fx:id="compileFile" text="Kompilieren"
                                   accelerator="Shortcut+C"
                                   onAction="#onCompileFileClicked">
@@ -65,14 +71,19 @@
                             </graphic>
                         </MenuItem>
                         <Menu mnemonicParsing="false" text="Speichern als">
-
                             <items>
                                 <MenuItem mnemonicParsing="false" fx:id="saveAsXml" text="XML"
                                           onAction="#onSaveAsXmlClicked"/>
-                                <MenuItem mnemonicParsing="false" fx:id="saveAsJaxb" text="JAXB"/>
-                                <MenuItem mnemonicParsing="false" fx:id="saveAsSerial" text="Serialisieren"/>
                                 <MenuItem mnemonicParsing="false" fx:id="saveAsImage" text="Bild"
                                           onAction="#onSaveAsImageClicked"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Serialisierung">
+                            <items>
+                                <MenuItem mnemonicParsing="false" fx:id="saveAsSerialize" text="Serialisieren"
+                                          onAction="#onSaveAsSerializeClicked"/>
+                                <MenuItem mnemonicParsing="false" fx:id="loadSerialize" text="De-Serialisieren"
+                                          onAction="#onLoadSerializeClicked"/>
                             </items>
                         </Menu>
                         <MenuItem mnemonicParsing="false" fx:id="changeSizeField" text="Größe des Spielfeldes ändern"
@@ -105,7 +116,7 @@
                         </RadioMenuItem>
                     </items>
                     <SeparatorMenuItem></SeparatorMenuItem>
-                    <MenuItem mnemonicParsing="false" fx:id="print" text="Drucken"
+                    <MenuItem mnemonicParsing="false" fx:id="print" text="Drucken" accelerator="Shortcut+P"
                               onAction="#onPrintClicked"/>
                 </Menu>
                 <Menu text="Spiel_figur">
@@ -388,6 +399,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="1018.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"
+                              onAction="#start"
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
@@ -412,6 +424,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="1130.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"
+                              onAction="#stop"
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>

@@ -1,26 +1,26 @@
-/*
-import game.GameField;
-import javafx.application.Platform;
+package controller;
 
-public class SimulationController {
+import game.GameField;
+import pattern.ObservedObject;
+
+public class SimulationController extends ObservedObject {
     GameField gameField;
-    Simulation simulation = new Simulation(gameField);
+    GameFieldPanelController gameFieldPanelController;
+    Simulation simulation;
+
     volatile int speed;
 
-    public SimulationController(GameField gameField) {
-        this.gameField = gameField;
+    public SimulationController(GameFieldPanelController gameFieldPanelController) {
+        this.gameField = gameFieldPanelController.getGameField();
+        this.gameFieldPanelController = gameFieldPanelController;
     }
 
     public void simulationEnded() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
+        notifyRegisteredObservers(this);
     }
 
     public void start() {
+        simulation = new Simulation(gameFieldPanelController, this);
         simulation.setDaemon(true);
         simulation.start();
     }
@@ -49,4 +49,4 @@ public class SimulationController {
     }
 }
 
-*/
+

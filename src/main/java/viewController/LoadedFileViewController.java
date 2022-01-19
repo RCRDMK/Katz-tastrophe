@@ -1,9 +1,9 @@
-package presenter;
+package viewController;
 
 import controller.FileController;
 import javafx.event.ActionEvent;
 
-public class LoadedFilePresenter extends MainPresenter {
+public class LoadedFileViewController extends MainViewController {
 
     String loadedProgramName;
     FileController fileController;

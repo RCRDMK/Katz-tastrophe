@@ -1,4 +1,4 @@
-package presenter;
+package viewController;
 
 import controller.FileController;
 import javafx.event.ActionEvent;
@@ -14,7 +14,7 @@ import javax.lang.model.SourceVersion;
  * @since 03.12.2021
  */
 
-public class NewFilePresenter {
+public class NewFileViewController {
 
     @FXML
     Button newFileCancel;

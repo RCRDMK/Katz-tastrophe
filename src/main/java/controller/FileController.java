@@ -1,5 +1,6 @@
 package controller;
 
+import game.CharaWrapper;
 import game.GameCharacter;
 import game.GameField;
 
@@ -113,7 +114,7 @@ public class FileController {
      * @since 15.12.2021
      */
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public GameCharacter compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
+    public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
         String file = userDirectory + programFolder + fileName + fileType;
         programName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
@@ -141,9 +142,9 @@ public class FileController {
             e.printStackTrace();
         }
         System.out.println("loaded");
-        GameCharacter newCharacter = new GameCharacter(gameField);
+        CharaWrapper newCharacter = new CharaWrapper(gameField);
         try {
-            newCharacter = (GameCharacter) c.getDeclaredConstructor().newInstance();
+            newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

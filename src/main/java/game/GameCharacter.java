@@ -23,6 +23,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
 
     }
 
+    public void main() {
+
+    }
+
     public void setGameCharacter(GameField gameField, GameCharacter gameCharacter) {
         this.gameField = gameField;
         this.handsFull = gameCharacter.handsFull;

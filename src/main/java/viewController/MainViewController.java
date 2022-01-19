@@ -1,8 +1,6 @@
-package presenter;
+package viewController;
 
-import controller.FileController;
-import controller.GameFieldPanelController;
-import controller.XMLController;
+import controller.*;
 import game.CharaWrapper;
 import game.GameCharacter;
 import game.GameField;
@@ -40,7 +38,7 @@ import java.nio.file.Path;
  *
  * @since 03.11.2021
  */
-public class MainPresenter implements ObserverInterface {
+public class MainViewController implements ObserverInterface {
 
     //TODO Es darf eine Instanz nur einmal offen sein und nicht fünf Fenster mit dem selben Namen
 
@@ -56,12 +54,12 @@ public class MainPresenter implements ObserverInterface {
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
-    private StartStop startStop;
+    private ThreadController threadController;
 
     private FileController fileController = new FileController();
+    private XMLController xmlController = new XMLController();
 
-
-    public MainPresenter() {
+    public MainViewController() {
     }
 
 
@@ -71,7 +69,7 @@ public class MainPresenter implements ObserverInterface {
         character = gameFieldPanelController.getCharacter();
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
-        startStop = new StartStop(gameFieldPanelController);
+        threadController = new ThreadController(gameFieldPanelController);
         gameField.addObserver(this);
         //stage = (Stage) textInput.getScene().getWindow();
 
@@ -117,6 +115,7 @@ public class MainPresenter implements ObserverInterface {
                             try {
                                 Method metExc = c.getMethod(met.getName());
                                 metExc.invoke(c.getDeclaredConstructor().newInstance());
+                                System.out.println(metExc.getName());
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
                             } catch (InvocationTargetException e) {
@@ -143,7 +142,7 @@ public class MainPresenter implements ObserverInterface {
                             try {
                                 Method metExc = c.getMethod(met.getName());
                                 System.out.println(metExc.getName());
-                                switch (metExc.getName()) {//TODO Besseren Code schreiben
+                                /*switch (metExc.getName()) {//TODO Besseren Code schreiben
                                     case "moveUp":
                                         onMoveUpClicked(event);
                                         break;
@@ -168,7 +167,7 @@ public class MainPresenter implements ObserverInterface {
                                     case "putDrinkDown":
                                         onPutDrinkDownClicked(event);
                                         break;
-                                    /*case "handsFree":
+                                    case "handsFree":
                                         onMoveUpClicked(event);
                                         break;
                                     case "catThere":
@@ -176,8 +175,9 @@ public class MainPresenter implements ObserverInterface {
                                         break;
                                     case "stepOverCatPossible":
                                         onMoveUpClicked(event);
-                                        break;*/
+                                        break;
                                 }
+                            }*/
                             } catch (Throwable t) {
                                 t.printStackTrace();
                             }
@@ -315,7 +315,6 @@ public class MainPresenter implements ObserverInterface {
      * @since 10.12.2021
      */
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
-
         Stage primaryStage = new Stage();
         if (!loadWindows(primaryStage)) {
             return;
@@ -335,7 +334,7 @@ public class MainPresenter implements ObserverInterface {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
-        LoadedFilePresenter lfp = loader.getController();
+        LoadedFileViewController lfp = loader.getController();
         lfp.setTextInput(fileController.loadTextForEditor(fileController.getProgramName()), fileController.getProgramName(), fileController);
 
 
@@ -348,14 +347,12 @@ public class MainPresenter implements ObserverInterface {
     }
 
     public void onSaveAsXmlClicked(ActionEvent actionEvent) {
-        XMLController xmlController = new XMLController();
-        xmlController.saveAsXML();
+        xmlController.saveAsXML(gameField, (Stage) scrollPane.getScene().getWindow());
     }
 
 
-    public void readXML() {
-
-
+    public void onLoadXmlClicked(ActionEvent actionEvent) {
+        xmlController.loadXML(gameField, (Stage) scrollPane.getScene().getWindow());
     }
 
     public void onSaveAsImageClicked(ActionEvent actionEvent) {
@@ -388,8 +385,8 @@ public class MainPresenter implements ObserverInterface {
         try {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
             Parent root = loader.load();
-            ChangeGameFieldPresenter changeGameFieldPresenter = (ChangeGameFieldPresenter) loader.getController();
-            changeGameFieldPresenter.init(gameField);
+            ChangeGameFieldViewController changeGameFieldViewController = (ChangeGameFieldViewController) loader.getController();
+            changeGameFieldViewController.init(gameField);
             Stage stage = new Stage();
             stage.setTitle("Größe des Spielfeldes ändern");
             stage.setScene(new Scene(root));
@@ -687,14 +684,17 @@ public class MainPresenter implements ObserverInterface {
     }
 
     public void start(ActionEvent actionEvent) {
-        startStop.start();
+        //threadController.start();
+        SimulationController sc = new SimulationController(gameFieldPanelController);
+        sc.start();
+
     }
 
     public void stop(ActionEvent actionEvent) {
-        startStop.stop();
+        threadController.stop();
     }
 
-    public void onSaveAsSerialClicked(ActionEvent actionEvent) {
+    public void onSaveAsSerializeClicked(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
 
         //Set extension filter
@@ -735,7 +735,7 @@ public class MainPresenter implements ObserverInterface {
         }
     }
 
-    public void onLoadSerClicked(ActionEvent actionEvent) {
+    public void onLoadSerializeClicked(ActionEvent actionEvent) {
         loadSerial();
     }
 }

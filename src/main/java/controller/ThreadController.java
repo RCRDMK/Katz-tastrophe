@@ -1,13 +1,12 @@
-package presenter;
+package controller;
 
-import controller.GameFieldPanelController;
 import game.GameCharacter;
 import game.GameField;
 import game.GameFieldPanel;
 
 import static java.lang.Thread.sleep;
 
-public class StartStop {
+public class ThreadController {
 
     private GameFieldPanelController gameFieldPanelController;
     private GameFieldPanel gameFieldPanel;
@@ -15,8 +14,8 @@ public class StartStop {
     private GameCharacter character;
     boolean isRunning = false;
 
-    public StartStop(GameFieldPanelController gfpc) {
-        this.gameFieldPanelController = gfpc;
+    public ThreadController(GameFieldPanelController gfpc) {
+        gameFieldPanelController = gfpc;
         gameFieldPanel = gfpc.getGameFieldPanel();
         gameField = gfpc.getGameField();
         character = gfpc.getCharacter();

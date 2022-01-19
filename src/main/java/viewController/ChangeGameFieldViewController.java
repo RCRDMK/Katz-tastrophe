@@ -1,4 +1,4 @@
-package presenter;
+package viewController;
 
 import game.GameField;
 import javafx.beans.value.ChangeListener;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * @since 21.11.2021
  */
 
-public class ChangeGameFieldPresenter {
+public class ChangeGameFieldViewController {
 
     private GameField gameField;
 
