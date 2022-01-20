@@ -18,7 +18,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.*;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pattern.ObserverInterface;
@@ -453,29 +455,7 @@ public class MainViewController implements ObserverInterface {
                     gameField.placeObjectsInGameField(xAxis, yAxis, "^");
                     gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
-
-            }
-        });
-    }
-
-    public void dragChara() {
-
-        scrollPane.setOnDragDetected(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Dragboard db = scrollPane.startDragAndDrop(TransferMode.MOVE);
-                int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
-                int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
-                System.out.println("drag " + xAxis + " " + yAxis);
-                event.consume();
-            }
-        });
-        //Nur Mouseevent
-
-        scrollPane.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
-            @Override
-            public void handle(MouseDragEvent event) {
-                System.out.println("entered " + event.getX() + event.getY());
+                drop(event);
             }
         });
     }
