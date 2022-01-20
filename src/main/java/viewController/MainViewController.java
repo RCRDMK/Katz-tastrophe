@@ -190,6 +190,30 @@ public class MainViewController implements ObserverInterface {
         });
     }
 
+    public void drag(MouseEvent mouseEvent) {
+        if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_PRESSED) && mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+        }
+    }
+
+    public void drop(MouseEvent mouseEvent) {//TODO Bug beseitigen, dass beim Setzen von anderen Objekten der Charakter auf 0,0 gesetzt wird
+        if (mouseEvent.getEventType().equals(MouseEvent.MOUSE_RELEASED) && mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+            if ((mouseEvent.getX() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && mouseEvent.getX() < 251) && (mouseEvent.getY() > gameFieldPanelController.getGameFieldPanel().getBorderPatting() && mouseEvent.getY() < 250)) {
+                for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
+                    for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {
+                        if (gameField.getGameFieldArray()[i][j].equals("^") || gameField.getGameFieldArray()[i][j].equals("v") || gameField.getGameFieldArray()[i][j].equals(">") || gameField.getGameFieldArray()[i][j].equals("<")) {
+                            gameField.getGameFieldArray()[i][j] = "x";
+                        }
+                    }
+                }
+                int xAxis = (int) ((mouseEvent.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
+                int yAxis = (int) ((mouseEvent.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
+                gameField.placeObjectsInGameField(xAxis, yAxis, "^");
+                gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
+            }
+        }
+
+    }
+
     /**
      * Responsible for presenting the user his/her file explorer in which he/she can choose which file to load.
      *
@@ -669,15 +693,6 @@ public class MainViewController implements ObserverInterface {
         character.putDrinkDown();
     }
 
-    //TODO Drop endlich ma hinbekommen
-    public void onDragClick(MouseEvent mouseEvent) {
-        System.out.println("drag");
-    }
-
-    public void onDragClickDone(DragEvent dragEvent) {
-        System.out.println("done");
-    }
-
     @Override //TODO Update muss etwas setzen
     public void update(Object object) {
 
@@ -738,4 +753,5 @@ public class MainViewController implements ObserverInterface {
     public void onLoadSerializeClicked(ActionEvent actionEvent) {
         loadSerial();
     }
+
 }
