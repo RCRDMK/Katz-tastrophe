@@ -27,6 +27,7 @@ public class CharaWrapper extends GameCharacter {
     @Override
     public void moveUp() {
         try {
+            super.lookHere("up");
             super.moveUp();
         } catch (WallInFrontException wall) {
             System.out.println("Wall in front");
@@ -42,6 +43,7 @@ public class CharaWrapper extends GameCharacter {
     @Override
     public void moveDown() {
         try {
+            super.lookHere("down");
             super.moveDown();
         } catch (WallInFrontException wall) {
             System.out.println("Wall in front");
@@ -58,6 +60,7 @@ public class CharaWrapper extends GameCharacter {
     @Override
     public void moveRight() {
         try {
+            super.lookHere("right");
             super.moveRight();
         } catch (WallInFrontException wall) {
             System.out.println("Wall in front");
@@ -74,6 +77,7 @@ public class CharaWrapper extends GameCharacter {
     @Override
     public void moveLeft() {
         try {
+            super.lookHere("left");
             super.moveLeft();
         } catch (WallInFrontException wall) {
             System.out.println("Wall in front");

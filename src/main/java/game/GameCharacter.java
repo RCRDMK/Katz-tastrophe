@@ -23,6 +23,13 @@ public class GameCharacter extends ObservedObject implements Serializable {
 
     }
 
+    /**
+     * Main method of the GameCharacter class. This method will be overwritten, once a class will be compiled. Inside of
+     * it will be the code, written by the user, which will be then executed through the run method in the Simulator class.
+     *
+     * @see controller.Simulation
+     * @since 15.01.2022
+     */
     public void main() {
 
     }

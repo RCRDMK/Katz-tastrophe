@@ -1,6 +1,9 @@
 package viewController;
 
-import controller.*;
+import controller.FileController;
+import controller.GameFieldPanelController;
+import controller.SimulationController;
+import controller.XMLController;
 import game.CharaWrapper;
 import game.GameCharacter;
 import game.GameField;
@@ -28,7 +31,6 @@ import pattern.ObserverInterface;
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,7 +58,6 @@ public class MainViewController implements ObserverInterface {
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
-    private ThreadController threadController;
 
     private FileController fileController = new FileController();
     private XMLController xmlController = new XMLController();
@@ -71,7 +72,6 @@ public class MainViewController implements ObserverInterface {
         character = gameFieldPanelController.getCharacter();
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
-        threadController = new ThreadController(gameFieldPanelController);
         gameField.addObserver(this);
         //stage = (Stage) textInput.getScene().getWindow();
 
@@ -103,12 +103,12 @@ public class MainViewController implements ObserverInterface {
     private void contextClick() {
         scrollPane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
-            public void handle(ContextMenuEvent event) {
+            public void handle(ContextMenuEvent event) {//TODO Context-Menü im richtigen Fenster anzeigen und nicht im Fenster, dass das Laden eines neues Fensters auslöst
                 ContextMenu contextMenu = new ContextMenu();
                 Class c = fileController.compiledMethods(fileController.getProgramName());
                 Method[] m = c.getDeclaredMethods();
                 for (Method met : m//TODO Besseren Code schreiben
-                ) {
+                ) {//Context menu for the main method and methods written by the user at runtime
                     MenuItem menuItem = new MenuItem(met.toString());
                     contextMenu.getItems().add(menuItem);
                     menuItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -117,14 +117,7 @@ public class MainViewController implements ObserverInterface {
                             try {
                                 Method metExc = c.getMethod(met.getName());
                                 metExc.invoke(c.getDeclaredConstructor().newInstance());
-                                System.out.println(metExc.getName());
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
-                                e.printStackTrace();
-                            } catch (InstantiationException e) {
-                                e.printStackTrace();
-                            } catch (NoSuchMethodException e) {
+                            } catch (Throwable e) {
                                 e.printStackTrace();
                             }
                         }
@@ -135,7 +128,7 @@ public class MainViewController implements ObserverInterface {
                 m = charaWrapper.getClass().getDeclaredMethods();
 
                 for (Method met : m
-                ) {
+                ) {//Context menu for methods in the GameCharacter class
                     MenuItem menuItem = new MenuItem(met.toString().replace("game.CharaWrapper.", ""));
                     contextMenu.getItems().add(menuItem);
                     menuItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -143,8 +136,7 @@ public class MainViewController implements ObserverInterface {
                         public void handle(ActionEvent event) {
                             try {
                                 Method metExc = c.getMethod(met.getName());
-                                System.out.println(metExc.getName());
-                                /*switch (metExc.getName()) {//TODO Besseren Code schreiben
+                                switch (metExc.getName()) {//TODO Besseren Code schreiben
                                     case "moveUp":
                                         onMoveUpClicked(event);
                                         break;
@@ -179,7 +171,6 @@ public class MainViewController implements ObserverInterface {
                                         onMoveUpClicked(event);
                                         break;
                                 }
-                            }*/
                             } catch (Throwable t) {
                                 t.printStackTrace();
                             }
@@ -220,7 +211,7 @@ public class MainViewController implements ObserverInterface {
      * Responsible for presenting the user his/her file explorer in which he/she can choose which file to load.
      *
      * @param stage stage to represent the fileChooser
-     * @return boolean value if the user has chosen a file or cancelled out of the window
+     * @return boolean value if the user has chosen a file (true) or cancelled out of the window (false)
      * @since 17.12.2021
      */
     //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/FileChooser.html
@@ -245,25 +236,25 @@ public class MainViewController implements ObserverInterface {
         }
     }
 
+    /**
+     * Responsible saving the scrollPane as a .png or .gif file.
+     *
+     * @since 23.12.2021
+     */
     //https://stackoverflow.com/questions/38028825/javafx-save-view-of-pane-to-image
-    public void createPngImage() {
+    public void createImage() {
         FileChooser fileChooser = new FileChooser();
 
-        //Set extension filter
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".png", "*.png"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".gif", "*.gif"));
-
-        //Prompt user to select a file
         File file = fileChooser.showSaveDialog(null);
 
         if (file != null && file.getName().endsWith(".png")) {
             try {
-                //Pad the capture area
                 WritableImage writableImage = new WritableImage((int) scrollPane.getWidth(),
                         (int) scrollPane.getHeight());
                 scrollPane.snapshot(null, writableImage);
                 RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-                //Write the snapshot to the chosen file
                 ImageIO.write(renderedImage, "png", file);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -283,6 +274,12 @@ public class MainViewController implements ObserverInterface {
         }
     }
 
+    /**
+     * Responsible creating a printer job to print the textarea.
+     *
+     * @param stage stage on which the dialog window should appear.
+     * @since 26.12.2021
+     */
     //https://stackoverflow.com/questions/54789373/how-to-print-pane-in-javafx
     public void printGameFieldAndUserCode(Stage stage) {
         PrinterJob pj = PrinterJob.createPrinterJob();
@@ -304,7 +301,7 @@ public class MainViewController implements ObserverInterface {
      * @since 16.12.2021
      */
     public void onCompileFileClicked(ActionEvent actionEvent) {
-        character = fileController.compileFileAndSetNewCharacter(fileController.getProgramName(), gameField, character);
+        character = fileController.compileFileAndSetNewCharacter(fileController.getProgramName(), gameField, character, gameFieldPanelController);
     }
 
     /**
@@ -366,23 +363,47 @@ public class MainViewController implements ObserverInterface {
 
     }
 
+    /**
+     * Responsible for handling the request made by the user to save the current file as a .java file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 15.12.2021
+     */
     //TODO Fenster dürfen nur ihre Datei speichern und nicht in denen, welche sie laden
     public void onSaveFileClicked(ActionEvent actionEvent) {
         fileController.setProgramName(fileController.getProgramName());
+        fileController.saveFile(fileController.getProgramName(), textInput.getText());
         System.out.println("Save " + fileController.getProgramName());
     }
 
+    /**
+     * Responsible for handling the request made by the user to save the current file as a .xml file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 16.01.2022
+     */
     public void onSaveAsXmlClicked(ActionEvent actionEvent) {
         xmlController.saveAsXML(gameField, (Stage) scrollPane.getScene().getWindow());
     }
 
-
+    /**
+     * Responsible for handling the request made by the user to load a .xml file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 18.01.2022
+     */
     public void onLoadXmlClicked(ActionEvent actionEvent) {
         xmlController.loadXML(gameField, (Stage) scrollPane.getScene().getWindow());
     }
 
+    /**
+     * Responsible for handling the request made by the user to save the current file as an image.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 23.12.2021
+     */
     public void onSaveAsImageClicked(ActionEvent actionEvent) {
-        createPngImage();
+        createImage();
     }
 
     /**
@@ -580,6 +601,12 @@ public class MainViewController implements ObserverInterface {
         });
     }
 
+    /**
+     * Responsible for handling the request made by the user to print the current file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 26.12.2021
+     */
     public void onPrintClicked(ActionEvent actionEvent) {
         printGameFieldAndUserCode((Stage) scrollPane.getScene().getWindow());
     }
@@ -678,24 +705,28 @@ public class MainViewController implements ObserverInterface {
 
     }
 
+    /**
+     * Responsible for handling the request made by the user to execute the contents of the main method in the
+     * currently compiled class.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 15.01.2022
+     */
     public void start(ActionEvent actionEvent) {
-        //threadController.start();
         SimulationController sc = new SimulationController(gameFieldPanelController);
         sc.start();
 
     }
 
-    public void stop(ActionEvent actionEvent) {
-        threadController.stop();
-    }
-
+    /**
+     * Responsible for handling the user request to save the current file as a .rsm file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 11.01.2022
+     */
     public void onSaveAsSerializeClicked(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-
-        //Set extension filter
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
-
-        //Prompt user to select a file
         File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
 
         if (file != null && file.getName().endsWith(".rsm")) {
@@ -709,8 +740,14 @@ public class MainViewController implements ObserverInterface {
         }
     }
 
-    public void loadSerial() {
 
+    /**
+     * Responsible for handling the user request to load a .rsm file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 13.01.2022
+     */
+    public void onLoadSerializeClicked(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.setTitle("Programm öffnen");
@@ -728,10 +765,6 @@ public class MainViewController implements ObserverInterface {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void onLoadSerializeClicked(ActionEvent actionEvent) {
-        loadSerial();
     }
 
 }

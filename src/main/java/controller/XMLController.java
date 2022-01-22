@@ -21,8 +21,24 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class is responsible for creating/writing xml files and also reading them. For that it uses the DOM structure.
+ *
+ * @since 16.01.2022
+ */
 public class XMLController {
 
+    /**
+     * Responsible for creating a xml file.
+     * <p>
+     * When this method is called it first saves the size of the array of the given gameField value. Then it iterates
+     * through the array to find the position of the character and the drink. Then it iterates again through it, to find
+     * the position of all walls and cat placed. Lastly it transforms all of its finding in a xml file.
+     *
+     * @param gameField the gamefield which holds the array where every object on it can be found.
+     * @param stage     the stage from the view for the fileChooser so that both can be associated with each other.
+     * @since 16.01.2022
+     */
     public void saveAsXML(GameField gameField, Stage stage) {//TODO Character Zustände abspeichern und laden
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
@@ -133,6 +149,16 @@ public class XMLController {
         }
     }
 
+    /**
+     * Responsible for reading a xml file.
+     * <p>
+     * When this method is called, it reads the chosen xml file, sets the size of the array inside the gameField and
+     * places objects inside of it, according to their position in the chosen xml file.
+     *
+     * @param gameField the gamefield which holds the array where every object on it can be found.
+     * @param stage     the stage from the view for the fileChooser so that both can be associated with each other.
+     * @since 18.01.2022
+     */
     public void loadXML(GameField gameField, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));

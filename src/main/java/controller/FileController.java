@@ -83,6 +83,17 @@ public class FileController {
         writeInFile(fileName, contentToSave);
     }
 
+    /**
+     * Responsible for loading the code, written by the user, in the textarea.
+     * <p>
+     * It reads the string inside the given file, removes the prefix and the postfix and then returns it.
+     *
+     * @param fileName The given name of the file which code should be read
+     * @return the code inside the chosen file as a string. It removes the prefix, such as class name and inheritance,
+     * and postfix, closing semicolon of the class, so that only the main method and methods written by the user during
+     * runtime will be depicted.
+     * @since 18.12.2021
+     */
     public String loadTextForEditor(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         programName = fileName;
@@ -114,7 +125,7 @@ public class FileController {
      * @since 15.12.2021
      */
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
-    public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter) {
+    public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter, GameFieldPanelController gameFieldPanelController) {
         String file = userDirectory + programFolder + fileName + fileType;
         programName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
@@ -155,6 +166,7 @@ public class FileController {
             e.printStackTrace();
         }
         newCharacter.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newCharacter. Vll als Return
+        gameFieldPanelController.setCharacter(newCharacter);
         return newCharacter;
     }
 

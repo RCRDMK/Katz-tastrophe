@@ -52,4 +52,7 @@ public class GameFieldPanelController extends ObservedObject {
         return character;
     }
 
+    public void setCharacter(GameCharacter character) {
+        this.character = character;
+    }
 }
