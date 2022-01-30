@@ -1,6 +1,6 @@
-package game;
+package model;
 
-import game.exceptions.*;
+import model.exceptions.*;
 import pattern.ObservedObject;
 
 import java.io.Serializable;

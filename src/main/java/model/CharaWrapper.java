@@ -1,6 +1,6 @@
-package game;
+package model;
 
-import game.exceptions.*;
+import model.exceptions.*;
 
 /**
  * This class is purely being used to forward method calls to its parent class and to abstract the relationship between

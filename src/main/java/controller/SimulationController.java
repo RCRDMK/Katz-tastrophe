@@ -1,6 +1,6 @@
 package controller;
 
-import game.GameField;
+import model.GameField;
 import pattern.ObservedObject;
 
 /**

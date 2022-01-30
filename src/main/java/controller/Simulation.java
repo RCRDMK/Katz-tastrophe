@@ -1,7 +1,7 @@
 package controller;
 
-import game.GameField;
-import game.exceptions.StoppedException;
+import model.GameField;
+import model.exceptions.StoppedException;
 import javafx.application.Platform;
 import pattern.ObserverInterface;
 

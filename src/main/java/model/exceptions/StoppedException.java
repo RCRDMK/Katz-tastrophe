@@ -1,4 +1,4 @@
-package game.exceptions;
+package model.exceptions;
 
 /**
  * This exception gets thrown the thread was being stopped.

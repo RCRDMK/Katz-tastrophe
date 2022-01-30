@@ -1,6 +1,6 @@
 package viewController;
 
-import game.GameField;
+import model.GameField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

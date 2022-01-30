@@ -4,10 +4,10 @@ import controller.FileController;
 import controller.GameFieldPanelController;
 import controller.SimulationController;
 import controller.XMLController;
-import game.CharaWrapper;
-import game.GameCharacter;
-import game.GameField;
-import game.exceptions.*;
+import model.CharaWrapper;
+import model.GameCharacter;
+import model.GameField;
+import model.exceptions.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -141,7 +141,7 @@ public class MainViewController implements ObserverInterface {
                     {
                         method = met;
                     }
-                    MenuItem menuItem = new MenuItem(met.toString().replace("game.CharaWrapper.", ""));
+                    MenuItem menuItem = new MenuItem(met.toString().replace("model.CharaWrapper.", ""));
                     contextMenu.getItems().add(menuItem);
                     menuItem.setOnAction(new EventHandler<ActionEvent>() {
                         @Override

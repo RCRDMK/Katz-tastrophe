@@ -1,8 +1,8 @@
 package controller;
 
-import game.GameCharacter;
-import game.GameField;
-import game.GameFieldPanel;
+import model.GameCharacter;
+import model.GameField;
+import model.GameFieldPanel;
 import pattern.ObservedObject;
 
 /**

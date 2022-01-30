@@ -1,6 +1,6 @@
 package controller;
 
-import game.GameField;
+import model.GameField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.w3c.dom.Attr;

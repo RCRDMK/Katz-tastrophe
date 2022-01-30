@@ -1,5 +1,5 @@
 import controller.FileController;
-import game.GameField;
+import model.GameField;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

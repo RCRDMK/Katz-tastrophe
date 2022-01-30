@@ -1,8 +1,8 @@
 package controller;
 
-import game.CharaWrapper;
-import game.GameCharacter;
-import game.GameField;
+import model.CharaWrapper;
+import model.GameCharacter;
+import model.GameField;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -169,9 +169,9 @@ public class FileController {
         gameFieldPanelController.setCharacter(newCharacter);
         return newCharacter;
     }
-    
+
     public String getPrefix(String fileName) {
-        return "public class " + fileName + " extends game.CharaWrapper {\n\n";
+        return "public class " + fileName + " extends model.CharaWrapper {\n\n";
     }
 
     public String getPostfix() {
