@@ -169,34 +169,7 @@ public class FileController {
         gameFieldPanelController.setCharacter(newCharacter);
         return newCharacter;
     }
-
-    /**
-     * Responsible for compiling .java files to .class files to, later then, read the, from the user, declared methods in
-     * the .class file.
-     *
-     * @param fileName name of the .java file which is to be compiled
-     * @return compiled .class file from which the declared methods can be read
-     * @since 18.12.2021
-     */
-    public Class compiledMethods(String fileName) {
-        URL classUrl = null;
-        try {
-            classUrl = new URL("file:///" + userDirectory + programFolder);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        URL[] urls = {classUrl};
-        URLClassLoader classLoader = new URLClassLoader(urls);
-        Class c = null;
-        try {
-            c = classLoader.loadClass(fileName);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return c;
-    }
-
-
+    
     public String getPrefix(String fileName) {
         return "public class " + fileName + " extends game.CharaWrapper {\n\n";
     }

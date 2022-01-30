@@ -105,18 +105,25 @@ public class MainViewController implements ObserverInterface {
             @Override
             public void handle(ContextMenuEvent event) {//TODO Context-Menü im richtigen Fenster anzeigen und nicht im Fenster, dass das Laden eines neues Fensters auslöst
                 ContextMenu contextMenu = new ContextMenu();
-                Class c = fileController.compiledMethods(fileController.getProgramName());
+                CharaWrapper cw = (CharaWrapper) gameFieldPanelController.getCharacter();
+                Class c = cw.getClass();
                 Method[] m = c.getDeclaredMethods();
-                for (Method met : m//TODO Besseren Code schreiben
+                for (Method met : m
                 ) {//Context menu for the main method and methods written by the user at runtime
                     MenuItem menuItem = new MenuItem(met.toString());
                     contextMenu.getItems().add(menuItem);
                     menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                        Method method;
+
+                        {
+                            method = met;
+                        }
+
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                Method metExc = c.getMethod(met.getName());
-                                metExc.invoke(c.getDeclaredConstructor().newInstance());
+                                System.out.println(method.getName());
+                                method.invoke(character);
                             } catch (Throwable e) {
                                 e.printStackTrace();
                             }
@@ -124,53 +131,23 @@ public class MainViewController implements ObserverInterface {
                     });
 
                 }
-                CharaWrapper charaWrapper = new CharaWrapper();
-                m = charaWrapper.getClass().getDeclaredMethods();
+                CharaWrapper chaWra = new CharaWrapper();
+                Class cl = chaWra.getClass();
+                Method[] me = cl.getDeclaredMethods();
+                for (Method met : me
+                ) {//Context menu for methods in the CharaWrapper class
+                    Method method;
 
-                for (Method met : m
-                ) {//Context menu for methods in the GameCharacter class
+                    {
+                        method = met;
+                    }
                     MenuItem menuItem = new MenuItem(met.toString().replace("game.CharaWrapper.", ""));
                     contextMenu.getItems().add(menuItem);
                     menuItem.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                Method metExc = c.getMethod(met.getName());
-                                switch (metExc.getName()) {//TODO Besseren Code schreiben
-                                    case "moveUp":
-                                        onMoveUpClicked(event);
-                                        break;
-                                    case "moveDown":
-                                        onMoveDownClicked(event);
-                                        break;
-                                    case "moveLeft":
-                                        onMoveLeftClicked(event);
-                                        break;
-                                    case "moveRight":
-                                        onMoveRightClicked(event);
-                                        break;
-                                    case "takeCat":
-                                        onPickCatUpClicked(event);
-                                        break;
-                                    case "takeDrink":
-                                        onPickDrinkUpClicked(event);
-                                        break;
-                                    case "putCatDown":
-                                        onPutCatDownClicked(event);
-                                        break;
-                                    case "putDrinkDown":
-                                        onPutDrinkDownClicked(event);
-                                        break;
-                                    case "handsFree":
-                                        onMoveUpClicked(event);
-                                        break;
-                                    case "catThere":
-                                        onMoveUpClicked(event);
-                                        break;
-                                    case "stepOverCatPossible":
-                                        onMoveUpClicked(event);
-                                        break;
-                                }
+                                method.invoke(chaWra);
                             } catch (Throwable t) {
                                 t.printStackTrace();
                             }
@@ -225,7 +202,7 @@ public class MainViewController implements ObserverInterface {
 
         if (selectedFile != null) {
             if (selectedFile.getName().replace(".java", "") == fileController.getProgramName()) {
-                System.out.println("hi");
+                System.out.println("hi");//TODO Vll als Instanceof?
                 return false;
             }
             fileController.setProgramName(selectedFile.getName().replace(".java", ""));
