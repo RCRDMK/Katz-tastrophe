@@ -424,7 +424,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="1130.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"
-                              onAction="#stop"
+
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
@@ -444,7 +444,7 @@
                 <TextArea prefHeight="200.0" prefWidth="200.0" fx:id="textInput"/>
                 <VBox alignment="CENTER" fx:id="vBox">
                     <HBox alignment="CENTER" fx:id="hBox">
-                        <ScrollPane fx:id="scrollPane" onDragDetected="#onDragClick" onDragDone="#onDragClickDone"/>
+                        <ScrollPane fx:id="scrollPane"/>
                     </HBox>
                 </VBox>
             </items>

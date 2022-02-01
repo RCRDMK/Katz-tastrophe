@@ -1,8 +1,8 @@
 package controller;
 
+import javafx.application.Platform;
 import model.GameField;
 import model.exceptions.StoppedException;
-import javafx.application.Platform;
 import pattern.ObserverInterface;
 
 /**
@@ -55,27 +55,30 @@ public class Simulation extends Thread implements ObserverInterface {
 
     @Override
     public void update(Object object) {
-        if (!Platform.isFxApplicationThread()) {
-            return;
-        }
         try {
-            sleep(500);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        if (stop) {
-            throw new StoppedException();
-        }
-        while (pause) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (Platform.isFxApplicationThread()) {
+                return;
             }
+            sleep(500);
             if (stop) {
                 throw new StoppedException();
             }
+            while (pause) {
+                synchronized (this) {
+                    try {//synchronized
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (stop) {
+                    throw new StoppedException();
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
+
     }
 }
 

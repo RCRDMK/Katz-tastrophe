@@ -45,7 +45,7 @@ public class SimulationController extends ObservedObject {
     public void start() {
         simulation = new Simulation(gameFieldPanelController, this);
         simulation.setDaemon(true);
-        simulation.run();
+        simulation.start();
     }
 
     /**
@@ -55,7 +55,9 @@ public class SimulationController extends ObservedObject {
      */
     public void resume() {
         simulation.pause = false;
-        simulation.notify();
+        synchronized (simulation) {
+            simulation.notify();
+        }
     }
 
     /**

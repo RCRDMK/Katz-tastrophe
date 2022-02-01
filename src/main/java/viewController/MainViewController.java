@@ -4,10 +4,6 @@ import controller.FileController;
 import controller.GameFieldPanelController;
 import controller.SimulationController;
 import controller.XMLController;
-import model.CharaWrapper;
-import model.GameCharacter;
-import model.GameField;
-import model.exceptions.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +22,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.CharaWrapper;
+import model.GameCharacter;
+import model.GameField;
+import model.exceptions.*;
 import pattern.ObserverInterface;
 
 import javax.imageio.ImageIO;
@@ -45,8 +45,6 @@ import java.nio.file.Path;
 public class MainViewController implements ObserverInterface {
 
     //TODO Es darf eine Instanz nur einmal offen sein und nicht fünf Fenster mit dem selben Namen
-
-    public static final String fxml = "/fxml/MainView.fxml";
 
     @FXML
     ScrollPane scrollPane;
@@ -73,7 +71,6 @@ public class MainViewController implements ObserverInterface {
         gameField = gameFieldPanelController.getGameField();
         gameField.addObserver(gameFieldPanelController.getGameFieldPanel());
         gameField.addObserver(this);
-        //stage = (Stage) textInput.getScene().getWindow();
 
 
         if (Files.notExists(Path.of("programs"))) {
@@ -147,7 +144,7 @@ public class MainViewController implements ObserverInterface {
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                method.invoke(chaWra);
+                                method.invoke(character);
                             } catch (Throwable t) {
                                 t.printStackTrace();
                             }

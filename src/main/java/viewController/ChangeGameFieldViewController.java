@@ -1,6 +1,5 @@
 package viewController;
 
-import model.GameField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -8,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.GameField;
 
 import java.util.regex.Pattern;
 
@@ -20,6 +20,10 @@ import java.util.regex.Pattern;
 public class ChangeGameFieldViewController {
 
     private GameField gameField;
+
+    boolean row = false;
+
+    boolean column = false;
 
     @FXML
     Label changeViewErrorLabel;
@@ -52,17 +56,41 @@ public class ChangeGameFieldViewController {
     }
 
     /**
-     * Responsible for validating if the textfields are containing valid entries. If so, it enables the accept button.
+     * Responsible for validating if the textfields are both containing valid entries. If so, it enables the accept button.
      *
      * @since 21.11.2021
      */
     public void validateTextField() {
-        changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {//TODO TextFieldColumn hinzufügen
+
+        changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {//checks the content of the row textfield
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (Pattern.matches("^[2-9]$", changeViewTextFieldRow.getText())) {
+                    row = true;
+                } else if (!Pattern.matches("^[2-9]$", changeViewTextFieldRow.getText())) {
+                    row = false;
+                }
+                if (row == true && column == true) {
                     changeViewAccept.setDisable(false);
-                } else {
+                }
+                if (row == false || column == false) {
+                    changeViewAccept.setDisable(true);
+                }
+            }
+        });
+
+        changeViewTextFieldColumn.textProperty().addListener(new ChangeListener<String>() {//checks the content of the column textfield
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (Pattern.matches("^[2-9]$", changeViewTextFieldColumn.getText())) {
+                    column = true;
+                } else if (!Pattern.matches("^[2-9]$", changeViewTextFieldColumn.getText())) {
+                    column = false;
+                }
+                if (row == true && column == true) {
+                    changeViewAccept.setDisable(false);
+                }
+                if (row == false || column == false) {
                     changeViewAccept.setDisable(true);
                 }
             }
