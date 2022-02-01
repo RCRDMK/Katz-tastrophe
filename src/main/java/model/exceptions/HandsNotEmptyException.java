@@ -1,4 +1,4 @@
-package game.exceptions;
+package model.exceptions;
 
 /**
  * This exception gets thrown when the hands of the character aren't empty

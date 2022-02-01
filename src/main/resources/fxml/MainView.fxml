@@ -3,10 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400"
             minWidth="1150"
             prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2"
-            fx:controller="presenter.ClientPresenter" stylesheets="@../css/stylesheet.css">
+            fx:controller="viewController.MainViewController" stylesheets="@../css/stylesheet.css" fx:id="test">
     <children>
 
         <fx:define>
@@ -17,17 +19,34 @@
             <menus>
                 <Menu text="_Editor">
                     <items>
-                        <MenuItem mnemonicParsing="false" fx:id="newFile" text="Neu" accelerator="Shortcut+N">
+                        <MenuItem mnemonicParsing="false" fx:id="newFile" text="Neu" accelerator="Shortcut+N"
+                                  onAction="#onNewFileClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/newFileMenu.png"></Image>
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" fx:id="openFile" text="Öffnen" accelerator="Shortcut+O">
+                        <Menu mnemonicParsing="false" text="Laden">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/loadFileMenu.png"></Image>
+                                </ImageView>
+                            </graphic>
+                            <items>
+                                <MenuItem mnemonicParsing="false" fx:id="loadFile" text="Öffnen"
+                                          accelerator="Shortcut+O"
+                                          onAction="#onLoadFileClicked"/>
+                                <MenuItem mnemonicParsing="false" fx:id="loadXML" text="XML-Datei laden"
+                                          onAction="#onLoadXmlClicked"/>
+                            </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" fx:id="compileFile" text="Kompilieren"
+                                  accelerator="Shortcut+C"
+                                  onAction="#onCompileFileClicked">
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@../images/menuItems/compileMenu.png"></Image>
                                 </ImageView>
                             </graphic>
                         </MenuItem>
@@ -43,16 +62,28 @@
                 </Menu>
                 <Menu text="_Spielfläche">
                     <items>
-                        <Menu mnemonicParsing="false" text="Speichern als">
+                        <MenuItem mnemonicParsing="false" fx:id="saveFile" text="Speichern" accelerator="Shortcut+S"
+                                  onAction="#onSaveFileClicked">
                             <graphic>
                                 <ImageView>
                                     <Image url="@../images/menuItems/saveFileMenu.png"></Image>
                                 </ImageView>
                             </graphic>
+                        </MenuItem>
+                        <Menu mnemonicParsing="false" text="Speichern als">
                             <items>
-                                <MenuItem mnemonicParsing="false" fx:id="saveXml" text="XML" accelerator="Shortcut+S"/>
-                                <MenuItem mnemonicParsing="false" fx:id="saveJaxb" text="JAXB"/>
-                                <MenuItem mnemonicParsing="false" fx:id="saveSerial" text="Serialisieren"/>
+                                <MenuItem mnemonicParsing="false" fx:id="saveAsXml" text="XML"
+                                          onAction="#onSaveAsXmlClicked"/>
+                                <MenuItem mnemonicParsing="false" fx:id="saveAsImage" text="Bild"
+                                          onAction="#onSaveAsImageClicked"/>
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Serialisierung">
+                            <items>
+                                <MenuItem mnemonicParsing="false" fx:id="saveAsSerialize" text="Serialisieren"
+                                          onAction="#onSaveAsSerializeClicked"/>
+                                <MenuItem mnemonicParsing="false" fx:id="loadSerialize" text="De-Serialisieren"
+                                          onAction="#onLoadSerializeClicked"/>
                             </items>
                         </Menu>
                         <MenuItem mnemonicParsing="false" fx:id="changeSizeField" text="Größe des Spielfeldes ändern"
@@ -84,6 +115,9 @@
                             </graphic>
                         </RadioMenuItem>
                     </items>
+                    <SeparatorMenuItem></SeparatorMenuItem>
+                    <MenuItem mnemonicParsing="false" fx:id="print" text="Drucken" accelerator="Shortcut+P"
+                              onAction="#onPrintClicked"/>
                 </Menu>
                 <Menu text="Spiel_figur">
                     <items>
@@ -151,7 +185,18 @@
 
         <ToolBar layoutY="28.0" prefHeight="40.0" prefWidth="1200.0">
             <items>
-                <Button mnemonicParsing="true" fx:id="newFileButton">
+                <Button mnemonicParsing="true" fx:id="compileFileButton" onAction="#onCompileFileClicked">
+                    <graphic>
+                        <ImageView>
+                            <Image url="@../images/buttons/compile.png"/>
+                        </ImageView>
+                    </graphic>
+                    <tooltip>
+                        <Tooltip text="Datei kompilieren"/>
+                    </tooltip>
+                </Button>
+
+                <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" fx:id="newFileButton">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/newFile.png"/>
@@ -162,21 +207,8 @@
                     </tooltip>
                 </Button>
 
-                <!--
-                Noch nicht klar, ob dieser Button Sinn macht.
-                Was ist der Unterschied zwischen "Datei öffnen" und "Datei laden"?
-                Machen die beiden nicht genau das selbe in diesem Kontext?
-
-                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false">
-                    <graphic>
-                        <ImageView>
-                            <Image url="" />
-                        </ImageView>
-                    </graphic>
-                    <tooltip><Tooltip text="Datei öffnen"/> </tooltip>
-                </Button>
-    -->
-                <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" fx:id="saveFileButton">
+                <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false" fx:id="saveFileButton"
+                        onAction="#onSaveFileClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/saveFile.png"/>
@@ -187,7 +219,7 @@
                     </tooltip>
                 </Button>
 
-                <Button layoutX="122.0" layoutY="10.0" mnemonicParsing="false" fx:id="openFileButton">
+                <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" fx:id="openFileButton">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/loadFile.png"/>
@@ -198,7 +230,7 @@
                     </tooltip>
                 </Button>
 
-                <Button layoutX="178.0" layoutY="10.0" mnemonicParsing="false" fx:id="changeSizeFieldButton"
+                <Button layoutX="234.0" layoutY="10.0" mnemonicParsing="false" fx:id="changeSizeFieldButton"
                         onAction="#onChangeSizeFieldClicked">
                     <graphic>
                         <ImageView>
@@ -210,7 +242,7 @@
                     </tooltip>
                 </Button>
 
-                <ToggleButton layoutX="234.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCharaButton"
+                <ToggleButton layoutX="290.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCharaButton"
                               toggleGroup="$buttons" onAction="#onPlaceCharaClicked">
                     <graphic>
                         <ImageView>
@@ -222,7 +254,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="290.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeDrinkButton"
+                <ToggleButton layoutX="346.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeDrinkButton"
                               toggleGroup="$buttons" onAction="#onPlaceDrinkClicked">
                     <graphic>
                         <ImageView>
@@ -234,7 +266,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="346.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCatButton"
+                <ToggleButton layoutX="402.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeCatButton"
                               toggleGroup="$buttons" onAction="#onPlaceCatClicked">
                     <graphic>
                         <ImageView>
@@ -246,7 +278,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="402.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeWallButton"
+                <ToggleButton layoutX="458.0" layoutY="10.0" mnemonicParsing="false" fx:id="placeWallButton"
                               toggleGroup="$buttons" onAction="#onPlaceWallClicked">
                     <graphic>
                         <ImageView>
@@ -258,7 +290,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="458.0" layoutY="10.0" mnemonicParsing="false" fx:id="deleteContentButton"
+                <ToggleButton layoutX="514.0" layoutY="10.0" mnemonicParsing="false" fx:id="deleteContentButton"
                               toggleGroup="$buttons" onAction="#onDeleteContentClicked">
                     <graphic>
                         <ImageView>
@@ -270,7 +302,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="514.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton"
+                <ToggleButton layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton"
                               toggleGroup="$buttons" onAction="#onPickDrinkUpClicked">
                     <graphic>
                         <ImageView>
@@ -282,7 +314,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton"
+                <ToggleButton layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton"
                               toggleGroup="$buttons" onAction="#onPickCatUpClicked">
                     <graphic>
                         <ImageView>
@@ -294,7 +326,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton"
+                <ToggleButton layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton"
                               toggleGroup="$buttons" onAction="#onPutDrinkDownClicked">
                     <graphic>
                         <ImageView>
@@ -306,7 +338,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton"
+                <ToggleButton layoutX="738.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton"
                               toggleGroup="$buttons" onAction="#onPutCatDownClicked">
                     <graphic>
                         <ImageView>
@@ -318,7 +350,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="738.0" layoutY="20.0" mnemonicParsing="false" fx:id="moveUpButton"
+                <ToggleButton layoutX="794.0" layoutY="20.0" mnemonicParsing="false" fx:id="moveUpButton"
                               toggleGroup="$buttons" onAction="#onMoveUpClicked">
                     <graphic>
                         <ImageView>
@@ -330,7 +362,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="794.0" layoutY="30.0" mnemonicParsing="false" fx:id="moveDownButton"
+                <ToggleButton layoutX="850.0" layoutY="30.0" mnemonicParsing="false" fx:id="moveDownButton"
                               toggleGroup="$buttons" onAction="#onMoveDownClicked">
                     <graphic>
                         <ImageView>
@@ -342,7 +374,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="850.0" layoutY="40.0" mnemonicParsing="false" fx:id="moveRightButton"
+                <ToggleButton layoutX="906.0" layoutY="40.0" mnemonicParsing="false" fx:id="moveRightButton"
                               toggleGroup="$buttons" onAction="#onMoveRightClicked">
                     <graphic>
                         <ImageView>
@@ -354,7 +386,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="906.0" layoutY="50.0" mnemonicParsing="false" fx:id="moveLeftButton"
+                <ToggleButton layoutX="962.0" layoutY="50.0" mnemonicParsing="false" fx:id="moveLeftButton"
                               toggleGroup="$buttons" onAction="#onMoveLeftClicked">
                     <graphic>
                         <ImageView>
@@ -366,7 +398,8 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="962.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"
+                <ToggleButton layoutX="1018.0" layoutY="60.0" mnemonicParsing="false" fx:id="startButton"
+                              onAction="#start"
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
@@ -378,7 +411,7 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="1018.0" layoutY="70.0" mnemonicParsing="false" fx:id="pauseButton"
+                <ToggleButton layoutX="1074.0" layoutY="70.0" mnemonicParsing="false" fx:id="pauseButton"
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
@@ -390,7 +423,8 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="1074.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"
+                <ToggleButton layoutX="1130.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"
+                              
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>
@@ -404,15 +438,15 @@
 
             </items>
         </ToolBar>
-        <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0">
+        <SplitPane dividerPositions="0.5033422459893048" layoutY="74.0" prefHeight="302.0" prefWidth="1150.0"
+                   fx:id="splitPane">
             <items>
-                <TextArea prefHeight="200.0" prefWidth="200.0"/>
-                <!--<VBox alignment="CENTER" fx:id="vBox">
+                <TextArea prefHeight="200.0" prefWidth="200.0" fx:id="textInput"/>
+                <VBox alignment="CENTER" fx:id="vBox">
                     <HBox alignment="CENTER" fx:id="hBox">
                         <ScrollPane fx:id="scrollPane"/>
                     </HBox>
-                </VBox>-->
-                <ScrollPane fx:id="scrollPane"/>
+                </VBox>
             </items>
         </SplitPane>
         <Label layoutY="380.0" prefHeight="18.0" prefWidth="600.0" text="'Mau! Maaauuuuuu!!!' - Kuro, immer"

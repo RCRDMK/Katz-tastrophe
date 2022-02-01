@@ -1,10 +1,11 @@
-package game;
+package model;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import pattern.ObserverInterface;
 
 
 /**
@@ -14,21 +15,18 @@ import javafx.scene.paint.Color;
  *
  * @since 10.11.2021
  */
-public class GameFieldPanel extends Region {
+public class GameFieldPanel extends Region implements ObserverInterface {
 
-    //Anleitung zum Arbeiten mit Canvas'. Auch wie man Bilder einfügt oder diese animiert
-    //https://edencoding.com/javafx-canvas/
-
-    static final int BORDER_PATTING = 20;
-    static private final Image cat = new Image("images/buttons/cat.png");
-    static private final Image wall = new Image("images/buttons/wall.png");
-    static private final Image drink = new Image("images/buttons/drink.png");
-    static private final Image character = new Image("images/buttons/protag.png");
-    static private GameField gameField;
-    static private Canvas canvas;
-    static private GraphicsContext graCon;
-    static private double tileHeightCalculated;
-    static private double tileWidthCalculated;
+    final int BORDER_PATTING = 0;
+    private final Image cat = new Image("images/buttons/cat.png");
+    private final Image wall = new Image("images/buttons/wall.png");
+    private final Image drink = new Image("images/buttons/drink.png");
+    private final Image character = new Image("images/buttons/protag.png");
+    private GameField gameField;
+    private Canvas canvas;
+    private GraphicsContext graCon;
+    private double tileHeightCalculated;
+    private double tileWidthCalculated;
 
     /**
      * The default constructor of the class
@@ -58,30 +56,34 @@ public class GameFieldPanel extends Region {
         this.graCon = canvas.getGraphicsContext2D();
         this.setPrefSize(height, width);
         this.getChildren().add(this.canvas);
-        tileHeightCalculated = (this.getPrefHeight() - BORDER_PATTING) / gameField.getGameField().length;
-        tileWidthCalculated = (this.getPrefWidth() - BORDER_PATTING) / gameField.getGameField()[0].length;
+        tileHeightCalculated = (this.getPrefHeight() - BORDER_PATTING) / gameField.getGameFieldArray().length;
+        tileWidthCalculated = (this.getPrefWidth() - BORDER_PATTING) / gameField.getGameFieldArray()[0].length;
         drawGameField();
     }
 
-    public static int getBorderPatting() {
+    public int getBorderPatting() {
         return BORDER_PATTING;
     }
 
-    public static double getTileHeightCalculated() {
+    public double getTileHeightCalculated() {
         return tileHeightCalculated;
     }
 
-    public static double getTileWidthCalculated() {
+    public double getTileWidthCalculated() {
         return tileWidthCalculated;
     }
 
-    public static Canvas getCanvas() {
+    public Canvas getCanvas() {
         return canvas;
     }
 
-    public static void calculateTileHeightAndWidth() {
-        GameFieldPanel.tileHeightCalculated = (getCanvas().getHeight() - BORDER_PATTING) / gameField.getGameField().length;
-        GameFieldPanel.tileWidthCalculated = (getCanvas().getWidth() - BORDER_PATTING) / gameField.getGameField()[0].length;
+    public void setGameField(GameField gameField) {
+        this.gameField = gameField;
+    }
+
+    public void calculateTileHeightAndWidth() {
+        tileHeightCalculated = (getCanvas().getHeight() - BORDER_PATTING) / gameField.getGameFieldArray().length;
+        tileWidthCalculated = (getCanvas().getWidth() - BORDER_PATTING) / gameField.getGameFieldArray()[0].length;
     }
 
     /**
@@ -92,10 +94,10 @@ public class GameFieldPanel extends Region {
      *
      * @since 18.11.2021
      */
-    private static void drawGameField() {
+    private void drawGameField() {
         graCon.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int i = 0; i < gameField.getGameField().length; i++) {
-            for (int j = 0; j < gameField.getGameField()[0].length; j++) {
+        for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
+            for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {
                 graCon.setStroke(Color.BLACK);
                 graCon.setFill(Color.SLATEGREY);
                 graCon.fillRect(BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
@@ -112,29 +114,38 @@ public class GameFieldPanel extends Region {
      *
      * @since 18.11.2011
      */
-    public static void drawObjectsOnGameField() {
+    public void drawObjectsOnGameField() {
         drawGameField();
-        for (int i = 0; i < gameField.getGameField().length; i++) {
-            for (int j = 0; j < gameField.getGameField()[0].length; j++) {
-                if (gameField.gameField[i][j].equals("C")) {
+        for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
+            for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {
+                if (gameField.getGameFieldArray()[i][j].equals("C")) {
                     graCon.drawImage(cat, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("W")) {
+                } else if (gameField.getGameFieldArray()[i][j].equals("W")) {
                     graCon.drawImage(wall, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("D")) {
+                } else if (gameField.getGameFieldArray()[i][j].equals("D")) {
                     graCon.drawImage(drink, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
 
 
-                if (gameField.gameField[i][j].equals("^")) {
+                if (gameField.getGameFieldArray()[i][j].equals("^") || gameField.getGameFieldArray()[i][j].equals("C^")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("v")) {
+                } else if (gameField.getGameFieldArray()[i][j].equals("v") || gameField.getGameFieldArray()[i][j].equals("Cv")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals(">")) {
+                } else if (gameField.getGameFieldArray()[i][j].equals(">") || gameField.getGameFieldArray()[i][j].equals("C>")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
-                } else if (gameField.gameField[i][j].equals("<")) {
+                } else if (gameField.getGameFieldArray()[i][j].equals("<") || gameField.getGameFieldArray()[i][j].equals("C<")) {
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
             }
         }
+    }
+
+    @Override
+    public void update(Object object) {
+        if (object.getClass() == GameField.class) {
+            gameField = (GameField) object;
+            calculateTileHeightAndWidth();
+        }
+        drawObjectsOnGameField();
     }
 }

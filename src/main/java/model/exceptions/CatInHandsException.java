@@ -1,4 +1,4 @@
-package game.exceptions;
+package model.exceptions;
 
 /**
  * This exception gets thrown when there's a cat in the hand of the character
