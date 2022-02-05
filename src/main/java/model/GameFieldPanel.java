@@ -115,6 +115,7 @@ public class GameFieldPanel extends Region implements ObserverInterface {
      * @since 18.11.2011
      */
     public void drawObjectsOnGameField() {
+        //TODO Character anders zeichnen, je nachdem wohin er schaut
         drawGameField();
         for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
             for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {

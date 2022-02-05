@@ -3,6 +3,8 @@ package viewController;
 import controller.FileController;
 import javafx.event.ActionEvent;
 
+import java.io.IOException;
+
 /**
  * This class is responsible for showing and handling all request if the user decides to load a program. This program
  * will then be loaded through this fxml controller. Because it inherits the main fxml controller and all of its methods,
@@ -29,10 +31,11 @@ public class LoadedFileViewController extends MainViewController {
      *                       rather than having to go through the methods in the main controller.
      * @since 28.12.2021
      */
-    public void setTextInput(String code, String programName, FileController fileController) {
-        textInput.setText(code);
+    public void setTextInput(String code, String programName, FileController fileController) throws IOException {
+        super.initialize();
         loadedProgramName = programName;
         this.fileController = fileController;
+        textInput.setText(code);
     }
 
     /**

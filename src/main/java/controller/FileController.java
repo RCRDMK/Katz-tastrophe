@@ -27,7 +27,6 @@ public class FileController {
     String programFolder = "/programs/";
     String fileType = ".java";
 
-
     public void fileWhenFirstOpened() {
         createFile(programName);
     }

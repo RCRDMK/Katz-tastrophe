@@ -100,10 +100,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move upwards
      * @since 05.11.2021
      */
-    //TODO Spieler darf nicht auf das selbe Feld wie Trinken
+
     public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         try {
-            //TODO Rausfinden warum ab hier gameField null beim Contextcklick wird
+            //TODO Rausfinden warum ab hier gameField null beim Contextklick wird
             for (int i = 0; i < gameField.getRow(); i++) {
                 for (int j = 0; j < gameField.getColumn(); j++) {
                     if (gameField.getGameFieldArray()[i][j].equals("C^")) {
@@ -111,11 +111,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         gameField.placeObjectsInGameField(i - 1, j, "^");
                         break;
                     }
-                    if (gameField.getGameFieldArray()[i][j].equals("^")) {
+
+                    if (gameField.getGameFieldArray()[i][j].equals("^")) {//checks what is above the character to determine his action
                         if (i == gameField.getRow() / gameField.getRow() - 1) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i - 1][j].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i - 1][j].equals("D")) {
+                            throw new DrinkInFrontException();
                         } else if (gameField.getGameFieldArray()[i - 1][j].equals("C")) {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i - 1, j, "C^");
@@ -134,6 +137,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
             System.out.println("Edge of gamefield is reached");
         } */ catch (WallInFrontException wife) {
             System.out.println("Can't move in this direction. Wall in front");
+        } catch (DrinkInFrontException dife) {
+            System.out.println("Can't move in this direction. Drink in front");
         }
     }
 
@@ -156,11 +161,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         i = gameField.getRow() - 1;
                         break;
                     }
-                    if (gameField.getGameFieldArray()[i][j].equals("v")) {
+
+                    if (gameField.getGameFieldArray()[i][j].equals("v")) {//checks what is below the character to determine his action
                         if (i + 1 == gameField.getRow()) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i + 1][j].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i + 1][j].equals("D")) {
+                            throw new DrinkInFrontException();
                         } else if (gameField.getGameFieldArray()[i + 1][j].equals("C")) {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i + 1, j, "Cv");
@@ -181,6 +189,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
             System.out.println("Edge of gamefield is reached");
         } catch (WallInFrontException wife) {
             System.out.println("Can't move in this direction. Wall in front");
+        } catch (DrinkInFrontException dife) {
+            System.out.println("Can't move in this direction. Drink in front");
         }
     }
 
@@ -202,11 +212,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         gameField.placeObjectsInGameField(i, j + 1, ">");
                         break;
                     }
-                    if (gameField.getGameFieldArray()[i][j].equals(">")) {
+
+                    if (gameField.getGameFieldArray()[i][j].equals(">")) {//checks what is to the right of the character to determine his action
                         if (j + 1 == gameField.getColumn()) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i][j + 1].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i][j + 1].equals("D")) {
+                            throw new DrinkInFrontException();
                         } else if (gameField.getGameFieldArray()[i][j + 1].equals("C")) {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i, j + 1, "C>");
@@ -225,6 +238,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
             System.out.println("Edge of gamefield is reached");
         } catch (WallInFrontException wife) {
             System.out.println("Can't move in this direction. Wall in front");
+        } catch (DrinkInFrontException dife) {
+            System.out.println("Can't move in this direction. Drink in front");
         }
     }
 
@@ -246,11 +261,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         gameField.placeObjectsInGameField(i, j - 1, "<");
                         break;
                     }
-                    if (gameField.getGameFieldArray()[i][j].equals("<")) {
+
+                    if (gameField.getGameFieldArray()[i][j].equals("<")) {//checks what is to the left of the character to determine his action
                         if (j == gameField.getColumn() / gameField.getColumn() - 1) {
                             throw new EndOfGameFieldException();
                         } else if (gameField.getGameFieldArray()[i][j - 1].equals("W")) {
                             throw new WallInFrontException();
+                        } else if (gameField.getGameFieldArray()[i][j - 1].equals("D")) {
+                            throw new DrinkInFrontException();
                         } else if (gameField.getGameFieldArray()[i][j - 1].equals("C")) {
                             gameField.getGameFieldArray()[i][j] = "x";
                             gameField.placeObjectsInGameField(i, j - 1, "C<");
@@ -269,34 +287,45 @@ public class GameCharacter extends ObservedObject implements Serializable {
             System.out.println("Edge of gamefield is reached");
         } catch (WallInFrontException wife) {
             System.out.println("Can't move in this direction. Wall in front");
+        } catch (DrinkInFrontException dife) {
+            System.out.println("Can't move in this direction. Drink in front");
         }
     }
 
     /**
      * Responsible for taking a cat from a tile and communicating this change to the gamefield array.
      * <p>
-     * In this method the array gets checked in which direction the character looks and if the character is even able
-     * to pick up a cat at the moment.
+     * In this method the array gets checked in which direction the character looks, if the character is even able
+     * to pick up a cat at the moment and if he is, if there's a cat in front of him to pick up.
      *
-     * @throws HandsNotEmptyException If the user wants to pick up a cat even though the hands of the character are not empty at the moment.
+     * @throws HandsNotEmptyException  If the user wants to pick up a cat even though the hands of the character are not empty at the moment.
+     * @throws CatInFrontException     If the user wants to pick up a cat even though there is no cat in front of him to pick up.
+     * @throws EndOfGameFieldException If the user wants to pick up a cat even though he already reached the end of the game field.
      * @since 05.11.2011
      */
-    //TODO Nehmen und Ablegen auf EndOfGameFieldException überprüfen sowie was passiert wenn nicht das gewünschte Objekt vor dem Charakter liegt
-    public void takeCat() throws HandsNotEmptyException {
+    public void takeCat() throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
         try {
             if (!handsFull) {
-                handsFull = true;
-                catInHand = true;
+                boolean catWasInFront = false;
 
                 switch (gameField.getCharacter()) {
                     case "^":
                         for (int i = 0; i < gameField.getRow() - 1; i++) {
                             for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                                if (gameField.getGameFieldArray()[i][j].equals("^")) {
+                                if (gameField.getGameFieldArray()[i][j].equals("^") && gameField.getGameFieldArray()[i - 1][j].equals("C")) {
                                     gameField.getGameFieldArray()[i - 1][j] = "x";
+                                    handsFull = true;
+                                    catInHand = true;
+                                    catWasInFront = true;
                                     break;
                                 }
+                                /*if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }*/
                             }
+                        }
+                        if (!catWasInFront) {
+                            throw new CatInFrontException();
                         }
                         gameField.fillUpGameField();
                         notifyRegisteredObservers(this);
@@ -304,11 +333,20 @@ public class GameCharacter extends ObservedObject implements Serializable {
                     case "v":
                         for (int i = 0; i < gameField.getRow() - 1; i++) {
                             for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                                if (gameField.getGameFieldArray()[i][j].equals("v")) {
+                                if (gameField.getGameFieldArray()[i][j].equals("v") && gameField.getGameFieldArray()[i + 1][j].equals("C")) {
                                     gameField.getGameFieldArray()[i + 1][j] = "x";
+                                    handsFull = true;
+                                    catInHand = true;
+                                    catWasInFront = true;
                                     break;
                                 }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
+                        }
+                        if (!catWasInFront) {
+                            throw new CatInFrontException();
                         }
                         gameField.fillUpGameField();
                         notifyRegisteredObservers(this);
@@ -316,11 +354,20 @@ public class GameCharacter extends ObservedObject implements Serializable {
                     case ">":
                         for (int i = 0; i < gameField.getRow() - 1; i++) {
                             for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                                if (gameField.getGameFieldArray()[i][j].equals(">")) {
+                                if (gameField.getGameFieldArray()[i][j].equals(">") && gameField.getGameFieldArray()[i][j + 1].equals("C")) {
                                     gameField.getGameFieldArray()[i][j + 1] = "x";
+                                    handsFull = true;
+                                    catInHand = true;
+                                    catWasInFront = true;
                                     break;
                                 }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
+                        }
+                        if (!catWasInFront) {
+                            throw new CatInFrontException();
                         }
                         gameField.fillUpGameField();
                         notifyRegisteredObservers(this);
@@ -328,11 +375,20 @@ public class GameCharacter extends ObservedObject implements Serializable {
                     case "<":
                         for (int i = 0; i < gameField.getRow() - 1; i++) {
                             for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                                if (gameField.getGameFieldArray()[i][j].equals("<")) {
+                                if (gameField.getGameFieldArray()[i][j].equals("<") && gameField.getGameFieldArray()[i][j - 1].equals("C")) {
                                     gameField.getGameFieldArray()[i][j - 1] = "x";
+                                    handsFull = true;
+                                    catInHand = true;
+                                    catWasInFront = true;
                                     break;
                                 }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
+                        }
+                        if (!catWasInFront) {
+                            throw new CatInFrontException();
                         }
                         gameField.fillUpGameField();
                         notifyRegisteredObservers(this);
@@ -343,6 +399,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
             }
         } catch (HandsNotEmptyException hnee) {
             System.out.println("Hands are not empty");
+        } catch (CatInFrontException cife) {
+            System.out.println("There is no cat to pick up");
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("End of gamefield reached");
         }
     }
 
@@ -352,66 +412,109 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * In this method the array gets checked in which direction the character looks and if the character is even able
      * to pick up a drink at the moment.
      *
-     * @throws HandsNotEmptyException If the user wants to pick up a drink even though the hands of the character are not empty at the moment.
+     * @throws HandsNotEmptyException  If the user wants to pick up a drink even though the hands of the character are not empty at the moment.
+     * @throws DrinkInFrontException   If the user wants to pick up a drink even though there is no drink in front of him to pick up.
+     * @throws EndOfGameFieldException If the user wants to pick up a drink even though he already reached the end of the game field.
      * @since 05.11.2011
      */
-    public void takeDrink() throws HandsNotEmptyException {
-        if (!handsFull) {
-            handsFull = true;
-            drinkInHand = true;
+    public void takeDrink() throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
+        try {
+            if (!handsFull) {
+                boolean drinkWasInFront = false;
 
-            switch (gameField.getCharacter()) {
-                case "^":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("^")) {
-                                gameField.getGameFieldArray()[i - 1][j] = "x";
-                                break;
+                switch (gameField.getCharacter()) {
+                    case "^":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("^") && gameField.getGameFieldArray()[i - 1][j].equals("D")) {
+                                    gameField.getGameFieldArray()[i - 1][j] = "x";
+                                    handsFull = true;
+                                    drinkInHand = true;
+                                    drinkWasInFront = true;
+                                    break;
+                                }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case "v":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("v")) {
-                                gameField.getGameFieldArray()[i + 1][j] = "x";
-                                break;
+                        if (!drinkWasInFront) {
+                            throw new DrinkInFrontException();
+                        }
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case "v":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("v") && gameField.getGameFieldArray()[i + 1][j].equals("D")) {
+                                    gameField.getGameFieldArray()[i + 1][j] = "x";
+                                    handsFull = true;
+                                    drinkInHand = true;
+                                    drinkWasInFront = true;
+                                    break;
+                                }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case ">":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals(">")) {
-                                gameField.getGameFieldArray()[i][j + 1] = "x";
-                                break;
+                        if (!drinkWasInFront) {
+                            throw new DrinkInFrontException();
+                        }
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case ">":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals(">") && gameField.getGameFieldArray()[i][j + 1].equals("D")) {
+                                    gameField.getGameFieldArray()[i][j + 1] = "x";
+                                    handsFull = true;
+                                    drinkInHand = true;
+                                    drinkWasInFront = true;
+                                    break;
+                                }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case "<":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("<")) {
-                                gameField.getGameFieldArray()[i][j - 1] = "x";
-                                break;
+                        if (!drinkWasInFront) {
+                            throw new DrinkInFrontException();
+                        }
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case "<":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("<") && gameField.getGameFieldArray()[i][j - 1].equals("D")) {
+                                    gameField.getGameFieldArray()[i][j - 1] = "x";
+                                    handsFull = true;
+                                    drinkInHand = true;
+                                    drinkWasInFront = true;
+                                    break;
+                                }
+                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
+                                    throw new EndOfGameFieldException();
+                                }
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
+                        if (!drinkWasInFront) {
+                            throw new DrinkInFrontException();
+                        }
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                }
+            } else {
+                throw new HandsNotEmptyException();
             }
-        } else {
-            throw new HandsNotEmptyException();
+        } catch (HandsNotEmptyException hnee) {
+            System.out.println("Hands are not empty");
+        } catch (DrinkInFrontException dife) {
+            System.out.println("There is no drink to pick up");
         }
 
     }
@@ -428,95 +531,105 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws NoCatInHandException  if the user wants to put down the cat without even having picked up a cat first
      * @since 05.11.2021
      */
-    public void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException {
-        if (catInHand) {
-            catInHand = false;
-            handsFull = false;
+    public void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException, EndOfGameFieldException {
+        try {
+            if (catInHand) {
 
-            switch (gameField.getCharacter()) {
-                case "^":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("^")) {
-                                switch (gameField.getGameFieldArray()[i - 1][j]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
-                                    case "D":
-                                        throw new DrinkInFrontException();
+                switch (gameField.getCharacter()) {
+                    case "^":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("^")) {
+                                    switch (gameField.getGameFieldArray()[i - 1][j]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                        case "D":
+                                            throw new DrinkInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i - 1, j, "C");
+                                    catInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i - 1, j, "C");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case "v":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("v")) {
-                                switch (gameField.getGameFieldArray()[i + 1][j]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
-                                    case "D":
-                                        throw new DrinkInFrontException();
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case "v":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("v")) {
+                                    switch (gameField.getGameFieldArray()[i + 1][j]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                        case "D":
+                                            throw new DrinkInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i + 1, j, "C");
+                                    catInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i + 1, j, "C");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case ">":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals(">")) {
-                                switch (gameField.getGameFieldArray()[i][j + 1]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
-                                    case "D":
-                                        throw new DrinkInFrontException();
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case ">":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals(">")) {
+                                    switch (gameField.getGameFieldArray()[i][j + 1]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                        case "D":
+                                            throw new DrinkInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i, j + 1, "C");
+                                    catInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i, j + 1, "C");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case "<":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("<")) {
-                                switch (gameField.getGameFieldArray()[i][j - 1]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
-                                    case "D":
-                                        throw new DrinkInFrontException();
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case "<":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("<")) {
+                                    switch (gameField.getGameFieldArray()[i][j - 1]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                        case "D":
+                                            throw new DrinkInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i, j - 1, "C");
+                                    catInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i, j - 1, "C");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                }
+            } else {
+                throw new NoCatInHandException();
             }
-        } else {
-            throw new NoCatInHandException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new EndOfGameFieldException();
         }
     }
 
@@ -532,92 +645,102 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws NoDrinkInHandException if the user wants to put down the drink without even having picked up a drink first
      * @since 05.11.2021
      */
-    public void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException {
-        if (drinkInHand) {
-            drinkInHand = false;
-            handsFull = false;
+    public void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException, EndOfGameFieldException {
+        try {
+            if (drinkInHand) {
 
-            switch (gameField.getCharacter()) {
-                case "^":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("^")) {
-                                switch (gameField.getGameFieldArray()[i - 1][j]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
+                switch (gameField.getCharacter()) {
+                    case "^":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("^")) {
+                                    switch (gameField.getGameFieldArray()[i - 1][j]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i - 1, j, "D");
+                                    drinkInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i - 1, j, "D");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case "v":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("v")) {
-                                switch (gameField.getGameFieldArray()[i + 1][j]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case "v":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("v")) {
+                                    switch (gameField.getGameFieldArray()[i + 1][j]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i + 1, j, "D");
+                                    drinkInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i + 1, j, "D");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case ">":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals(">")) {
-                                switch (gameField.getGameFieldArray()[i][j + 1]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case ">":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals(">")) {
+                                    switch (gameField.getGameFieldArray()[i][j + 1]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i, j + 1, "D");
+                                    drinkInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i, j + 1, "D");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
-                case "<":
-                    for (int i = 0; i < gameField.getRow() - 1; i++) {
-                        for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                            if (gameField.getGameFieldArray()[i][j].equals("<")) {
-                                switch (gameField.getGameFieldArray()[i][j - 1]) {
-                                    case "W":
-                                        throw new WallInFrontException();
-                                    case "C":
-                                        throw new CatInFrontException();
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                    case "<":
+                        for (int i = 0; i < gameField.getRow() - 1; i++) {
+                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                                if (gameField.getGameFieldArray()[i][j].equals("<")) {
+                                    switch (gameField.getGameFieldArray()[i][j - 1]) {
+                                        case "W":
+                                            throw new WallInFrontException();
+                                        case "C":
+                                            throw new CatInFrontException();
+                                    }
+                                    gameField.placeObjectsInGameField(i, j - 1, "D");
+                                    drinkInHand = false;
+                                    handsFull = false;
+                                    break;
                                 }
-                                gameField.placeObjectsInGameField(i, j - 1, "D");
-                                break;
                             }
                         }
-                    }
-                    gameField.fillUpGameField();
-                    notifyRegisteredObservers(this);
-                    break;
+                        gameField.fillUpGameField();
+                        notifyRegisteredObservers(this);
+                        break;
+                }
+            } else {
+                throw new NoDrinkInHandException();
             }
-        } else {
-            throw new NoDrinkInHandException();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new EndOfGameFieldException();
         }
     }
 
     /**
-     * checks if the hands the character are currently free or full
+     * checks if the hands of the character are currently free or full
      *
      * @return true if hands are free, false if the hands are full
      * @since 05.11.2021
@@ -630,7 +753,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
     }
 
     /**
-     * checks if a cat is in front of the direction in which the character currently looks
+     * checks if a cat is in front of the direction in which the character currently is looking
      *
      * @return true if there IS a cat, false if there is not
      * @since 05.11.2021
@@ -681,7 +804,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
     /**
      * checks if it's currently possible for the character to step over a cat in front of him
      *
-     * @return true if he can step over a cat, because his hands are free, false if he can't because his hands are full
+     * @return true if he can step over a cat, because his hands are free, false if he can't, because his hands are full
      * @since 05.11.2021
      */
     public boolean stepOverCatPossible() {

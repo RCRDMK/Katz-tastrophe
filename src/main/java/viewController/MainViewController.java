@@ -43,6 +43,7 @@ import java.nio.file.Path;
  * @since 03.11.2021
  */
 public class MainViewController implements ObserverInterface {
+    //TODO Exceptions in einem Dialog anzeigen und einen Warnton auslösen
 
     //TODO Es darf eine Instanz nur einmal offen sein und nicht fünf Fenster mit dem selben Namen
 
@@ -65,6 +66,8 @@ public class MainViewController implements ObserverInterface {
 
 
     public void initialize() throws IOException {
+        //TODO beim Laden eines neuen Fensters nicht die "neue Katz-tastrophe"
+        // mit "fileController.fileWhenFirstOpened()" überschreiben. Programmnamen des geladenen Fensters für contextClick nehmen
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
         character = gameFieldPanelController.getCharacter();
@@ -97,7 +100,7 @@ public class MainViewController implements ObserverInterface {
      *
      * @since 18.12.2021
      */
-    private void contextClick() {
+    public void contextClick() {//Aktualisert sich im "alten" Fenster, weil das neue Fenster die init Methode ausführt beim laden
         scrollPane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {//TODO Context-Menü im richtigen Fenster anzeigen und nicht im Fenster, dass das Laden eines neues Fensters auslöst
@@ -119,7 +122,6 @@ public class MainViewController implements ObserverInterface {
                         @Override
                         public void handle(ActionEvent event) {
                             try {
-                                System.out.println(method.getName());
                                 method.invoke(character);
                             } catch (Throwable e) {
                                 e.printStackTrace();
@@ -331,8 +333,8 @@ public class MainViewController implements ObserverInterface {
 
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
-        LoadedFileViewController lfp = loader.getController();
-        lfp.setTextInput(fileController.loadTextForEditor(fileController.getProgramName()), fileController.getProgramName(), fileController);
+        LoadedFileViewController lfvc = loader.getController();
+        lfvc.setTextInput(fileController.loadTextForEditor(fileController.getProgramName()), fileController.getProgramName(), fileController);
 
 
     }
@@ -383,7 +385,8 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the interaction with the quit menu item and button.
      * <p>
-     * If the user clicks this menu item, the application in its entirety will get terminated.
+     * If the user clicks this menu item, the current window will be closed. If it was the last open window, the
+     * application will be terminated.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
@@ -640,7 +643,7 @@ public class MainViewController implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPickCatUpClicked(ActionEvent actionEvent) throws HandsNotEmptyException {
+    public void onPickCatUpClicked(ActionEvent actionEvent) throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
         character.takeCat();
     }
 
@@ -650,7 +653,7 @@ public class MainViewController implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPickDrinkUpClicked(ActionEvent actionEvent) throws HandsNotEmptyException {
+    public void onPickDrinkUpClicked(ActionEvent actionEvent) throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
         character.takeDrink();
     }
 
@@ -660,8 +663,12 @@ public class MainViewController implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPutCatDownClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, NoCatInHandException, CatInFrontException {
-        character.putCatDown();
+    public void onPutCatDownClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, NoCatInHandException, CatInFrontException, EndOfGameFieldException {
+        try {
+            character.putCatDown();
+        } catch (EndOfGameFieldException e) {
+            System.out.println("Can't put cat outside");
+        }
     }
 
     /**
@@ -670,8 +677,12 @@ public class MainViewController implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPutDrinkDownClicked(ActionEvent actionEvent) throws WallInFrontException, NoDrinkInHandException, CatInFrontException {
-        character.putDrinkDown();
+    public void onPutDrinkDownClicked(ActionEvent actionEvent) throws WallInFrontException, NoDrinkInHandException, CatInFrontException, EndOfGameFieldException {
+        try {
+            character.putDrinkDown();
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("Can't place drink outside");
+        }
     }
 
     @Override //TODO Update muss etwas setzen

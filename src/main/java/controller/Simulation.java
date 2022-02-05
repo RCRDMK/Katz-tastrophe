@@ -59,7 +59,7 @@ public class Simulation extends Thread implements ObserverInterface {
             if (Platform.isFxApplicationThread()) {
                 return;
             }
-            sleep(500);
+            sleep(250);
             if (stop) {
                 throw new StoppedException();
             }

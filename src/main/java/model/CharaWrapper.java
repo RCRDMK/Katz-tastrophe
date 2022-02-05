@@ -97,6 +97,10 @@ public class CharaWrapper extends GameCharacter {
             super.takeCat();
         } catch (HandsNotEmptyException hne) {
             System.out.println("Hands are full");
+        } catch (CatInFrontException cife) {
+            System.out.println("There is no cat to pick up");
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("End of gamefield reached");
         }
 
     }
@@ -108,6 +112,10 @@ public class CharaWrapper extends GameCharacter {
             super.takeDrink();
         } catch (HandsNotEmptyException hne) {
             System.out.println("Hands are full");
+        } catch (DrinkInFrontException dife) {
+            System.out.println("There is no drink in front to pick up");
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("End of gamefield reached");
         }
     }
 
@@ -124,6 +132,8 @@ public class CharaWrapper extends GameCharacter {
             System.out.println("No cat in hand");
         } catch (CatInFrontException cat) {
             System.out.println("can not step over cat");
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("Can't put Cat down outside the gamefield");
         }
     }
 
@@ -138,6 +148,8 @@ public class CharaWrapper extends GameCharacter {
             System.out.println("No drink in hand");
         } catch (CatInFrontException cat) {
             System.out.println("can not step over cat");
+        } catch (EndOfGameFieldException eogfe) {
+            System.out.println("can not put drink outside");
         }
     }
 
