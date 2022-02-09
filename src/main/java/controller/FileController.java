@@ -21,14 +21,14 @@ import java.net.URLClassLoader;
 
 public class FileController {
 
-    String programName = "neue_Katztastrophe";
+    String defaultName = "neue_Katztastrophe";
 
     File userDirectory = new File(System.getProperty("user.dir"));
     String programFolder = "/programs/";
     String fileType = ".java";
 
     public void fileWhenFirstOpened() {
-        createFile(programName);
+        createFile(defaultName);
     }
 
     /**
@@ -42,7 +42,7 @@ public class FileController {
     public void createFile(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
-            programName = fileName;
+            defaultName = fileName;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getPrefix(fileName) + "public void main(){   }" + getPostfix());
             writer.write(stringBuilder.toString());
@@ -62,7 +62,7 @@ public class FileController {
     private void writeInFile(String fileName, String contentToWrite) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
-            programName = fileName;
+            defaultName = fileName;
             String s = getPrefix(fileName) + contentToWrite + getPostfix();
             writer.write(s);
 
@@ -95,7 +95,7 @@ public class FileController {
      */
     public String loadTextForEditor(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
-        programName = fileName;
+        //defaultName = fileName;
         String replacePrefix = "";
         String replacePostfix = "";
         try (FileReader reader = new FileReader(file)) {
@@ -126,7 +126,7 @@ public class FileController {
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
     public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter, GameFieldPanelController gameFieldPanelController) {
         String file = userDirectory + programFolder + fileName + fileType;
-        programName = fileName;
+        defaultName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
         boolean success =
@@ -178,18 +178,18 @@ public class FileController {
     }
 
     public String getProgramTitleName() {
-        if (!programName.contains("Katz-tastrophe")) {
-            return programName + " Katz-tastrophe";
+        if (!defaultName.contains("Katz-tastrophe")) {
+            return defaultName + " Katz-tastrophe";
         } else {
-            return programName;
+            return defaultName;
         }
     }
 
-    public String getProgramName() {
-        return programName;
+    public String getDefaultName() {
+        return defaultName;
     }
 
-    public void setProgramName(String programName) {
-        this.programName = programName;
+    public void setDefaultName(String defaultName) {
+        this.defaultName = defaultName;
     }
 }

@@ -5,8 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.messages.NewFileHasBeenCreatedMessage;
+import pattern.ObservedObject;
 
 import javax.lang.model.SourceVersion;
+import java.io.IOException;
 
 /**
  * This class is responsible for the fxml view which is being called when the user wishes to create a new file.
@@ -14,7 +17,7 @@ import javax.lang.model.SourceVersion;
  * @since 03.12.2021
  */
 
-public class NewFileViewController {
+public class NewFileViewController extends ObservedObject {
 
     @FXML
     Button newFileCancel;
@@ -47,11 +50,12 @@ public class NewFileViewController {
      * @since 03.12.2021
      */
     //TODO Dynamisch Button dis- und enablen
-    public void onNewFileAcceptedClicked(ActionEvent actionEvent) {
+    public void onNewFileAcceptedClicked(ActionEvent actionEvent) throws IOException {
         if (validateName(newFileText.getText())) {
 
             fileController.createFile(newFileText.getText());
             newFileAccept.getScene().getWindow().hide();
+            notifyRegisteredObservers(new NewFileHasBeenCreatedMessage(newFileText.getText()));
         }
     }
 

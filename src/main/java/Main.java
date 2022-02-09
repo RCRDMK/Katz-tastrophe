@@ -1,5 +1,4 @@
 import controller.FileController;
-import model.GameField;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.GameField;
 
 public class Main extends Application {
 
@@ -18,7 +18,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1150, 400));
 
         FileController fileController = new FileController();
-        primaryStage.setTitle(fileController.getProgramName().replace("_", " "));
+        fileController.fileWhenFirstOpened();
+        primaryStage.setTitle(fileController.getDefaultName().replace("_", " "));
 
         primaryStage.show();
 
@@ -31,7 +32,13 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                //fileController.saveFile(fileController.getProgramName(), );
+
+            }
+        });
+
+        primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (primaryStage.isFocused()) {
+
             }
         });
     }

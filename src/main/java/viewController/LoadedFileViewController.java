@@ -1,7 +1,10 @@
 package viewController;
 
 import controller.FileController;
+import controller.GameFieldPanelController;
 import javafx.event.ActionEvent;
+import model.GameCharacter;
+import model.GameField;
 
 import java.io.IOException;
 
@@ -17,6 +20,28 @@ public class LoadedFileViewController extends MainViewController {
 
     private String loadedProgramName;
     private FileController fileController;
+    private GameField gameField;
+    private GameCharacter character;
+    private GameFieldPanelController gameFieldPanelController;
+    MainViewController mvc;
+
+    public void iniController(FileController fileController, GameField gameField, GameCharacter character, GameFieldPanelController gameFieldPanelController, String program, MainViewController mcv) {
+        this.fileController = fileController;
+        this.gameField = gameField;
+        this.character = character;
+        this.gameFieldPanelController = gameFieldPanelController;
+        this.mvc = mcv;
+        cont();
+
+        fileController.setDefaultName(program);
+
+        fileController.compileFileAndSetNewCharacter(fileController.getDefaultName(), gameField, character, gameFieldPanelController);
+    }
+
+
+    public void cont() {
+        mvc.contextClick();
+    }
 
     /**
      * Responsible for setting up the view and the value of the textarea.
@@ -25,16 +50,15 @@ public class LoadedFileViewController extends MainViewController {
      * initiates the variables, making sure that this scene is linked to the of the loaded program. Because of this, it
      * can't overwrite other programs unless it's explicitly ordered to.
      *
-     * @param code           the code, written by the user, which is to be depicted in the textarea.
-     * @param programName    the name of program, loaded in this view.
-     * @param fileController the fileController, to make it possible to interact with the file from this controller,
-     *                       rather than having to go through the methods in the main controller.
+     * @param code        the code, written by the user, which is to be depicted in the textarea.
+     * @param programName the name of program, loaded in this view.
+     *                    <p>
+     *                    rather than having to go through the methods in the main controller.
      * @since 28.12.2021
      */
-    public void setTextInput(String code, String programName, FileController fileController) throws IOException {
-        super.initialize();
+    public void setTextInput(String code, String programName) throws IOException {
         loadedProgramName = programName;
-        this.fileController = fileController;
+        fileController.setDefaultName(programName);
         textInput.setText(code);
     }
 
@@ -51,6 +75,6 @@ public class LoadedFileViewController extends MainViewController {
     @Override
     public void onSaveFileClicked(ActionEvent actionEvent) {
         fileController.saveFile(loadedProgramName, textInput.getText());
-        System.out.println("Save " + fileController.getProgramName());
+        System.out.println("Save " + fileController.getDefaultName());
     }
 }
