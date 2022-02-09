@@ -1,6 +1,10 @@
 package model;
 
+import controller.AlertController;
+import javafx.scene.control.Alert;
 import model.exceptions.*;
+
+import java.io.StringWriter;
 
 /**
  * This class is purely being used to forward method calls to its parent class and to abstract the relationship between
@@ -14,7 +18,9 @@ import model.exceptions.*;
 
 public class CharaWrapper extends GameCharacter {
 
-    GameField gameField;
+    private GameField gameField;
+    private StringWriter errorMessage = new StringWriter();
+    private AlertController alertController = new AlertController();
 
     public CharaWrapper(GameField gameField) {
         this.gameField = gameField;
@@ -29,14 +35,20 @@ public class CharaWrapper extends GameCharacter {
         try {
             super.lookHere("up");
             super.moveUp();
+
+        /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (WallInFrontException wall) {
-            System.out.println("Wall in front");
+            alertController.alert(Alert.AlertType.ERROR, "Wall in front", "Can't move further, there is a wall in front.");
         } catch (DrinkInFrontException drink) {
-            System.out.println("Drink in front");
-        } catch (EndOfGameFieldException eogf) {
-            System.out.println("End of gamefield reached");
+            alertController.alert(Alert.AlertType.ERROR, "Drink in front", "Can't move further, there is a drink in front. Either pick it up or walk around it.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         } catch (CatInFrontException cat) {
-            System.out.println("can not step over cat");
+            alertController.alert(Alert.AlertType.ERROR, "Can't step over cat", "Can't step over the cat in front. Either put things out of your hands or walk around the cat.");
         }
     }
 
@@ -45,14 +57,20 @@ public class CharaWrapper extends GameCharacter {
         try {
             super.lookHere("down");
             super.moveDown();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (WallInFrontException wall) {
-            System.out.println("Wall in front");
+            alertController.alert(Alert.AlertType.ERROR, "Wall in front", "Can't move further, there is a wall in front.");
         } catch (DrinkInFrontException drink) {
-            System.out.println("Drink in front");
-        } catch (EndOfGameFieldException eogf) {
-            System.out.println("End of gamefield reached");
+            alertController.alert(Alert.AlertType.ERROR, "Drink in front", "Can't move further, there is a drink in front. Either pick it up or walk around it.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         } catch (CatInFrontException cat) {
-            System.out.println("can not step over cat");
+            alertController.alert(Alert.AlertType.ERROR, "Can't step over cat", "Can't step over the cat in front. Either put things out of your hands or walk around the cat.");
         }
     }
 
@@ -62,14 +80,20 @@ public class CharaWrapper extends GameCharacter {
         try {
             super.lookHere("right");
             super.moveRight();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (WallInFrontException wall) {
-            System.out.println("Wall in front");
+            alertController.alert(Alert.AlertType.ERROR, "Wall in front", "Can't move further, there is a wall in front.");
         } catch (DrinkInFrontException drink) {
-            System.out.println("Drink in front");
-        } catch (EndOfGameFieldException eogf) {
-            System.out.println("End of gamefield reached");
+            alertController.alert(Alert.AlertType.ERROR, "Drink in front", "Can't move further, there is a drink in front. Either pick it up or walk around it.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         } catch (CatInFrontException cat) {
-            System.out.println("can not step over cat");
+            alertController.alert(Alert.AlertType.ERROR, "Can't step over cat", "Can't step over the cat in front. Either put things out of your hands or walk around the cat.");
         }
     }
 
@@ -79,14 +103,20 @@ public class CharaWrapper extends GameCharacter {
         try {
             super.lookHere("left");
             super.moveLeft();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (WallInFrontException wall) {
-            System.out.println("Wall in front");
+            alertController.alert(Alert.AlertType.ERROR, "Wall in front", "Can't move further, there is a wall in front.");
         } catch (DrinkInFrontException drink) {
-            System.out.println("Drink in front");
-        } catch (EndOfGameFieldException eogf) {
-            System.out.println("End of gamefield reached");
+            alertController.alert(Alert.AlertType.ERROR, "Drink in front", "Can't move further, there is a drink in front. Either pick it up or walk around it.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         } catch (CatInFrontException cat) {
-            System.out.println("can not step over cat");
+            alertController.alert(Alert.AlertType.ERROR, "Can't step over cat", "Can't step over the cat in front. Either put things out of your hands or walk around the cat.");
         }
     }
 
@@ -95,12 +125,18 @@ public class CharaWrapper extends GameCharacter {
     public void takeCat() {
         try {
             super.takeCat();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (HandsNotEmptyException hne) {
-            System.out.println("Hands are full");
+            alertController.alert(Alert.AlertType.ERROR, "Hands are full", "Can't pick cat up, hands are already full. Please put something down before picking cat up.");
         } catch (CatInFrontException cife) {
-            System.out.println("There is no cat to pick up");
-        } catch (EndOfGameFieldException eogfe) {
-            System.out.println("End of gamefield reached");
+            alertController.alert(Alert.AlertType.ERROR, "Not cat to pick up", "There is no cat to pick up in front");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         }
 
     }
@@ -110,12 +146,18 @@ public class CharaWrapper extends GameCharacter {
     public void takeDrink() {
         try {
             super.takeDrink();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (HandsNotEmptyException hne) {
-            System.out.println("Hands are full");
+            alertController.alert(Alert.AlertType.ERROR, "Hands are full", "Can't pick the drink up, hands are already full. Please put something down before picking the drink up.");
         } catch (DrinkInFrontException dife) {
-            System.out.println("There is no drink in front to pick up");
-        } catch (EndOfGameFieldException eogfe) {
-            System.out.println("End of gamefield reached");
+            alertController.alert(Alert.AlertType.ERROR, "No drink in front", "There is no drink in front to pick up.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         }
     }
 
@@ -124,16 +166,22 @@ public class CharaWrapper extends GameCharacter {
     public void putCatDown() {
         try {
             super.putCatDown();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (WallInFrontException wall) {
-            System.out.println("Wall in front");
+            alertController.alert(Alert.AlertType.ERROR, "Wall in front", "Can't put cat on a wall.");
         } catch (DrinkInFrontException drink) {
-            System.out.println("Drink in front");
+            alertController.alert(Alert.AlertType.ERROR, "Drink in front", "Can't put cat down here, there is a drink in front.");
         } catch (NoCatInHandException ncih) {
-            System.out.println("No cat in hand");
+            alertController.alert(Alert.AlertType.ERROR, "No cat in hand", "Can't put cat down, because no cat was being hold.");
         } catch (CatInFrontException cat) {
-            System.out.println("can not step over cat");
-        } catch (EndOfGameFieldException eogfe) {
-            System.out.println("Can't put Cat down outside the gamefield");
+            alertController.alert(Alert.AlertType.ERROR, "There's a cat in front", "There's already a cat. Can't put a cat on another cat.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         }
     }
 
@@ -142,14 +190,20 @@ public class CharaWrapper extends GameCharacter {
     public void putDrinkDown() {
         try {
             super.putDrinkDown();
+
+            /*} catch (Throwable t) {
+            //Uncomment these lines if you want to give the user a more comprehensive alert about the error that has just occurred
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.alert(Alert.AlertType.ERROR, "An error has occurred", String.valueOf(errorMessage));*/
+
         } catch (WallInFrontException wall) {
-            System.out.println("Wall in front");
+            alertController.alert(Alert.AlertType.ERROR, "There's a wall in front", "Can't put drink on a wall.");
         } catch (NoDrinkInHandException ndih) {
-            System.out.println("No drink in hand");
+            alertController.alert(Alert.AlertType.ERROR, "No drink in hand", "Can't put drink down, because no drink was being hold.");
         } catch (CatInFrontException cat) {
-            System.out.println("can not step over cat");
-        } catch (EndOfGameFieldException eogfe) {
-            System.out.println("can not put drink outside");
+            alertController.alert(Alert.AlertType.ERROR, "There's a cat in front", "Can't put your drink here because there's already a cat there.");
+        } catch (EndOfGameFieldException endOfGamefield) {
+            alertController.alert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
         }
     }
 

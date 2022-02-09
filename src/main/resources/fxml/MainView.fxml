@@ -8,7 +8,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400"
             minWidth="1150"
             prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2"
-            fx:controller="viewController.MainViewController" stylesheets="@../css/stylesheet.css" fx:id="test">
+            fx:controller="viewController.MainViewController" stylesheets="@../soundfiles/stylesheet.css" fx:id="test">
     <children>
 
         <fx:define>
@@ -424,7 +424,7 @@
                 </ToggleButton>
 
                 <ToggleButton layoutX="1130.0" layoutY="80.0" mnemonicParsing="false" fx:id="stopButton"
-                              
+
                               toggleGroup="$buttons">
                     <graphic>
                         <ImageView>

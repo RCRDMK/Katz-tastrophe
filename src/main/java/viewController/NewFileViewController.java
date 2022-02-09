@@ -55,7 +55,7 @@ public class NewFileViewController extends ObservedObject {
 
             fileController.createFile(newFileText.getText());
             newFileAccept.getScene().getWindow().hide();
-            notifyRegisteredObservers(new NewFileHasBeenCreatedMessage(newFileText.getText()));
+            new NewFileHasBeenCreatedMessage(newFileText.getText());
         }
     }
 

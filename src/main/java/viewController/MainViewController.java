@@ -58,7 +58,7 @@ public class MainViewController implements ObserverInterface {
     private GameField gameField;
     private GameCharacter character;
     private GameFieldPanelController gameFieldPanelController;
-    private String name = "neue_Katztastrophe";
+    private String currentFileName = "neue_Katztastrophe";
 
     private FileController fileController = new FileController();
     private XMLController xmlController = new XMLController();
@@ -194,7 +194,7 @@ public class MainViewController implements ObserverInterface {
      * @since 17.12.2021
      */
     //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/FileChooser.html
-    private String loadWindows(Stage stage) {
+    private String selectFileToLoad(Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.setTitle("Programm öffnen");
@@ -278,8 +278,8 @@ public class MainViewController implements ObserverInterface {
      * @since 16.12.2021
      */
     public void onCompileFileClicked(ActionEvent actionEvent) {
-        fileController.compileFileAndSetNewCharacter(name, gameField, character, gameFieldPanelController);
-        System.out.println("compiled " + name);
+        fileController.compileFileAndSetNewCharacter(currentFileName, gameField, character, gameFieldPanelController);
+        System.out.println("compiled " + currentFileName);
         character = gameFieldPanelController.getCharacter();
     }
 
@@ -300,31 +300,34 @@ public class MainViewController implements ObserverInterface {
             stage.setTitle("Neue Datei erstellen");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-            ausgelagert(name, stage);
-            //TODO schauen ob beim Namen der neuen Datei Observer hinhauen und dann damit das Textfeld laden
+//TODO Warum ab hier wieder default Name?
+            System.out.println(currentFileName);
+            loadNewWindow(currentFileName, stage);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void ausgelagert(String test, Stage primaryStage) throws IOException {
+    public void loadNewWindow(String loadedFile, Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
 
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root, 1150, 400));
 
         MainViewController childMainViewController = loader.getController();
-        if (name.equals(test)) {
+        if (currentFileName.equals(loadedFile)) {
             System.out.println("gleicher name");
+            primaryStage.toFront();
             //TODO hier Selbstaufruf
-//return;
+            //return;
         }
-        childMainViewController.name = test;
-        primaryStage.setTitle(childMainViewController.name + " Katz-tastrophe");
+        childMainViewController.currentFileName = loadedFile;
+        primaryStage.setTitle(childMainViewController.currentFileName + " Katz-tastrophe");
 
         primaryStage.show();
+
+        childMainViewController.textInput.requestFocus();
 
         primaryStage.setMaxHeight(500);
         primaryStage.setMaxWidth(primaryStage.getWidth());
@@ -332,7 +335,7 @@ public class MainViewController implements ObserverInterface {
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(1150);
 
-        childMainViewController.textInput.setText(childMainViewController.fileController.loadTextForEditor(childMainViewController.name));
+        childMainViewController.textInput.setText(childMainViewController.fileController.loadTextForEditor(childMainViewController.currentFileName));
     }
 
     /**
@@ -347,67 +350,13 @@ public class MainViewController implements ObserverInterface {
      */
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
         Stage primaryStage = new Stage();
-        String test = loadWindows(primaryStage);
-        if (test == null) {
+        String nameOfTheSelectedFile = selectFileToLoad(primaryStage);
+        if (nameOfTheSelectedFile == null) {
             return;
         }
 
-        ausgelagert(test, primaryStage);
+        loadNewWindow(nameOfTheSelectedFile, primaryStage);
 //TODO Ab hier auslagern (entweder in neue Klasse oder andere Methode, die dann alle aufrufen, die ein neues Fenster wollen
-        /*FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
-
-        Parent root = loader.load();
-        primaryStage.setScene(new Scene(root, 1150, 400));
-
-        MainViewController childMainViewController = loader.getController();
-        if (name.equals(test)) {
-            System.out.println("gleicher name");
-            //TODO hier Selbstaufruf
-            return;
-        }
-        childMainViewController.name = test;
-        primaryStage.setTitle(childMainViewController.name + " Katz-tastrophe");
-        System.out.println("Load " + fileController.getDefaultName());
-
-        System.out.println(textInput.getScene().getWindow());
-
-
-        primaryStage.show();
-
-        primaryStage.setMaxHeight(500);
-        primaryStage.setMaxWidth(primaryStage.getWidth());
-
-        primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(1150);
-
-        childMainViewController.textInput.setText(childMainViewController.fileController.loadTextForEditor(childMainViewController.name));*/
-        /*primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (primaryStage.isFocused()) {
-                try {
-                    onLoadFileClicked(actionEvent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
-        /*FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/LoadedView.fxml"));
-        Parent root = loader.load();
-        primaryStage.setScene(new Scene(root, 1150, 400));
-
-        primaryStage.setTitle(fileController.getProgramTitleName());
-        System.out.println("Load " + fileController.getProgramName());
-
-        primaryStage.show();
-
-        primaryStage.setMaxHeight(500);
-        primaryStage.setMaxWidth(primaryStage.getWidth());
-
-        primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(1150);
-        LoadedFileViewController lfvc = loader.getController();
-        lfvc.iniController(fileController, gameField, character, gameFieldPanelController, fileController.getProgramName(), this);
-        lfvc.setTextInput(fileController.loadTextForEditor(fileController.getProgramName()), fileController.getProgramName());
-*/
 
     }
 
@@ -419,11 +368,11 @@ public class MainViewController implements ObserverInterface {
      */
     //TODO Fenster dürfen nur ihre Datei speichern und nicht in denen, welche sie laden
     public void onSaveFileClicked(ActionEvent actionEvent) {
-        if (name.equals(fileController.getDefaultName())) {
+        if (currentFileName.equals(fileController.getDefaultName())) {
             //TODO Bitten Datei neuen Namen zu geben
         }
-        fileController.saveFile(name, textInput.getText());
-        System.out.println("Save " + name);
+        fileController.saveFile(currentFileName, textInput.getText());
+        System.out.println("Save " + currentFileName);
     }
 
     /**
@@ -668,14 +617,9 @@ public class MainViewController implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onMoveUpClicked(ActionEvent actionEvent) {
-        try {
-            character.lookHere("up");
-            character.moveUp();
-        } catch (Throwable t) {
-            System.out.println("Fehler");
-        }
-
+    public void onMoveUpClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException {
+        character.lookHere("up");
+        character.moveUp();
     }
 
     /**
@@ -762,8 +706,8 @@ public class MainViewController implements ObserverInterface {
     @Override //TODO Update muss etwas setzen
     public void update(Object object) {
         if (object.getClass() == NewFileHasBeenCreatedMessage.class) {
-            name = ((NewFileHasBeenCreatedMessage) object).getNewFileName();
-            System.out.println("hi");
+            currentFileName = ((NewFileHasBeenCreatedMessage) object).getNewFileName();
+            System.out.println(currentFileName);
         }
     }
 
