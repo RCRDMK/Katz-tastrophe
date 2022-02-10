@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import pattern.ObserverInterface;
+import model.pattern.ObserverInterface;
 
 
 /**

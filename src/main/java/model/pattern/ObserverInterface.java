@@ -1,4 +1,4 @@
-package pattern;
+package model.pattern;
 
 public interface ObserverInterface {
 

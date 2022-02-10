@@ -3,7 +3,7 @@ package controller;
 import javafx.application.Platform;
 import model.GameField;
 import model.exceptions.StoppedException;
-import pattern.ObserverInterface;
+import model.pattern.ObserverInterface;
 
 /**
  * This class is responsible running the main method inside the compiled classes as a thread.

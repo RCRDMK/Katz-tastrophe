@@ -1,7 +1,7 @@
 package model;
 
 import model.exceptions.*;
-import pattern.ObservedObject;
+import model.pattern.ObservedObject;
 
 import java.io.Serializable;
 

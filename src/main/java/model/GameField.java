@@ -1,6 +1,6 @@
 package model;
 
-import pattern.ObservedObject;
+import model.pattern.ObservedObject;
 
 import java.io.Serializable;
 import java.util.Arrays;

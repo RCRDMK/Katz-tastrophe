@@ -3,7 +3,7 @@ package controller;
 import model.GameCharacter;
 import model.GameField;
 import model.GameFieldPanel;
-import pattern.ObservedObject;
+import model.pattern.ObservedObject;
 
 /**
  * The controller class for the gameFieldPanel class

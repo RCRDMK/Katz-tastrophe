@@ -27,7 +27,7 @@ import model.GameCharacter;
 import model.GameField;
 import model.exceptions.*;
 import model.messages.NewFileHasBeenCreatedMessage;
-import pattern.ObserverInterface;
+import model.pattern.ObserverInterface;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
@@ -44,7 +44,6 @@ import java.nio.file.Path;
  * @since 03.11.2021
  */
 public class MainViewController implements ObserverInterface {
-    //TODO Exceptions in einem Dialog anzeigen und einen Warnton auslösen
 
     //TODO Es darf eine Instanz nur einmal offen sein und nicht fünf Fenster mit dem selben Namen
 
@@ -105,8 +104,6 @@ public class MainViewController implements ObserverInterface {
         scrollPane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
-                //TODO Context-Menü darf nicht die Methoden andere Klassen beim kompilieren anzeigen
-                // (Vll zu lösen indem man beim fokussieren die Datei mit dem Namen der Title Stage kompiliert?)
                 ContextMenu contextMenu = new ContextMenu();
                 CharaWrapper cw = (CharaWrapper) gameFieldPanelController.getCharacter();
                 Class c = cw.getClass();
@@ -286,7 +283,8 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request of the user to create a new file.
      * <p>
-     * When this method is called, a window will pop up, asking to input the name for the new file.
+     * When this method is called, a window will pop up, asking to input the name for the new file. After it, it will load
+     * the new file in a new window.
      *
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 03.12.2021
@@ -296,12 +294,14 @@ public class MainViewController implements ObserverInterface {
         try {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
             Parent root = loader.load();
+            NewFileViewController nfvc = loader.getController();
+            nfvc.setMainViewController(this);
             Stage stage = new Stage();
             stage.setTitle("Neue Datei erstellen");
             stage.setScene(new Scene(root));
             stage.showAndWait();
-//TODO Warum ab hier wieder default Name?
-            System.out.println(currentFileName);
+
+
             loadNewWindow(currentFileName, stage);
 
         } catch (IOException e) {
@@ -309,7 +309,19 @@ public class MainViewController implements ObserverInterface {
         }
     }
 
-    public void loadNewWindow(String loadedFile, Stage primaryStage) throws IOException {
+    /**
+     * Responsible for loading a new window.
+     * <p>
+     * When this method is called, a new window will be loaded with which the user can interact. Depending on if it's
+     * a newly created file or an already existing file, the textarea of the window will be filled with the code in
+     * the file.
+     *
+     * @param loadedFile   Name of the file which should be loaded in the new window
+     * @param primaryStage The stage on which the new window should be depicted
+     * @throws IOException
+     * @since 09.02.2022
+     */
+    private void loadNewWindow(String loadedFile, Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
 
         Parent root = loader.load();
@@ -351,13 +363,12 @@ public class MainViewController implements ObserverInterface {
     public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
         Stage primaryStage = new Stage();
         String nameOfTheSelectedFile = selectFileToLoad(primaryStage);
+
         if (nameOfTheSelectedFile == null) {
             return;
         }
 
         loadNewWindow(nameOfTheSelectedFile, primaryStage);
-//TODO Ab hier auslagern (entweder in neue Klasse oder andere Methode, die dann alle aufrufen, die ein neues Fenster wollen
-
     }
 
     /**
@@ -366,7 +377,6 @@ public class MainViewController implements ObserverInterface {
      * @param actionEvent the interaction of the user with the FXML Element
      * @since 15.12.2021
      */
-    //TODO Fenster dürfen nur ihre Datei speichern und nicht in denen, welche sie laden
     public void onSaveFileClicked(ActionEvent actionEvent) {
         if (currentFileName.equals(fileController.getDefaultName())) {
             //TODO Bitten Datei neuen Namen zu geben
@@ -383,6 +393,7 @@ public class MainViewController implements ObserverInterface {
      */
     public void onSaveAsXmlClicked(ActionEvent actionEvent) {
         xmlController.saveAsXML(gameField, (Stage) scrollPane.getScene().getWindow());
+
     }
 
     /**
@@ -703,7 +714,7 @@ public class MainViewController implements ObserverInterface {
         }
     }
 
-    @Override //TODO Update muss etwas setzen
+    @Override
     public void update(Object object) {
         if (object.getClass() == NewFileHasBeenCreatedMessage.class) {
             currentFileName = ((NewFileHasBeenCreatedMessage) object).getNewFileName();

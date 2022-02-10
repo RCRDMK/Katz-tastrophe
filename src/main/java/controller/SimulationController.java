@@ -1,7 +1,7 @@
 package controller;
 
 import model.GameField;
-import pattern.ObservedObject;
+import model.pattern.ObservedObject;
 
 /**
  * This class is responsible for handling the control over threads which are running the main methods inside the

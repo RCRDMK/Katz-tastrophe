@@ -1,4 +1,4 @@
-package pattern;
+package model.pattern;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
