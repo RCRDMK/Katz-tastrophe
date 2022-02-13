@@ -6,5 +6,5 @@ package model.exceptions;
  * @since 05.11.2021
  */
 
-public class NoCatInHandException extends Throwable {
+public class NoCatInHandException extends Exception {
 }

@@ -69,11 +69,7 @@ public class Simulation extends Thread implements ObserverInterface {
             }
             while (pause) {
                 synchronized (this) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    wait();
                 }
                 if (stop) {
                     throw new StoppedException();

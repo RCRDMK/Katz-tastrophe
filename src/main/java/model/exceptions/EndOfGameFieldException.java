@@ -6,5 +6,5 @@ package model.exceptions;
  * @since 05.11.2021
  */
 
-public class EndOfGameFieldException extends Throwable {
+public class EndOfGameFieldException extends Exception {
 }

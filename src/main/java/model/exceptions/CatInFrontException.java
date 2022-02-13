@@ -7,5 +7,5 @@ package model.exceptions;
  * @since 05.11.2021
  */
 
-public class CatInFrontException extends Throwable {
+public class CatInFrontException extends Exception {
 }

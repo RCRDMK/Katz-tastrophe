@@ -134,7 +134,7 @@ public class GameField extends ObservedObject implements Serializable {
      * @since 21.11.2021
      */
     public void resizeGameFieldSize(int rows, int columns) {
-        String copy[][] = Arrays.stream(getGameFieldArray()).map(String[]::clone).toArray(String[][]::new);
+        String[][] copy = Arrays.stream(getGameFieldArray()).map(String[]::clone).toArray(String[][]::new);
         gameFieldArray = new String[rows][columns];
         row = rows;
         column = columns;

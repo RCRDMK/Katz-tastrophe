@@ -153,13 +153,7 @@ public class FileController {
         CharaWrapper newCharacter = new CharaWrapper(gameField);
         try {
             newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         newCharacter.setGameCharacter(gameField, gameCharacter);

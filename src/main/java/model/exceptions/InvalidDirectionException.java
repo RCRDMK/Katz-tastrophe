@@ -5,5 +5,5 @@ package model.exceptions;
  *
  * @since 12.02.2022
  */
-public class InvalidDirectionException extends Throwable {
+public class InvalidDirectionException extends Exception {
 }

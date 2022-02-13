@@ -87,9 +87,9 @@ public class MainViewController implements ObserverInterface {
             Files.createDirectory(Path.of("programs"));
         }
 
-        Platform.runLater(() -> {
-            scrollPane.getScene().getWindow().setOnCloseRequest(event -> fileController.saveFile(currentFileName, textInput.getText()));
-        });
+        Platform.runLater(() -> //TODO
+                scrollPane.getScene().getWindow().setOnCloseRequest(event -> fileController.saveFile(currentFileName, textInput.getText()))
+        );
 
         character = fileController.compileFileAndSetNewCharacter(fileController.getDefaultName(), gameField, character, gameFieldPanelController);//executed to being able to use the contextClick method right from the start
         textInput.setText(fileController.loadTextForEditor(fileController.getDefaultName()));
@@ -142,7 +142,7 @@ public class MainViewController implements ObserverInterface {
                             public void handle(ActionEvent event) {
                                 try {
                                     method.invoke(character);
-                                } catch (Throwable e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -168,8 +168,8 @@ public class MainViewController implements ObserverInterface {
                             public void handle(ActionEvent event) {
                                 try {
                                     method.invoke(character);
-                                } catch (Throwable t) {
-                                    t.printStackTrace();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
                         });
@@ -382,10 +382,10 @@ public class MainViewController implements ObserverInterface {
      * When this method is called, it first asks the user which file to load. If the user has chosen a file, it will
      * then proceed to load a new ClientView instance and filling it with the values of the chosen file.
      *
-     * @throws Exception possible exception which can be thrown when loading a new fxml view
+     * @throws IOException
      * @since 10.12.2021
      */
-    public void onLoadFileClicked() throws Exception {
+    public void onLoadFileClicked() throws IOException {
         Stage primaryStage = new Stage();
         String nameOfTheSelectedFile = selectFileToLoad(primaryStage);
 
