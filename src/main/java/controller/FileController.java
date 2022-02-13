@@ -24,9 +24,9 @@ public class FileController {
 
     final String defaultName = "neue_Katztastrophe";
 
-    File userDirectory = new File(System.getProperty("user.dir"));
-    String programFolder = "/programs/";
-    String fileType = ".java";
+    private File userDirectory = new File(System.getProperty("user.dir"));
+    private String programFolder = "/programs/";
+    private String fileType = ".java";
 
     public void fileWhenFirstOpened() {
         createFile(defaultName);
@@ -94,7 +94,6 @@ public class FileController {
      */
     public String loadTextForEditor(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
-        //defaultName = fileName;
         String replacePrefix = "";
         String replacePostfix = "";
         try (FileReader reader = new FileReader(file)) {
@@ -154,13 +153,7 @@ public class FileController {
         CharaWrapper newCharacter = new CharaWrapper(gameField);
         try {
             newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         newCharacter.setGameCharacter(gameField, gameCharacter);

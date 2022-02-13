@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import model.GameField;
 import model.exceptions.StoppedException;
 import model.pattern.ObserverInterface;
@@ -12,9 +13,10 @@ import model.pattern.ObserverInterface;
  */
 
 public class Simulation extends Thread implements ObserverInterface {
-    GameField gameField;
-    GameFieldPanelController gameFieldPanelController;
-    SimulationController simulationController;
+    private GameField gameField;
+    private GameFieldPanelController gameFieldPanelController;
+    private SimulationController simulationController;
+    private AlertController alertController = new AlertController();
     volatile boolean pause;
     volatile boolean stop;
 
@@ -47,6 +49,8 @@ public class Simulation extends Thread implements ObserverInterface {
             gameFieldPanelController.getCharacter().main();
         } catch (StoppedException e) {
             System.out.println("The simulation has been stopped");
+        } catch (IllegalStateException e) {
+            alertController.userAlert(Alert.AlertType.ERROR, "There's something in the way", "Can't move further. There's something in the way");
         } finally {
             gameField.removeObserver(this);
             simulationController.simulationEnded();
@@ -65,17 +69,14 @@ public class Simulation extends Thread implements ObserverInterface {
             }
             while (pause) {
                 synchronized (this) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    wait();
                 }
                 if (stop) {
                     throw new StoppedException();
                 }
             }
         } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }

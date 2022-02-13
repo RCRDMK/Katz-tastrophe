@@ -1,8 +1,9 @@
 package controller;
 
-import model.GameField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.GameCharacter;
+import model.GameField;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -13,7 +14,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -39,7 +39,7 @@ public class XMLController {
      * @param stage     the stage from the view for the fileChooser so that both can be associated with each other.
      * @since 16.01.2022
      */
-    public void saveAsXML(GameField gameField, Stage stage) {//TODO Character Zustände abspeichern und laden
+    public void saveAsXML(GameField gameField, GameCharacter gameCharacter, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.setTitle("Speichern als XML-Datei");
@@ -82,6 +82,18 @@ public class XMLController {
                             Attr characterColumn = doc.createAttribute("column");
                             characterColumn.setValue(Integer.toString(j));
                             character.setAttributeNode(characterColumn);
+
+                            Attr characterHandsFree = doc.createAttribute("handsFree");
+                            characterHandsFree.setValue(String.valueOf(gameCharacter.handsFree()));
+                            character.setAttributeNode(characterHandsFree);
+
+                            Attr characterDrinkInHand = doc.createAttribute("drinkInHand");
+                            characterDrinkInHand.setValue(String.valueOf(gameCharacter.isDrinkInHand()));
+                            character.setAttributeNode(characterDrinkInHand);
+
+                            Attr characterCatInHand = doc.createAttribute("catInHand");
+                            characterCatInHand.setValue(String.valueOf(gameCharacter.isCatInHand()));
+                            character.setAttributeNode(characterCatInHand);
 
                         } else if (gameField.getGameFieldArray()[i][j].equals("D")) {
 
@@ -139,11 +151,7 @@ public class XMLController {
                 StreamResult result = new StreamResult(selectedFile);
                 transformer.transform(source, result);
 
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (TransformerConfigurationException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (ParserConfigurationException | TransformerException e) {
                 e.printStackTrace();
             }
         }
@@ -159,7 +167,7 @@ public class XMLController {
      * @param stage     the stage from the view for the fileChooser so that both can be associated with each other.
      * @since 18.01.2022
      */
-    public void loadXML(GameField gameField, Stage stage) {
+    public void loadXML(GameField gameField, GameCharacter gameCharacter, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.setTitle("XML-Datei laden");
@@ -198,6 +206,9 @@ public class XMLController {
                 nodeList = document.getElementsByTagName("character");
                 row = Integer.parseInt(nodeList.item(0).getAttributes().getNamedItem("row").getNodeValue());
                 column = Integer.parseInt(nodeList.item(0).getAttributes().getNamedItem("column").getNodeValue());
+                gameCharacter.setHandsFull(Boolean.parseBoolean(nodeList.item(0).getAttributes().getNamedItem("handsFree").getNodeValue()));
+                gameCharacter.setDrinkInHand(Boolean.parseBoolean(nodeList.item(0).getAttributes().getNamedItem("drinkInHand").getNodeValue()));
+                gameCharacter.setCatInHand(Boolean.parseBoolean(nodeList.item(0).getAttributes().getNamedItem("catInHand").getNodeValue()));
                 gameField.placeObjectsInGameField(row, column, "^");
 
                 nodeList = document.getElementsByTagName("drink");

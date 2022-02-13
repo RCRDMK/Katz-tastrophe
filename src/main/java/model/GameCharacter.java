@@ -19,6 +19,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
     private volatile boolean drinkInHand = false;
     private volatile boolean catInHand = false;
 
+
     public GameCharacter() {
 
     }
@@ -292,14 +293,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @since 05.11.2011
      */
     public void takeCat() throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
-        try {
-            if (!handsFull) {
-                boolean catWasInFront = false;
+        if (!handsFull) {
+            boolean catWasInFront = false;
 
+            try {
                 switch (gameField.getCharacter()) {
                     case "^":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("^") && gameField.getGameFieldArray()[i - 1][j].equals("C")) {
                                     gameField.getGameFieldArray()[i - 1][j] = "x";
                                     handsFull = true;
@@ -307,9 +308,6 @@ public class GameCharacter extends ObservedObject implements Serializable {
                                     catWasInFront = true;
                                     break;
                                 }
-                                /*if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
-                                }*/
                             }
                         }
                         if (!catWasInFront) {
@@ -319,17 +317,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "v":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("v") && gameField.getGameFieldArray()[i + 1][j].equals("C")) {
                                     gameField.getGameFieldArray()[i + 1][j] = "x";
                                     handsFull = true;
                                     catInHand = true;
                                     catWasInFront = true;
                                     break;
-                                }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
                                 }
                             }
                         }
@@ -340,17 +335,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case ">":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals(">") && gameField.getGameFieldArray()[i][j + 1].equals("C")) {
                                     gameField.getGameFieldArray()[i][j + 1] = "x";
                                     handsFull = true;
                                     catInHand = true;
                                     catWasInFront = true;
                                     break;
-                                }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
                                 }
                             }
                         }
@@ -361,8 +353,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "<":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("<") && gameField.getGameFieldArray()[i][j - 1].equals("C")) {
                                     gameField.getGameFieldArray()[i][j - 1] = "x";
                                     handsFull = true;
@@ -370,11 +362,9 @@ public class GameCharacter extends ObservedObject implements Serializable {
                                     catWasInFront = true;
                                     break;
                                 }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
-                                }
                             }
                         }
+
                         if (!catWasInFront) {
                             throw new CatInFrontException();
                         }
@@ -382,15 +372,11 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                 }
-            } else {
-                throw new HandsNotEmptyException();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new EndOfGameFieldException();
             }
-        } catch (HandsNotEmptyException hnee) {
-            System.out.println("Hands are not empty");
-        } catch (CatInFrontException cife) {
-            System.out.println("There is no cat to pick up");
-        } catch (EndOfGameFieldException eogfe) {
-            System.out.println("End of gamefield reached");
+        } else {
+            throw new HandsNotEmptyException();
         }
     }
 
@@ -406,23 +392,20 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @since 05.11.2011
      */
     public void takeDrink() throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
-        try {
-            if (!handsFull) {
-                boolean drinkWasInFront = false;
+        if (!handsFull) {
+            boolean drinkWasInFront = false;
 
+            try {
                 switch (gameField.getCharacter()) {
                     case "^":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("^") && gameField.getGameFieldArray()[i - 1][j].equals("D")) {
                                     gameField.getGameFieldArray()[i - 1][j] = "x";
                                     handsFull = true;
                                     drinkInHand = true;
                                     drinkWasInFront = true;
                                     break;
-                                }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
                                 }
                             }
                         }
@@ -433,17 +416,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "v":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("v") && gameField.getGameFieldArray()[i + 1][j].equals("D")) {
                                     gameField.getGameFieldArray()[i + 1][j] = "x";
                                     handsFull = true;
                                     drinkInHand = true;
                                     drinkWasInFront = true;
                                     break;
-                                }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
                                 }
                             }
                         }
@@ -454,17 +434,14 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case ">":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals(">") && gameField.getGameFieldArray()[i][j + 1].equals("D")) {
                                     gameField.getGameFieldArray()[i][j + 1] = "x";
                                     handsFull = true;
                                     drinkInHand = true;
                                     drinkWasInFront = true;
                                     break;
-                                }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
                                 }
                             }
                         }
@@ -484,9 +461,6 @@ public class GameCharacter extends ObservedObject implements Serializable {
                                     drinkWasInFront = true;
                                     break;
                                 }
-                                if (j == gameField.getColumn() / gameField.getColumn() - 1) {
-                                    throw new EndOfGameFieldException();
-                                }
                             }
                         }
                         if (!drinkWasInFront) {
@@ -496,15 +470,12 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                 }
-            } else {
-                throw new HandsNotEmptyException();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new EndOfGameFieldException();
             }
-        } catch (HandsNotEmptyException hnee) {
-            System.out.println("Hands are not empty");
-        } catch (DrinkInFrontException dife) {
-            System.out.println("There is no drink to pick up");
+        } else {
+            throw new HandsNotEmptyException();
         }
-
     }
 
     /**
@@ -522,11 +493,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
     public void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException, EndOfGameFieldException {
         try {
             if (catInHand) {
-
                 switch (gameField.getCharacter()) {
                     case "^":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("^")) {
                                     switch (gameField.getGameFieldArray()[i - 1][j]) {
                                         case "W":
@@ -547,8 +517,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "v":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("v")) {
                                     switch (gameField.getGameFieldArray()[i + 1][j]) {
                                         case "W":
@@ -569,8 +539,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case ">":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals(">")) {
                                     switch (gameField.getGameFieldArray()[i][j + 1]) {
                                         case "W":
@@ -591,8 +561,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "<":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("<")) {
                                     switch (gameField.getGameFieldArray()[i][j - 1]) {
                                         case "W":
@@ -639,8 +609,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
 
                 switch (gameField.getCharacter()) {
                     case "^":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("^")) {
                                     switch (gameField.getGameFieldArray()[i - 1][j]) {
                                         case "W":
@@ -659,8 +629,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "v":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("v")) {
                                     switch (gameField.getGameFieldArray()[i + 1][j]) {
                                         case "W":
@@ -679,8 +649,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case ">":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals(">")) {
                                     switch (gameField.getGameFieldArray()[i][j + 1]) {
                                         case "W":
@@ -699,8 +669,8 @@ public class GameCharacter extends ObservedObject implements Serializable {
                         notifyRegisteredObservers(this);
                         break;
                     case "<":
-                        for (int i = 0; i < gameField.getRow() - 1; i++) {
-                            for (int j = 0; j < gameField.getColumn() - 1; j++) {
+                        for (int i = 0; i < gameField.getRow(); i++) {
+                            for (int j = 0; j < gameField.getColumn(); j++) {
                                 if (gameField.getGameFieldArray()[i][j].equals("<")) {
                                     switch (gameField.getGameFieldArray()[i][j - 1]) {
                                         case "W":
@@ -779,7 +749,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
             case "<":
                 for (int i = 0; i < gameField.getRow() - 1; i++) {
                     for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                        if (gameField.getGameFieldArray()[i][j - 1].equals("C")) {
+                        if (gameField.getGameFieldArray()[i][j].equals("C")) {
                             return true;
                         }
                     }
@@ -802,4 +772,23 @@ public class GameCharacter extends ObservedObject implements Serializable {
         return true;
     }
 
+    public boolean isDrinkInHand() {
+        return drinkInHand;
+    }
+
+    public boolean isCatInHand() {
+        return catInHand;
+    }
+
+    public void setHandsFull(boolean handsFull) {
+        this.handsFull = handsFull;
+    }
+
+    public void setDrinkInHand(boolean drinkInHand) {
+        this.drinkInHand = drinkInHand;
+    }
+
+    public void setCatInHand(boolean catInHand) {
+        this.catInHand = catInHand;
+    }
 }

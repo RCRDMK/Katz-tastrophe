@@ -6,5 +6,5 @@ package model.exceptions;
  * @since 05.11.2021
  */
 
-public class WallInFrontException extends Throwable {
+public class WallInFrontException extends Exception {
 }

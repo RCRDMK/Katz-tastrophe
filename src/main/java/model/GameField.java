@@ -24,13 +24,6 @@ public class GameField extends ObservedObject implements Serializable {
     // tip points to where the character is looking. Initially the character looks up (^) but depending on the
     // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)
 
-    /**
-     * The default constructor of the class.
-     *
-     * @since 03.11.2021
-     */
-    GameField() {
-    }
 
     /**
      * The custom constructor of the class.
@@ -50,33 +43,21 @@ public class GameField extends ObservedObject implements Serializable {
     }
 
 
-    public int getRow() {
+    public synchronized int getRow() {
         return row;
     }
 
-    public String[][] getGameFieldArray() {
+    public synchronized String[][] getGameFieldArray() {
         return gameFieldArray;
     }
 
-    public String getCharacter() {
+    public synchronized String getCharacter() {
         return character;
     }
 
-    public void setCharacter(String character) {
+    public synchronized void setCharacter(String character) {
         this.character = character;
         notifyRegisteredObservers(this);
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-        notifyRegisteredObservers(this);
-        checkIfCharacterExists();
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-        notifyRegisteredObservers(this);
-        checkIfCharacterExists();
     }
 
     /**
@@ -122,7 +103,7 @@ public class GameField extends ObservedObject implements Serializable {
             }
         }
         if (!characterExist) {
-            gameFieldArray[0][0] = "^";
+            gameFieldArray[0][0] = ">";
         }
         notifyRegisteredObservers(this);
     }
@@ -153,9 +134,8 @@ public class GameField extends ObservedObject implements Serializable {
      * @since 21.11.2021
      */
     public void resizeGameFieldSize(int rows, int columns) {
-        String copy[][] = Arrays.stream(getGameFieldArray()).map(String[]::clone).toArray(String[][]::new);
+        String[][] copy = Arrays.stream(getGameFieldArray()).map(String[]::clone).toArray(String[][]::new);
         gameFieldArray = new String[rows][columns];
-        //TODO rows und columns überdenken
         row = rows;
         column = columns;
         //copying the values from the old array into the new one
@@ -186,7 +166,7 @@ public class GameField extends ObservedObject implements Serializable {
         notifyRegisteredObservers(this);
     }
 
-    public int getColumn() {
+    public synchronized int getColumn() {
         return column;
     }
 }

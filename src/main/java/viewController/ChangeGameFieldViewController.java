@@ -2,7 +2,6 @@ package viewController;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,9 +20,9 @@ public class ChangeGameFieldViewController {
 
     private GameField gameField;
 
-    boolean row = false;
+    private boolean row = false;
 
-    boolean column = false;
+    private boolean column = false;
 
     @FXML
     Label changeViewErrorLabel;
@@ -101,10 +100,9 @@ public class ChangeGameFieldViewController {
     /**
      * Responsible for handling the action event when the cancel button was being clicked.
      *
-     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 21.11.2021
      */
-    public void onChangeViewCancelClicked(ActionEvent actionEvent) {
+    public void onChangeViewCancelClicked() {
         changeViewCancel.getScene().getWindow().hide();
     }
 
@@ -115,10 +113,9 @@ public class ChangeGameFieldViewController {
      * resize method of the GameField class while using the before created int values as parameters. Afterwards, it calls
      * the checkCharacter method of the GameField class before it hides the fxml view.
      *
-     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 21.11.2021
      */
-    public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
+    public void onChangeViewAcceptClicked() {
         int rows = Integer.valueOf(changeViewTextFieldRow.getText());
         int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
         gameField.resizeGameFieldSize(rows, columns);
