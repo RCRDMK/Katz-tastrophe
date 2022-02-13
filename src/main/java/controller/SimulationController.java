@@ -15,10 +15,10 @@ import viewController.MainViewController;
  * @since 15.01.2022
  */
 public class SimulationController extends ObservedObject {
-    GameField gameField;
-    GameFieldPanelController gameFieldPanelController;
-    Simulation simulation;
-    MainViewController mainViewController;
+    private GameField gameField;
+    private GameFieldPanelController gameFieldPanelController;
+    private Simulation simulation;
+    private MainViewController mainViewController;
 
     /**
      * The custom constructor of the class. It initiates the variables with the value from the parameter.

@@ -12,9 +12,9 @@ import model.pattern.ObserverInterface;
  */
 
 public class Simulation extends Thread implements ObserverInterface {
-    GameField gameField;
-    GameFieldPanelController gameFieldPanelController;
-    SimulationController simulationController;
+    private GameField gameField;
+    private GameFieldPanelController gameFieldPanelController;
+    private SimulationController simulationController;
     volatile boolean pause;
     volatile boolean stop;
 

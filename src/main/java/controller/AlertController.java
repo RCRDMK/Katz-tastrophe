@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
  */
 public class AlertController {
 
-    String[] possibleAlertSound = {"/soundfiles/Error_sound.mp4", "/soundfiles/Not_correct.mp4", "/soundfiles/Think_about_it.mp4", "/soundfiles/Try_again.mp4"};
+    private String[] possibleAlertSound = {"/soundfiles/Error_sound.mp4", "/soundfiles/Not_correct.mp4", "/soundfiles/Think_about_it.mp4", "/soundfiles/Try_again.mp4"};
 
     /**
      * This method is responsible for showing the exception to the user who he himself is responsible for.
@@ -27,11 +27,11 @@ public class AlertController {
      * @since 10.02.2022
      */
     public void userAlert(Alert.AlertType alertType, String alertTitle, String alertMessage) {
-        Alert alert = new Alert(alertType);//sets the alert
+        Alert alert = new Alert(alertType);
         alert.setTitle(alertTitle);
         alert.setContentText(alertMessage);
 
-        try {//sets the sound that accompanies the alert
+        try {
             int randomNumber = (int) (Math.random() * 4);
             Media alertSound = new Media(getClass().getResource(possibleAlertSound[randomNumber]).toURI().toString());
             MediaPlayer player = new MediaPlayer(alertSound);

@@ -18,7 +18,6 @@ import model.pattern.ObserverInterface;
 public class GameFieldPanel extends Region implements ObserverInterface {
 
     final int BORDER_PATTING = 0;
-    private double rotationAngle = 0;
 
     private final Image cat = new Image("images/buttons/cat.png");
     private final Image wall = new Image("images/buttons/wall.png");
@@ -30,11 +29,6 @@ public class GameFieldPanel extends Region implements ObserverInterface {
     private double tileHeightCalculated;
     private double tileWidthCalculated;
 
-    /**
-     * The default constructor of the class
-     */
-    public GameFieldPanel() {
-    }
 
     /**
      * The custom constructor of the class

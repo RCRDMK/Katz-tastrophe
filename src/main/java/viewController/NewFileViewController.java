@@ -1,7 +1,6 @@
 package viewController;
 
 import controller.FileController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -32,17 +31,16 @@ public class NewFileViewController {
     @FXML
     TextField newFileText;
 
-    FileController fileController = new FileController();
+    private FileController fileController = new FileController();
 
-    MainViewController mainViewController;
+    private MainViewController mainViewController;
 
     /**
      * Responsible for handling the action event when the cancel button was being clicked.
      *
-     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 03.12.2021
      */
-    public void onNewFileCancelClicked(ActionEvent actionEvent) {
+    public void onNewFileCancelClicked() {
         newFileCancel.getScene().getWindow().hide();
     }
 
@@ -56,11 +54,10 @@ public class NewFileViewController {
      * If there already exist a file with the same name, it warns the user and asks him if he really does want to
      * overwrite the file.
      *
-     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 03.12.2021
      */
     //TODO Dynamisch Button dis- und enablen
-    public void onNewFileAcceptedClicked(ActionEvent actionEvent) {
+    public void onNewFileAcceptedClicked() {
         if (validateName(newFileText.getText())) {
             if (Files.exists(Path.of("programs/" + newFileText.getText() + ".java"))) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

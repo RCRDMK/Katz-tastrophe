@@ -145,7 +145,7 @@ public class CharaWrapper extends GameCharacter {
         } catch (CatInFrontException cife) {
             alertController.userAlert(Alert.AlertType.ERROR, "Not cat to pick up", "There is no cat to pick up in front");
         } catch (EndOfGameFieldException endOfGamefield) {
-            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
+            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't pick up cat from outside the gamefield.");
         }
 
     }
@@ -166,7 +166,7 @@ public class CharaWrapper extends GameCharacter {
         } catch (DrinkInFrontException dife) {
             alertController.userAlert(Alert.AlertType.ERROR, "No drink in front", "There is no drink in front to pick up.");
         } catch (EndOfGameFieldException endOfGamefield) {
-            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
+            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't pick up drink from outside the gamefield");
         }
     }
 
@@ -190,7 +190,7 @@ public class CharaWrapper extends GameCharacter {
         } catch (CatInFrontException cat) {
             alertController.userAlert(Alert.AlertType.ERROR, "There's a cat in front", "There's already a cat. Can't put a cat on another cat.");
         } catch (EndOfGameFieldException endOfGamefield) {
-            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
+            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't put cat down outside the gamefield.");
         }
     }
 
@@ -212,7 +212,7 @@ public class CharaWrapper extends GameCharacter {
         } catch (CatInFrontException cat) {
             alertController.userAlert(Alert.AlertType.ERROR, "There's a cat in front", "Can't put your drink here because there's already a cat there.");
         } catch (EndOfGameFieldException endOfGamefield) {
-            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't move further, already reached the end of the gamefield.");
+            alertController.userAlert(Alert.AlertType.ERROR, "Reached end of gamefield", "Can't put drink down outside the gamefield.");
         }
     }
 

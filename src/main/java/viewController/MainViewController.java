@@ -61,6 +61,18 @@ public class MainViewController implements ObserverInterface {
 
     }
 
+    /**
+     * Initializes this controller with all of its global variables.
+     * <p>
+     * When this method is called during the loading of this controller instance, it first sets the values for the variables
+     * necessary for running the application and registers observers at the necessary classes. Afterwards it checks if
+     * the programs folder exists. If not, it creates one. It then loads the file for the window and calls the method
+     * for the context menu. When the application has just started, it loads the default file. If the user closes this
+     * instance through the X in the top corner, it first saves the content in the textarea.
+     *
+     * @throws IOException
+     * @since 18.11.2021
+     */
     public void initialize() throws IOException {
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
@@ -305,7 +317,7 @@ public class MainViewController implements ObserverInterface {
      * @since 26.12.2021
      */
     //https://stackoverflow.com/questions/54789373/how-to-print-pane-in-javafx
-    private void printGameFieldAndUserCode(Stage stage) {
+    private void printUserCode(Stage stage) {
         PrinterJob pj = PrinterJob.createPrinterJob();
         pj.showPrintDialog(stage);
         Printer printer = Printer.getDefaultPrinter();
@@ -326,10 +338,9 @@ public class MainViewController implements ObserverInterface {
      * Responsible handling the request of the user to compile the current file.
      * To enhance the user experience, it saves the file before compiling it.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 16.12.2021
      */
-    public void onCompileFileClicked(ActionEvent actionEvent) {
+    public void onCompileFileClicked() {
         fileController.saveFile(currentFileName, textInput.getText());
         fileController.compileFileAndSetNewCharacter(currentFileName, gameField, character, gameFieldPanelController);
         character = gameFieldPanelController.getCharacter();
@@ -342,10 +353,9 @@ public class MainViewController implements ObserverInterface {
      * When this method is called, a window will pop up, asking to input the name for the new file. After it, it will load
      * the new file in a new window.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 03.12.2021
      */
-    public void onNewFileClicked(ActionEvent actionEvent) {
+    public void onNewFileClicked() {
         try {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
             Parent root = loader.load();
@@ -372,11 +382,10 @@ public class MainViewController implements ObserverInterface {
      * When this method is called, it first asks the user which file to load. If the user has chosen a file, it will
      * then proceed to load a new ClientView instance and filling it with the values of the chosen file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @throws Exception possible exception which can be thrown when loading a new fxml view
      * @since 10.12.2021
      */
-    public void onLoadFileClicked(ActionEvent actionEvent) throws Exception {
+    public void onLoadFileClicked() throws Exception {
         Stage primaryStage = new Stage();
         String nameOfTheSelectedFile = selectFileToLoad(primaryStage);
 
@@ -390,15 +399,14 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user to save the current file as a .java file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 15.12.2021
      */
-    public void onSaveFileClicked(ActionEvent actionEvent) throws IOException {
+    public void onSaveFileClicked() throws IOException {
         if (currentFileName.equals(fileController.getDefaultName())) {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/NewFileView.fxml"));
             Parent root = loader.load();
-            NewFileViewController nfvc = loader.getController();
-            nfvc.setMainViewController(this);
+            NewFileViewController newFileViewController = loader.getController();
+            newFileViewController.setMainViewController(this);
             Stage stage = new Stage();
             stage.setTitle("Möchtest du deine Datei unter einem neuen Namen speichern?");
             stage.setScene(new Scene(root));
@@ -416,10 +424,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user to save the current file as a .xml file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 16.01.2022
      */
-    public void onSaveAsXmlClicked(ActionEvent actionEvent) {
+    public void onSaveAsXmlClicked() {
         xmlController.saveAsXML(gameField, (Stage) scrollPane.getScene().getWindow());
         infoLabel.setText("Datei gespeichert");
     }
@@ -427,10 +434,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user to load a .xml file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 18.01.2022
      */
-    public void onLoadXmlClicked(ActionEvent actionEvent) {
+    public void onLoadXmlClicked() {
         xmlController.loadXML(gameField, (Stage) scrollPane.getScene().getWindow());
         infoLabel.setText("Datei geladen");
     }
@@ -438,10 +444,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the user request to save the current file as a .rsm file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 11.01.2022
      */
-    public void onSaveAsSerializeClicked(ActionEvent actionEvent) {
+    public void onSaveAsSerializeClicked() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
         File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
@@ -461,10 +466,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the user request to load a .rsm file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 13.01.2022
      */
-    public void onLoadSerializeClicked(ActionEvent actionEvent) {
+    public void onLoadSerializeClicked() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.setTitle("Programm öffnen");
@@ -488,10 +492,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user to save the current file as an image.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 23.12.2021
      */
-    public void onSaveAsImageClicked(ActionEvent actionEvent) {
+    public void onSaveAsImageClicked() {
         createImage();
     }
 
@@ -501,10 +504,9 @@ public class MainViewController implements ObserverInterface {
      * If the user clicks this menu item, the current window will be closed. If it was the last open window, the
      * application will be terminated.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onQuitClicked(ActionEvent actionEvent) {
+    public void onQuitClicked() {
         Stage stage = (Stage) textInput.getScene().getWindow();
         fileController.saveFile(currentFileName, textInput.getText());
         stage.hide();
@@ -515,15 +517,14 @@ public class MainViewController implements ObserverInterface {
      * <p>
      * When this method is called, a new instance of the ChangeGameFieldView gets created.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @throws IOException
      * @since 21.11.2021
      */
-    public void onChangeSizeFieldClicked(ActionEvent actionEvent) throws IOException {
+    public void onChangeSizeFieldClicked() {
         try {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/ChangeGameFieldView.fxml"));
             Parent root = loader.load();
-            ChangeGameFieldViewController changeGameFieldViewController = (ChangeGameFieldViewController) loader.getController();
+            ChangeGameFieldViewController changeGameFieldViewController = loader.getController();
             changeGameFieldViewController.init(gameField);
             Stage stage = new Stage();
             stage.setTitle("Größe des Spielfeldes ändern");
@@ -547,10 +548,9 @@ public class MainViewController implements ObserverInterface {
      * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
      * exists within the array and then draws gamefield new to accommodate for the change that just happened.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 20.11.2021
      */
-    public void onPlaceCharaClicked(ActionEvent actionEvent) {
+    public void onPlaceCharaClicked() {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -582,10 +582,9 @@ public class MainViewController implements ObserverInterface {
      * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
      * exists within the array and then draws gamefield new to accommodate for the change that just happened.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 20.11.2021
      */
-    public void onPlaceCatClicked(ActionEvent actionEvent) {
+    public void onPlaceCatClicked() {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -611,10 +610,9 @@ public class MainViewController implements ObserverInterface {
      * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
      * exists within the array and then draws gamefield new to accommodate for the change that just happened.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 20.11.2021
      */
-    public void onPlaceWallClicked(ActionEvent actionEvent) {
+    public void onPlaceWallClicked() {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -639,10 +637,9 @@ public class MainViewController implements ObserverInterface {
      * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
      * exists within the array and then draws gamefield new to accommodate for the change that just happened.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 20.11.2021
      */
-    public void onPlaceDrinkClicked(ActionEvent actionEvent) {
+    public void onPlaceDrinkClicked() {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -674,10 +671,9 @@ public class MainViewController implements ObserverInterface {
      * Lastly, it calls the method to manually alter objects inside the gamefield array, checks if the character still
      * exists within the array and then draws gamefield new to accommodate for the change that just happened.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 20.11.2021
      */
-    public void onDeleteContentClicked(ActionEvent actionEvent) {
+    public void onDeleteContentClicked() {
         scrollPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -695,20 +691,18 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user to print the current file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 26.12.2021
      */
-    public void onPrintClicked(ActionEvent actionEvent) {
-        printGameFieldAndUserCode((Stage) scrollPane.getScene().getWindow());
+    public void onPrintClicked() {
+        printUserCode((Stage) scrollPane.getScene().getWindow());
     }
 
     /**
      * Responsible for handling the interaction with the menu item and button for moving up.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onMoveUpClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
+    public void onMoveUpClicked() throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
         character.lookHere("up");
         character.moveUp();
     }
@@ -716,10 +710,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the interaction with the menu item and button for moving down.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onMoveDownClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
+    public void onMoveDownClicked() throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
         character.lookHere("down");
         character.moveDown();
     }
@@ -727,10 +720,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the interaction with the menu item and button for moving left.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onMoveLeftClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
+    public void onMoveLeftClicked() throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
         character.lookHere("left");
         character.moveLeft();
     }
@@ -738,10 +730,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the interaction with the menu item and button for moving right.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onMoveRightClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
+    public void onMoveRightClicked() throws WallInFrontException, DrinkInFrontException, EndOfGameFieldException, CatInFrontException, InvalidDirectionException {
         character.lookHere("right");
         character.moveRight();
     }
@@ -749,40 +740,36 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the interaction with the menu item and button for picking the cat up.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPickCatUpClicked(ActionEvent actionEvent) throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
+    public void onPickCatUpClicked() throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
         character.takeCat();
     }
 
     /**
      * Responsible for handling the interaction with the menu item and button for picking the drink up.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPickDrinkUpClicked(ActionEvent actionEvent) throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
+    public void onPickDrinkUpClicked() throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
         character.takeDrink();
     }
 
     /**
      * Responsible for handling the interaction with the menu item and button for putting the cat down.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPutCatDownClicked(ActionEvent actionEvent) throws WallInFrontException, DrinkInFrontException, NoCatInHandException, CatInFrontException, EndOfGameFieldException {
+    public void onPutCatDownClicked() throws WallInFrontException, DrinkInFrontException, NoCatInHandException, CatInFrontException, EndOfGameFieldException {
         character.putCatDown();
     }
 
     /**
      * Responsible for handling the interaction with the menu item and button for putting the drink down.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 19.11.2021
      */
-    public void onPutDrinkDownClicked(ActionEvent actionEvent) throws WallInFrontException, NoDrinkInHandException, CatInFrontException, EndOfGameFieldException {
+    public void onPutDrinkDownClicked() throws WallInFrontException, NoDrinkInHandException, CatInFrontException, EndOfGameFieldException {
         character.putDrinkDown();
     }
 
@@ -791,10 +778,9 @@ public class MainViewController implements ObserverInterface {
      * Responsible for handling the request made by the user to execute the contents of the main method in the
      * currently compiled class.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 15.01.2022
      */
-    public void onStartButtonClicked(ActionEvent actionEvent) {
+    public void onStartButtonClicked() {
         startButton.setSelected(true);
         startMenuItem.setSelected(true);
         simulationController.start(this);
@@ -804,10 +790,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user for pausing the current execution of the code written by the user.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 08.02.2022
      */
-    public void onPauseButtonClicked(ActionEvent actionEvent) {
+    public void onPauseButtonClicked() {
         pauseButton.setSelected(true);
         pauseMenuItem.setSelected(true);
         simulationController.pause();
@@ -817,10 +802,9 @@ public class MainViewController implements ObserverInterface {
     /**
      * Responsible for handling the request made by the user for terminating the current execution of the code written by the user.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
      * @since 08.02.2022
      */
-    public void onStopButtonClicked(ActionEvent actionEvent) {
+    public void onStopButtonClicked() {
         stopButton.setSelected(true);
         stopMenuItem.setSelected(true);
         simulationController.stop();
