@@ -42,7 +42,7 @@
                             </items>
                         </Menu>
                         <MenuItem mnemonicParsing="false" fx:id="compileFile" text="Kompilieren"
-                                  accelerator="Shortcut+C"
+                                  accelerator="Shortcut+x"
                                   onAction="#onCompileFileClicked">
                             <graphic>
                                 <ImageView>
@@ -94,19 +94,20 @@
                                 </ImageView>
                             </graphic>
                         </MenuItem>
-                        <RadioMenuItem mnemonicParsing="false" fx:id="placeChara" text="Spielfigur platzieren"
+                        <RadioMenuItem mnemonicParsing="false" fx:id="placeCharaMenuItem" text="Spielfigur platzieren"
                                        toggleGroup="$toggleableObjects" onAction="#onPlaceCharaClicked"/>
                         <Menu mnemonicParsing="false" text="Hindernis platzieren">
                             <items>
-                                <RadioMenuItem mnemonicParsing="false" fx:id="placeCat" text="Katze"
+                                <RadioMenuItem mnemonicParsing="false" fx:id="placeCatMenuItem" text="Katze"
                                                toggleGroup="$toggleableObjects" onAction="#onPlaceCatClicked"/>
-                                <RadioMenuItem mnemonicParsing="false" fx:id="placeWall" text="Wand"
+                                <RadioMenuItem mnemonicParsing="false" fx:id="placeWallMenuItem" text="Wand"
                                                toggleGroup="$toggleableObjects" onAction="#onPlaceWallClicked"/>
                             </items>
                         </Menu>
-                        <RadioMenuItem mnemonicParsing="false" fx:id="placeDrink" text="Trinken platzieren"
+                        <RadioMenuItem mnemonicParsing="false" fx:id="placeDrinkMenuItem" text="Trinken platzieren"
                                        toggleGroup="$toggleableObjects" onAction="#onPlaceDrinkClicked"/>
-                        <RadioMenuItem mnemonicParsing="false" fx:id="deleteContent" text="Inhalt einer Kachel löschen"
+                        <RadioMenuItem mnemonicParsing="false" fx:id="deleteContentMenuItem"
+                                       text="Inhalt einer Kachel löschen"
                                        toggleGroup="$toggleableObjects" onAction="#onDeleteContentClicked">
                             <graphic>
                                 <ImageView>
@@ -300,8 +301,8 @@
                     </tooltip>
                 </ToggleButton>
 
-                <ToggleButton layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton"
-                              toggleGroup="$toggleableObjects" onAction="#onPickDrinkUpClicked">
+                <Button layoutX="570.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickDrinkUpButton"
+                        onAction="#onPickDrinkUpClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/drinkPickUp.png"/>
@@ -310,10 +311,10 @@
                     <tooltip>
                         <Tooltip text="Trinken aufheben"/>
                     </tooltip>
-                </ToggleButton>
+                </Button>
 
-                <ToggleButton layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton"
-                              toggleGroup="$toggleableObjects" onAction="#onPickCatUpClicked">
+                <Button layoutX="626.0" layoutY="10.0" mnemonicParsing="false" fx:id="pickCatUpButton"
+                        onAction="#onPickCatUpClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/catPickUp.png"/>
@@ -322,10 +323,10 @@
                     <tooltip>
                         <Tooltip text="Katze aufheben"/>
                     </tooltip>
-                </ToggleButton>
+                </Button>
 
-                <ToggleButton layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton"
-                              toggleGroup="$toggleableObjects" onAction="#onPutDrinkDownClicked">
+                <Button layoutX="682.0" layoutY="10.0" mnemonicParsing="false" fx:id="putDrinkDownButton"
+                        onAction="#onPutDrinkDownClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/drinkPutDown.png"/>
@@ -334,10 +335,10 @@
                     <tooltip>
                         <Tooltip text="Trinken ablegen"/>
                     </tooltip>
-                </ToggleButton>
+                </Button>
 
-                <ToggleButton layoutX="738.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton"
-                              toggleGroup="$toggleableObjects" onAction="#onPutCatDownClicked">
+                <Button layoutX="738.0" layoutY="10.0" mnemonicParsing="false" fx:id="putCatDownButton"
+                        onAction="#onPutCatDownClicked">
                     <graphic>
                         <ImageView>
                             <Image url="@../images/buttons/catPutDown.png"/>
@@ -346,7 +347,7 @@
                     <tooltip>
                         <Tooltip text="Katze ablegen"/>
                     </tooltip>
-                </ToggleButton>
+                </Button>
 
                 <Button layoutX="794.0" layoutY="20.0" mnemonicParsing="false" fx:id="moveUpButton"
                         onAction="#onMoveUpClicked">

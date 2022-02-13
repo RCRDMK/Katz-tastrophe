@@ -43,19 +43,19 @@ public class GameField extends ObservedObject implements Serializable {
     }
 
 
-    public int getRow() {
+    public synchronized int getRow() {
         return row;
     }
 
-    public String[][] getGameFieldArray() {
+    public synchronized String[][] getGameFieldArray() {
         return gameFieldArray;
     }
 
-    public String getCharacter() {
+    public synchronized String getCharacter() {
         return character;
     }
 
-    public void setCharacter(String character) {
+    public synchronized void setCharacter(String character) {
         this.character = character;
         notifyRegisteredObservers(this);
     }
@@ -103,7 +103,7 @@ public class GameField extends ObservedObject implements Serializable {
             }
         }
         if (!characterExist) {
-            gameFieldArray[0][0] = "^";
+            gameFieldArray[0][0] = ">";
         }
         notifyRegisteredObservers(this);
     }
@@ -166,7 +166,7 @@ public class GameField extends ObservedObject implements Serializable {
         notifyRegisteredObservers(this);
     }
 
-    public int getColumn() {
+    public synchronized int getColumn() {
         return column;
     }
 }

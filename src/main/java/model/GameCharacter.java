@@ -19,6 +19,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
     private volatile boolean drinkInHand = false;
     private volatile boolean catInHand = false;
 
+
     public GameCharacter() {
 
     }
@@ -771,4 +772,23 @@ public class GameCharacter extends ObservedObject implements Serializable {
         return true;
     }
 
+    public boolean isDrinkInHand() {
+        return drinkInHand;
+    }
+
+    public boolean isCatInHand() {
+        return catInHand;
+    }
+
+    public void setHandsFull(boolean handsFull) {
+        this.handsFull = handsFull;
+    }
+
+    public void setDrinkInHand(boolean drinkInHand) {
+        this.drinkInHand = drinkInHand;
+    }
+
+    public void setCatInHand(boolean catInHand) {
+        this.catInHand = catInHand;
+    }
 }

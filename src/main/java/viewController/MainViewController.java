@@ -427,7 +427,7 @@ public class MainViewController implements ObserverInterface {
      * @since 16.01.2022
      */
     public void onSaveAsXmlClicked() {
-        xmlController.saveAsXML(gameField, (Stage) scrollPane.getScene().getWindow());
+        xmlController.saveAsXML(gameField, character, (Stage) scrollPane.getScene().getWindow());
         infoLabel.setText("Datei gespeichert");
     }
 
@@ -437,7 +437,7 @@ public class MainViewController implements ObserverInterface {
      * @since 18.01.2022
      */
     public void onLoadXmlClicked() {
-        xmlController.loadXML(gameField, (Stage) scrollPane.getScene().getWindow());
+        xmlController.loadXML(gameField, character, (Stage) scrollPane.getScene().getWindow());
         infoLabel.setText("Datei geladen");
     }
 
@@ -564,7 +564,7 @@ public class MainViewController implements ObserverInterface {
                     }
                     int xAxis = (int) ((event.getY() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileHeightCalculated());
                     int yAxis = (int) ((event.getX() - gameFieldPanelController.getGameFieldPanel().getBorderPatting()) / gameFieldPanelController.getGameFieldPanel().getTileWidthCalculated());
-                    gameField.placeObjectsInGameField(xAxis, yAxis, "^");
+                    gameField.placeObjectsInGameField(xAxis, yAxis, ">");
                     gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
                 }
                 characterDropped(event);
@@ -781,8 +781,6 @@ public class MainViewController implements ObserverInterface {
      * @since 15.01.2022
      */
     public void onStartButtonClicked() {
-        startButton.setSelected(true);
-        startMenuItem.setSelected(true);
         simulationController.start(this);
         infoLabel.setText("Simulation läuft");
     }
@@ -793,8 +791,6 @@ public class MainViewController implements ObserverInterface {
      * @since 08.02.2022
      */
     public void onPauseButtonClicked() {
-        pauseButton.setSelected(true);
-        pauseMenuItem.setSelected(true);
         simulationController.pause();
         infoLabel.setText("Simulation pausiert");
     }
@@ -805,8 +801,6 @@ public class MainViewController implements ObserverInterface {
      * @since 08.02.2022
      */
     public void onStopButtonClicked() {
-        stopButton.setSelected(true);
-        stopMenuItem.setSelected(true);
         simulationController.stop();
         infoLabel.setText("Simulation beendet");
     }
@@ -892,19 +886,19 @@ public class MainViewController implements ObserverInterface {
     MenuItem changeSizeField;
 
     @FXML
-    RadioMenuItem placeChara;
+    RadioMenuItem placeCharaMenuItem;
 
     @FXML
-    RadioMenuItem placeCat;
+    RadioMenuItem placeCatMenuItem;
 
     @FXML
-    RadioMenuItem placeWall;
+    RadioMenuItem placeWallMenuItem;
 
     @FXML
-    RadioMenuItem placeDrink;
+    RadioMenuItem placeDrinkMenuItem;
 
     @FXML
-    RadioMenuItem deleteContent;
+    RadioMenuItem deleteContentMenuItem;
 
     @FXML
     MenuItem print;
@@ -982,16 +976,16 @@ public class MainViewController implements ObserverInterface {
     ToggleButton deleteContentButton;
 
     @FXML
-    ToggleButton pickDrinkUpButton;
+    Button pickDrinkUpButton;
 
     @FXML
-    ToggleButton pickCatUpButton;
+    Button pickCatUpButton;
 
     @FXML
-    ToggleButton putDrinkDownButton;
+    Button putDrinkDownButton;
 
     @FXML
-    ToggleButton putCatDownButton;
+    Button putCatDownButton;
 
     @FXML
     Button moveUpButton;

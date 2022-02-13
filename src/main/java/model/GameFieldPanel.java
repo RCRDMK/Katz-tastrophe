@@ -57,23 +57,23 @@ public class GameFieldPanel extends Region implements ObserverInterface {
         drawGameField();
     }
 
-    public int getBorderPatting() {
+    public synchronized int getBorderPatting() {
         return BORDER_PATTING;
     }
 
-    public double getTileHeightCalculated() {
+    public synchronized double getTileHeightCalculated() {
         return tileHeightCalculated;
     }
 
-    public double getTileWidthCalculated() {
+    public synchronized double getTileWidthCalculated() {
         return tileWidthCalculated;
     }
 
-    public Canvas getCanvas() {
+    public synchronized Canvas getCanvas() {
         return canvas;
     }
 
-    public void setGameField(GameField gameField) {
+    public synchronized void setGameField(GameField gameField) {
         this.gameField = gameField;
     }
 
