@@ -42,7 +42,7 @@
                             </items>
                         </Menu>
                         <MenuItem mnemonicParsing="false" fx:id="compileFile" text="Kompilieren"
-                                  accelerator="Shortcut+x"
+                                  accelerator="Shortcut+K"
                                   onAction="#onCompileFileClicked">
                             <graphic>
                                 <ImageView>
