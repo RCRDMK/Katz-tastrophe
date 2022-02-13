@@ -722,8 +722,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
             case "^":
                 for (int i = 0; i < gameField.getRow() - 1; i++) {
                     for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                        if (gameField.getGameFieldArray()[i - 1][j].equals("C")) {
-                            return true;
+                        if (gameField.getGameFieldArray()[i][j].equals("^")) {
+                            if (gameField.getGameFieldArray()[i - 1][j].equals("C")) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -731,8 +733,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
             case "v":
                 for (int i = 0; i < gameField.getRow() - 1; i++) {
                     for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                        if (gameField.getGameFieldArray()[i + 1][j].equals("C")) {
-                            return true;
+                        if (gameField.getGameFieldArray()[i][j].equals("v")) {
+                            if (gameField.getGameFieldArray()[i + 1][j].equals("C")) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -740,8 +744,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
             case ">":
                 for (int i = 0; i < gameField.getRow() - 1; i++) {
                     for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                        if (gameField.getGameFieldArray()[i][j + 1].equals("C")) {
-                            return true;
+                        if (gameField.getGameFieldArray()[i][j].equals(">")) {
+                            if (gameField.getGameFieldArray()[i][j + 1].equals("C")) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -749,8 +755,10 @@ public class GameCharacter extends ObservedObject implements Serializable {
             case "<":
                 for (int i = 0; i < gameField.getRow() - 1; i++) {
                     for (int j = 0; j < gameField.getColumn() - 1; j++) {
-                        if (gameField.getGameFieldArray()[i][j].equals("C")) {
-                            return true;
+                        if (gameField.getGameFieldArray()[i][j].equals("<")) {
+                            if (gameField.getGameFieldArray()[i][j].equals("C")) {
+                                return true;
+                            }
                         }
                     }
                 }
