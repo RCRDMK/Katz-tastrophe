@@ -155,37 +155,4 @@ public class GameFieldPanel extends Region implements ObserverInterface {
         }
         drawObjectsOnGameField();
     }
-
-    /*https://stackoverflow.com/questions/18260421/how-to-draw-image-rotated-on-javafx-canvas
-     *//**
-     * Sets the transform for the GraphicsContext to rotate around a pivot point.
-     *
-     * @param gc    the graphics context the transform to applied to.
-     * @param angle the angle of rotation.
-     * @param px    the x pivot co-ordinate for the rotation (in canvas co-ordinates).
-     * @param py    the y pivot co-ordinate for the rotation (in canvas co-ordinates).
-     *//*
-    private void rotate(GraphicsContext gc, double angle, double px, double py) {
-        Rotate r = new Rotate(angle, px, py);
-        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
-
-    }
-
-    *//**
-     * Draws an image on a graphics context.
-     * <p>
-     * The image is drawn at (tlpx, tlpy) rotated by angle pivoted around the point:
-     * (tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2)
-     *
-     * @param graCon the graphics context the image is to be drawn on.
-     * @param angle  the angle of rotation.
-     * @param tlpx   the top left x co-ordinate where the image will be plotted (in canvas co-ordinates).
-     * @param tlpy   the top left y co-ordinate where the image will be plotted (in canvas co-ordinates).
-     *//*
-    private void drawRotatedImage(GraphicsContext graCon, Image image, double angle, double tlpx, double tlpy) {
-        graCon.save(); // saves the current state on stack, including the current transform
-        rotate(graCon, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
-        graCon.drawImage(image, tlpx, tlpy);
-        graCon.restore(); // back to original state (before rotation)
-    }*/
 }
