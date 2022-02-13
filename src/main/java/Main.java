@@ -1,45 +1,45 @@
+import controller.AlertController;
 import controller.FileController;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.GameField;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
-        Parent root = loader.load();
-        primaryStage.setScene(new Scene(root, 1150, 400));
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
 
-        FileController fileController = new FileController();
-        fileController.fileWhenFirstOpened();
-        primaryStage.setTitle(fileController.getDefaultName().replace("_", " "));
+            Parent root = loader.load();
+            primaryStage.setScene(new Scene(root, 1150, 400));
 
-        primaryStage.show();
+            FileController fileController = new FileController();
+            fileController.fileWhenFirstOpened();
+            primaryStage.setTitle(fileController.getDefaultName().replace("_", " "));
 
-        primaryStage.setMaxHeight(500);
-        primaryStage.setMaxWidth(primaryStage.getWidth());
+            primaryStage.show();
 
-        primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(1150);
+            primaryStage.setMaxHeight(500);
+            primaryStage.setMaxWidth(primaryStage.getWidth());
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
+            primaryStage.setMinHeight(450);
+            primaryStage.setMinWidth(1150);
 
-            }
-        });
+        } catch (Throwable t) {
+            AlertController alertController = new AlertController();
+            StringWriter errorMessage = new StringWriter();
 
-        primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (primaryStage.isFocused()) {
-
-            }
-        });
+            t.printStackTrace(new PrintWriter(errorMessage));
+            alertController.exceptionAlert(Alert.AlertType.ERROR, "Ein Fehler ist aufgetreten", String.valueOf(errorMessage));
+        }
     }
 }

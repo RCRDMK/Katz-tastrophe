@@ -19,7 +19,7 @@ public class GameField extends ObservedObject implements Serializable {
     private volatile String cat = "C";
     private volatile String wall = "W";
     private volatile String drink = "D";
-    private volatile String character = "^";
+    private volatile String character = ">";
 
     // tip points to where the character is looking. Initially the character looks up (^) but depending on the
     // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)

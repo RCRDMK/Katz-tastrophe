@@ -3,11 +3,16 @@ package viewController;
 import controller.FileController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import model.messages.NewFileHasBeenCreatedMessage;
 
 import javax.lang.model.SourceVersion;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * This class is responsible for the fxml view which is being called when the user wishes to create a new file.
@@ -34,7 +39,7 @@ public class NewFileViewController {
     /**
      * Responsible for handling the action event when the cancel button was being clicked.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
+     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 03.12.2021
      */
     public void onNewFileCancelClicked(ActionEvent actionEvent) {
@@ -47,13 +52,27 @@ public class NewFileViewController {
      * When this method is called, it first checks if the entered name is valid as name. If so, it then calls the
      * create method of the FileController class. After that, it hides the fxml view, and lastly it creates a
      * NewFileHasBeenCreated message, which is being sent to the MainViewController.
+     * <p>
+     * If there already exist a file with the same name, it warns the user and asks him if he really does want to
+     * overwrite the file.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
+     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 03.12.2021
      */
     //TODO Dynamisch Button dis- und enablen
     public void onNewFileAcceptedClicked(ActionEvent actionEvent) {
         if (validateName(newFileText.getText())) {
+            if (Files.exists(Path.of("programs/" + newFileText.getText() + ".java"))) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Datei überschreiben?");
+                alert.setContentText("Achtung!\nDu bist dabei eine Datei mit dem selben Namen zu überschreiben. Bist du wirklich sicher, dass sie überschreiben möchtest?");
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.CANCEL) {
+                    newFileAccept.getScene().getWindow().hide();
+                    return;
+                }
+            }
             fileController.createFile(newFileText.getText());
             newFileAccept.getScene().getWindow().hide();
             new NewFileHasBeenCreatedMessage(newFileText.getText(), mainViewController);
