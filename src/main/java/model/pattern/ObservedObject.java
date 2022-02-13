@@ -16,7 +16,7 @@ public class ObservedObject {
 
     public void notifyRegisteredObservers(Object object) {
         for (ObserverInterface observer : this.registeredObservers) {
-            observer.update(this);
+            observer.update(object);
         }
     }
 

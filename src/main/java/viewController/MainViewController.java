@@ -4,6 +4,7 @@ import controller.FileController;
 import controller.GameFieldPanelController;
 import controller.SimulationController;
 import controller.XMLController;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,6 +31,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -73,14 +75,18 @@ public class MainViewController implements ObserverInterface {
             Files.createDirectory(Path.of("programs"));
         }
 
-        /*Platform.runLater(() -> {
-            scrollPane.getScene().getWindow().setOnCloseRequest();
-        });*/
+        Platform.runLater(() -> {
+            scrollPane.getScene().getWindow().setOnCloseRequest(event -> fileController.saveFile(currentFileName, textInput.getText()));
+        });
 
         character = fileController.compileFileAndSetNewCharacter(fileController.getDefaultName(), gameField, character, gameFieldPanelController);//executed to being able to use the contextClick method right from the start
         textInput.setText(fileController.loadTextForEditor(fileController.getDefaultName()));
+
         pauseButton.setDisable(true);
+        pauseMenuItem.setDisable(true);
+
         stopButton.setDisable(true);
+        stopMenuItem.setDisable(true);
 
         contextClick();
     }
@@ -109,25 +115,27 @@ public class MainViewController implements ObserverInterface {
                 Method[] m = c.getDeclaredMethods();
                 for (Method met : m
                 ) {//Context menu for the main method and methods written by the user at runtime
-                    MenuItem menuItem = new MenuItem(met.toString());
-                    contextMenu.getItems().add(menuItem);
-                    menuItem.setOnAction(new EventHandler<ActionEvent>() {
-                        Method method;
+                    if (Modifier.isPublic(met.getModifiers()) && !Modifier.isStatic(met.getModifiers()) && met.getParameterCount() == 0) {
+                        MenuItem menuItem = new MenuItem(met.toString());
 
-                        {
-                            method = met;
-                        }
+                        contextMenu.getItems().add(menuItem);
+                        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                            Method method;
 
-                        @Override
-                        public void handle(ActionEvent event) {
-                            try {
-                                method.invoke(character);
-                            } catch (Throwable e) {
-                                e.printStackTrace();
+                            {
+                                method = met;
                             }
-                        }
-                    });
 
+                            @Override
+                            public void handle(ActionEvent event) {
+                                try {
+                                    method.invoke(character);
+                                } catch (Throwable e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
                 }
                 CharaWrapper chaWra = new CharaWrapper();
                 Class cl = chaWra.getClass();
@@ -139,18 +147,21 @@ public class MainViewController implements ObserverInterface {
                     {
                         method = met;
                     }
-                    MenuItem menuItem = new MenuItem(met.toString().replace("model.CharaWrapper.", ""));
-                    contextMenu.getItems().add(menuItem);
-                    menuItem.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            try {
-                                method.invoke(character);
-                            } catch (Throwable t) {
-                                t.printStackTrace();
+                    if (met.getParameterCount() == 0) {
+                        MenuItem menuItem = new MenuItem(met.toString().replace("model.CharaWrapper.", ""));
+
+                        contextMenu.getItems().add(menuItem);
+                        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                try {
+                                    method.invoke(character);
+                                } catch (Throwable t) {
+                                    t.printStackTrace();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
 
                 scrollPane.setContextMenu(contextMenu);
@@ -207,6 +218,46 @@ public class MainViewController implements ObserverInterface {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Responsible for loading a new window.
+     * <p>
+     * When this method is called, a new window will be loaded with which the user can interact. Depending on if it's
+     * a newly created file or an already existing file, the textarea of the window will be filled with the code in
+     * the file.
+     *
+     * @param loadedFile   Name of the file which should be loaded in the new window
+     * @param primaryStage The stage on which the new window should be depicted
+     * @throws IOException
+     * @since 09.02.2022
+     */
+    private void loadNewWindow(String loadedFile, Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
+
+        Parent root = loader.load();
+        primaryStage.setScene(new Scene(root, 1150, 400));
+
+        MainViewController childMainViewController = loader.getController();
+        if (currentFileName.equals(loadedFile)) {
+            //TODO Hier Stage nach vorne rücken
+            primaryStage.toFront();
+            //return;
+        }
+        childMainViewController.currentFileName = loadedFile;
+        primaryStage.setTitle(childMainViewController.currentFileName + " Katz-tastrophe");
+
+        primaryStage.show();
+
+        childMainViewController.textInput.requestFocus();
+
+        primaryStage.setMaxHeight(500);
+        primaryStage.setMaxWidth(primaryStage.getWidth());
+
+        primaryStage.setMinHeight(450);
+        primaryStage.setMinWidth(1150);
+
+        childMainViewController.textInput.setText(childMainViewController.fileController.loadTextForEditor(childMainViewController.currentFileName));
     }
 
     /**
@@ -314,46 +365,6 @@ public class MainViewController implements ObserverInterface {
         }
     }
 
-    /**
-     * Responsible for loading a new window.
-     * <p>
-     * When this method is called, a new window will be loaded with which the user can interact. Depending on if it's
-     * a newly created file or an already existing file, the textarea of the window will be filled with the code in
-     * the file.
-     *
-     * @param loadedFile   Name of the file which should be loaded in the new window
-     * @param primaryStage The stage on which the new window should be depicted
-     * @throws IOException
-     * @since 09.02.2022
-     */
-    private void loadNewWindow(String loadedFile, Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
-
-        Parent root = loader.load();
-        primaryStage.setScene(new Scene(root, 1150, 400));
-
-        MainViewController childMainViewController = loader.getController();
-        if (currentFileName.equals(loadedFile)) {
-            System.out.println("gleicher name");
-            primaryStage.toFront();
-            //TODO hier Selbstaufruf
-            //return;
-        }
-        childMainViewController.currentFileName = loadedFile;
-        primaryStage.setTitle(childMainViewController.currentFileName + " Katz-tastrophe");
-
-        primaryStage.show();
-
-        childMainViewController.textInput.requestFocus();
-
-        primaryStage.setMaxHeight(500);
-        primaryStage.setMaxWidth(primaryStage.getWidth());
-
-        primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(1150);
-
-        childMainViewController.textInput.setText(childMainViewController.fileController.loadTextForEditor(childMainViewController.currentFileName));
-    }
 
     /**
      * Responsible for handling the action event to load a file requested by the user.
@@ -425,6 +436,56 @@ public class MainViewController implements ObserverInterface {
     }
 
     /**
+     * Responsible for handling the user request to save the current file as a .rsm file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 11.01.2022
+     */
+    public void onSaveAsSerializeClicked(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
+        File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
+
+        if (file != null && file.getName().endsWith(".rsm")) {
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
+                objectOutputStream.writeObject(gameField);
+                objectOutputStream.writeUTF(textInput.getText());
+                objectOutputStream.writeObject(character);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        infoLabel.setText("Datei serialisiert");
+    }
+
+    /**
+     * Responsible for handling the user request to load a .rsm file.
+     *
+     * @param actionEvent the interaction of the user with the FXML Element
+     * @since 13.01.2022
+     */
+    public void onLoadSerializeClicked(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
+        fileChooser.setTitle("Programm öffnen");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
+        File file = fileChooser.showOpenDialog(scrollPane.getScene().getWindow());
+
+        if (file != null && file.getName().endsWith(".rsm")) {
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
+                gameFieldPanelController.getGameFieldPanel().setGameField((GameField) objectInputStream.readObject());
+                gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
+                textInput.setText(objectInputStream.readUTF());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        infoLabel.setText("Datei deserialisiert");
+    }
+
+    /**
      * Responsible for handling the request made by the user to save the current file as an image.
      *
      * @param actionEvent the interaction of the user with the FXML Element
@@ -445,6 +506,7 @@ public class MainViewController implements ObserverInterface {
      */
     public void onQuitClicked(ActionEvent actionEvent) {
         Stage stage = (Stage) textInput.getScene().getWindow();
+        fileController.saveFile(currentFileName, textInput.getText());
         stage.hide();
     }
 
@@ -724,24 +786,6 @@ public class MainViewController implements ObserverInterface {
         character.putDrinkDown();
     }
 
-    @Override
-    public void update(Object object) {
-        if (object.getClass() == NewFileHasBeenCreatedMessage.class) {
-            currentFileName = ((NewFileHasBeenCreatedMessage) object).getNewFileName();
-            newFileHasBeenCreated = true;
-        }
-        if (object.getClass() == SimulationHasStartedMessage.class || object.getClass() == SimulationHasResumedMessage.class) {
-            startButton.setDisable(true);
-            pauseButton.setDisable(false);
-            stopButton.setDisable(false);
-        }
-
-        if (object.getClass() == SimulationHasBeenPausedMessage.class || object.getClass() == SimulationHasEndedMessage.class) {
-            startButton.setDisable(false);
-            pauseButton.setDisable(true);
-            stopButton.setDisable(true);
-        }
-    }
 
     /**
      * Responsible for handling the request made by the user to execute the contents of the main method in the
@@ -753,59 +797,8 @@ public class MainViewController implements ObserverInterface {
     public void onStartButtonClicked(ActionEvent actionEvent) {
         startButton.setSelected(true);
         startMenuItem.setSelected(true);
-        simulationController.start();
+        simulationController.start(this);
         infoLabel.setText("Simulation läuft");
-    }
-
-    /**
-     * Responsible for handling the user request to save the current file as a .rsm file.
-     *
-     * @param actionEvent the interaction of the user with the FXML Element
-     * @since 11.01.2022
-     */
-    public void onSaveAsSerializeClicked(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
-        File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
-
-        if (file != null && file.getName().endsWith(".rsm")) {
-            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file))) {
-                objectOutputStream.writeObject(gameField);
-                objectOutputStream.writeUTF(textInput.getText());
-                objectOutputStream.writeObject(character);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        infoLabel.setText("Datei serialisiert");
-    }
-
-
-    /**
-     * Responsible for handling the user request to load a .rsm file.
-     *
-     * @param actionEvent the interaction of the user with the FXML Element
-     * @since 13.01.2022
-     */
-    public void onLoadSerializeClicked(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
-        fileChooser.setTitle("Programm öffnen");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
-        File file = fileChooser.showOpenDialog(scrollPane.getScene().getWindow());
-
-        if (file != null && file.getName().endsWith(".rsm")) {
-            try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file))) {
-                gameFieldPanelController.getGameFieldPanel().setGameField((GameField) objectInputStream.readObject());
-                gameFieldPanelController.getGameFieldPanel().drawObjectsOnGameField();
-                textInput.setText(objectInputStream.readUTF());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        infoLabel.setText("Datei deserialisiert");
     }
 
     /**
@@ -832,6 +825,49 @@ public class MainViewController implements ObserverInterface {
         stopMenuItem.setSelected(true);
         simulationController.stop();
         infoLabel.setText("Simulation beendet");
+    }
+
+
+    @Override
+    public void update(Object object) {
+
+        if (object.getClass() == NewFileHasBeenCreatedMessage.class) {
+            currentFileName = ((NewFileHasBeenCreatedMessage) object).getNewFileName();
+            newFileHasBeenCreated = true;
+        }
+
+        if (object.getClass() == SimulationHasStartedMessage.class || object.getClass() == SimulationHasResumedMessage.class) {
+            startButton.setDisable(true);
+            startMenuItem.setDisable(true);
+
+            pauseButton.setDisable(false);
+            pauseButton.setDisable(false);
+
+            stopButton.setDisable(false);
+            stopMenuItem.setDisable(false);
+        }
+
+        if (object.getClass() == SimulationHasBeenPausedMessage.class) {
+            startButton.setDisable(false);
+            startMenuItem.setDisable(false);
+
+            pauseButton.setDisable(true);
+            pauseMenuItem.setDisable(true);
+
+            stopButton.setDisable(false);
+            stopMenuItem.setDisable(false);
+        }
+
+        if (object.getClass() == SimulationHasEndedMessage.class) {
+            startButton.setDisable(false);
+            startMenuItem.setDisable(false);
+
+            pauseButton.setDisable(true);
+            pauseMenuItem.setDisable(true);
+
+            stopButton.setDisable(true);
+            stopMenuItem.setDisable(true);
+        }
     }
 
     /*****************************************************

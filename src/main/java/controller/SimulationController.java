@@ -6,6 +6,7 @@ import model.messages.SimulationHasEndedMessage;
 import model.messages.SimulationHasResumedMessage;
 import model.messages.SimulationHasStartedMessage;
 import model.pattern.ObservedObject;
+import viewController.MainViewController;
 
 /**
  * This class is responsible for handling the control over threads which are running the main methods inside the
@@ -17,6 +18,7 @@ public class SimulationController extends ObservedObject {
     GameField gameField;
     GameFieldPanelController gameFieldPanelController;
     Simulation simulation;
+    MainViewController mainViewController;
 
     /**
      * The custom constructor of the class. It initiates the variables with the value from the parameter.
@@ -44,11 +46,17 @@ public class SimulationController extends ObservedObject {
      *
      * @since 15.01.2022
      */
-    public void start() {
-        simulation = new Simulation(gameFieldPanelController, this);
-        simulation.setDaemon(true);
-        simulation.start();
-        notifyRegisteredObservers(new SimulationHasStartedMessage());
+    public void start(MainViewController mainViewController) {
+        if (simulation != null && simulation.isPause()) {
+            resume();
+        } else {
+            this.mainViewController = mainViewController;
+            addObserver(mainViewController);
+            simulation = new Simulation(gameFieldPanelController, this);
+            simulation.setDaemon(true);
+            simulation.start();
+            notifyRegisteredObservers(new SimulationHasStartedMessage());
+        }
     }
 
     /**
@@ -70,9 +78,7 @@ public class SimulationController extends ObservedObject {
      * @since 15.01.2022
      */
     public void pause() {
-        synchronized (simulation) {
-            simulation.pause = true;
-        }
+        simulation.pause = true;
         notifyRegisteredObservers(new SimulationHasBeenPausedMessage());
     }
 

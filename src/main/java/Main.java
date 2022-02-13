@@ -19,11 +19,12 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
 
+            FileController fileController = new FileController();
+            fileController.fileWhenFirstOpened();
+
             Parent root = loader.load();
             primaryStage.setScene(new Scene(root, 1150, 400));
 
-            FileController fileController = new FileController();
-            fileController.fileWhenFirstOpened();
             primaryStage.setTitle(fileController.getDefaultName().replace("_", " "));
 
             primaryStage.show();

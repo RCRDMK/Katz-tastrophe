@@ -46,7 +46,7 @@ public class Simulation extends Thread implements ObserverInterface {
         try {
             gameFieldPanelController.getCharacter().main();
         } catch (StoppedException e) {
-            e.printStackTrace();
+            System.out.println("The simulation has been stopped");
         } finally {
             gameField.removeObserver(this);
             simulationController.simulationEnded();
@@ -75,10 +75,13 @@ public class Simulation extends Thread implements ObserverInterface {
                     throw new StoppedException();
                 }
             }
-        } catch (Throwable t) {
-            t.printStackTrace();
+        } catch (InterruptedException e) {
         }
 
+    }
+
+    public boolean isPause() {
+        return pause;
     }
 }
 
