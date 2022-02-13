@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.control.Alert;
 import model.CharaWrapper;
 import model.GameCharacter;
 import model.GameField;
@@ -21,15 +22,14 @@ import java.net.URLClassLoader;
 
 public class FileController {
 
-    String programName = "neue_Katztastrophe";
+    final String defaultName = "neue_Katztastrophe";
 
     File userDirectory = new File(System.getProperty("user.dir"));
     String programFolder = "/programs/";
     String fileType = ".java";
 
-
     public void fileWhenFirstOpened() {
-        createFile(programName);
+        createFile(defaultName);
     }
 
     /**
@@ -43,7 +43,6 @@ public class FileController {
     public void createFile(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
-            programName = fileName;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(getPrefix(fileName) + "public void main(){   }" + getPostfix());
             writer.write(stringBuilder.toString());
@@ -63,7 +62,6 @@ public class FileController {
     private void writeInFile(String fileName, String contentToWrite) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
         try (FileWriter writer = new FileWriter(file)) {
-            programName = fileName;
             String s = getPrefix(fileName) + contentToWrite + getPostfix();
             writer.write(s);
 
@@ -96,7 +94,7 @@ public class FileController {
      */
     public String loadTextForEditor(String fileName) {
         File file = new File(userDirectory + programFolder + fileName + fileType);
-        programName = fileName;
+        //defaultName = fileName;
         String replacePrefix = "";
         String replacePostfix = "";
         try (FileReader reader = new FileReader(file)) {
@@ -127,15 +125,15 @@ public class FileController {
     //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
     public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter, GameFieldPanelController gameFieldPanelController) {
         String file = userDirectory + programFolder + fileName + fileType;
-        programName = fileName;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
         boolean success =
                 javac.run(null, null, err, file) == 0;
         if (!success) {
-            System.out.println(err.toString());
+            AlertController alertController = new AlertController();
+            alertController.compileAlert(Alert.AlertType.ERROR, "Datei konnte nicht kompiliert werden", err.toString());
         } else {
-            System.out.println("ok");
+            System.out.println("Syntax of the class seems okay");
         }
 
         URL classUrl = null;
@@ -152,7 +150,7 @@ public class FileController {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("loaded");
+        System.out.println("...has been compiled");
         CharaWrapper newCharacter = new CharaWrapper(gameField);
         try {
             newCharacter = (CharaWrapper) c.getDeclaredConstructor().newInstance();
@@ -165,7 +163,7 @@ public class FileController {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        newCharacter.setGameCharacter(gameField, gameCharacter);//Alten Character austauschen durch newCharacter. Vll als Return
+        newCharacter.setGameCharacter(gameField, gameCharacter);
         gameFieldPanelController.setCharacter(newCharacter);
         return newCharacter;
     }
@@ -178,19 +176,7 @@ public class FileController {
         return "\n}";
     }
 
-    public String getProgramTitleName() {
-        if (!programName.contains("Katz-tastrophe")) {
-            return programName + " Katz-tastrophe";
-        } else {
-            return programName;
-        }
-    }
-
-    public String getProgramName() {
-        return programName;
-    }
-
-    public void setProgramName(String programName) {
-        this.programName = programName;
+    public String getDefaultName() {
+        return defaultName;
     }
 }

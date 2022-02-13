@@ -1,7 +1,12 @@
 package controller;
 
 import model.GameField;
-import pattern.ObservedObject;
+import model.messages.SimulationHasBeenPausedMessage;
+import model.messages.SimulationHasEndedMessage;
+import model.messages.SimulationHasResumedMessage;
+import model.messages.SimulationHasStartedMessage;
+import model.pattern.ObservedObject;
+import viewController.MainViewController;
 
 /**
  * This class is responsible for handling the control over threads which are running the main methods inside the
@@ -13,8 +18,7 @@ public class SimulationController extends ObservedObject {
     GameField gameField;
     GameFieldPanelController gameFieldPanelController;
     Simulation simulation;
-
-    volatile int speed;
+    MainViewController mainViewController;
 
     /**
      * The custom constructor of the class. It initiates the variables with the value from the parameter.
@@ -34,7 +38,7 @@ public class SimulationController extends ObservedObject {
      * @since 15.01.2022
      */
     public void simulationEnded() {
-        notifyRegisteredObservers(this);
+        notifyRegisteredObservers(new SimulationHasEndedMessage());
     }
 
     /**
@@ -42,10 +46,17 @@ public class SimulationController extends ObservedObject {
      *
      * @since 15.01.2022
      */
-    public void start() {
-        simulation = new Simulation(gameFieldPanelController, this);
-        simulation.setDaemon(true);
-        simulation.start();
+    public void start(MainViewController mainViewController) {
+        if (simulation != null && simulation.isPause()) {
+            resume();
+        } else {
+            this.mainViewController = mainViewController;
+            addObserver(mainViewController);
+            simulation = new Simulation(gameFieldPanelController, this);
+            simulation.setDaemon(true);
+            simulation.start();
+            notifyRegisteredObservers(new SimulationHasStartedMessage());
+        }
     }
 
     /**
@@ -58,6 +69,7 @@ public class SimulationController extends ObservedObject {
         synchronized (simulation) {
             simulation.notify();
         }
+        notifyRegisteredObservers(new SimulationHasResumedMessage());
     }
 
     /**
@@ -67,6 +79,7 @@ public class SimulationController extends ObservedObject {
      */
     public void pause() {
         simulation.pause = true;
+        notifyRegisteredObservers(new SimulationHasBeenPausedMessage());
     }
 
     /**
@@ -77,15 +90,10 @@ public class SimulationController extends ObservedObject {
     public void stop() {
         simulation.stop = true;
         simulation.pause = false;
-        simulation.notify();
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
+        synchronized (simulation) {
+            simulation.notify();
+        }
+        notifyRegisteredObservers(new SimulationHasEndedMessage());
     }
 }
 

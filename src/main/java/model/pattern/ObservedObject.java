@@ -1,4 +1,4 @@
-package pattern;
+package model.pattern;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,7 +16,7 @@ public class ObservedObject {
 
     public void notifyRegisteredObservers(Object object) {
         for (ObserverInterface observer : this.registeredObservers) {
-            observer.update(this);
+            observer.update(object);
         }
     }
 

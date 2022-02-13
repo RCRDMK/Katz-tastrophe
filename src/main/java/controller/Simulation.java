@@ -3,7 +3,7 @@ package controller;
 import javafx.application.Platform;
 import model.GameField;
 import model.exceptions.StoppedException;
-import pattern.ObserverInterface;
+import model.pattern.ObserverInterface;
 
 /**
  * This class is responsible running the main method inside the compiled classes as a thread.
@@ -46,7 +46,7 @@ public class Simulation extends Thread implements ObserverInterface {
         try {
             gameFieldPanelController.getCharacter().main();
         } catch (StoppedException e) {
-            e.printStackTrace();
+            System.out.println("The simulation has been stopped");
         } finally {
             gameField.removeObserver(this);
             simulationController.simulationEnded();
@@ -59,13 +59,13 @@ public class Simulation extends Thread implements ObserverInterface {
             if (Platform.isFxApplicationThread()) {
                 return;
             }
-            sleep(500);
+            sleep(250);
             if (stop) {
                 throw new StoppedException();
             }
             while (pause) {
                 synchronized (this) {
-                    try {//synchronized
+                    try {
                         wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -75,10 +75,13 @@ public class Simulation extends Thread implements ObserverInterface {
                     throw new StoppedException();
                 }
             }
-        } catch (Throwable e) {
-            e.printStackTrace();
+        } catch (InterruptedException e) {
         }
 
+    }
+
+    public boolean isPause() {
+        return pause;
     }
 }
 

@@ -3,7 +3,7 @@ package controller;
 import model.GameCharacter;
 import model.GameField;
 import model.GameFieldPanel;
-import pattern.ObservedObject;
+import model.pattern.ObservedObject;
 
 /**
  * The controller class for the gameFieldPanel class
@@ -36,7 +36,7 @@ public class GameFieldPanelController extends ObservedObject {
         this.gameField.placeObjectsInGameField(3, 1, "W");
         this.gameField.placeObjectsInGameField(3, 2, "C");
         this.gameField.placeObjectsInGameField(4, 1, "D");
-        this.gameField.placeObjectsInGameField(3, 3, "^");
+        this.gameField.placeObjectsInGameField(3, 3, ">");
         this.gameFieldPanel.drawObjectsOnGameField();
     }
 

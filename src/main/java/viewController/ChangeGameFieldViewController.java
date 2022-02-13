@@ -60,7 +60,7 @@ public class ChangeGameFieldViewController {
      *
      * @since 21.11.2021
      */
-    public void validateTextField() {
+    private void validateTextField() {
 
         changeViewTextFieldRow.textProperty().addListener(new ChangeListener<String>() {//checks the content of the row textfield
             @Override
@@ -101,7 +101,7 @@ public class ChangeGameFieldViewController {
     /**
      * Responsible for handling the action event when the cancel button was being clicked.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
+     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 21.11.2021
      */
     public void onChangeViewCancelClicked(ActionEvent actionEvent) {
@@ -115,10 +115,10 @@ public class ChangeGameFieldViewController {
      * resize method of the GameField class while using the before created int values as parameters. Afterwards, it calls
      * the checkCharacter method of the GameField class before it hides the fxml view.
      *
-     * @param actionEvent the interaction of the user with the FXML Element
+     * @param actionEvent the interaction of the user with the FXML test.Element
      * @since 21.11.2021
      */
-    public void onChangeViewAcceptClicked(ActionEvent actionEvent) {//TODO NPE wenn das Spielfeld von 6 auf 7 geändert wird
+    public void onChangeViewAcceptClicked(ActionEvent actionEvent) {
         int rows = Integer.valueOf(changeViewTextFieldRow.getText());
         int columns = Integer.valueOf(changeViewTextFieldColumn.getText());
         gameField.resizeGameFieldSize(rows, columns);

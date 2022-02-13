@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import pattern.ObserverInterface;
+import model.pattern.ObserverInterface;
 
 
 /**
@@ -18,10 +18,12 @@ import pattern.ObserverInterface;
 public class GameFieldPanel extends Region implements ObserverInterface {
 
     final int BORDER_PATTING = 0;
+    private double rotationAngle = 0;
+
     private final Image cat = new Image("images/buttons/cat.png");
     private final Image wall = new Image("images/buttons/wall.png");
     private final Image drink = new Image("images/buttons/drink.png");
-    private final Image character = new Image("images/buttons/protag.png");
+    private Image character;
     private GameField gameField;
     private Canvas canvas;
     private GraphicsContext graCon;
@@ -115,6 +117,7 @@ public class GameFieldPanel extends Region implements ObserverInterface {
      * @since 18.11.2011
      */
     public void drawObjectsOnGameField() {
+        //TODO Character anders zeichnen, je nachdem wohin er schaut mit nur einem Bild, welches gedreht wird
         drawGameField();
         for (int i = 0; i < gameField.getGameFieldArray().length; i++) {
             for (int j = 0; j < gameField.getGameFieldArray()[0].length; j++) {
@@ -126,14 +129,18 @@ public class GameFieldPanel extends Region implements ObserverInterface {
                     graCon.drawImage(drink, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
 
-
+                //drawing of the character and in which direction he looks
                 if (gameField.getGameFieldArray()[i][j].equals("^") || gameField.getGameFieldArray()[i][j].equals("C^")) {
+                    character = new Image("images/character/characterLooksUp.png");
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 } else if (gameField.getGameFieldArray()[i][j].equals("v") || gameField.getGameFieldArray()[i][j].equals("Cv")) {
+                    character = new Image("images/character/characterLooksDown.png");
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 } else if (gameField.getGameFieldArray()[i][j].equals(">") || gameField.getGameFieldArray()[i][j].equals("C>")) {
+                    character = new Image("images/character/characterLooksRight.png");
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 } else if (gameField.getGameFieldArray()[i][j].equals("<") || gameField.getGameFieldArray()[i][j].equals("C<")) {
+                    character = new Image("images/character/characterLooksLeft.png");
                     graCon.drawImage(character, BORDER_PATTING + j * tileWidthCalculated, BORDER_PATTING + i * tileHeightCalculated, tileWidthCalculated, tileHeightCalculated);
                 }
             }
@@ -148,4 +155,37 @@ public class GameFieldPanel extends Region implements ObserverInterface {
         }
         drawObjectsOnGameField();
     }
+
+    /*https://stackoverflow.com/questions/18260421/how-to-draw-image-rotated-on-javafx-canvas
+     *//**
+     * Sets the transform for the GraphicsContext to rotate around a pivot point.
+     *
+     * @param gc    the graphics context the transform to applied to.
+     * @param angle the angle of rotation.
+     * @param px    the x pivot co-ordinate for the rotation (in canvas co-ordinates).
+     * @param py    the y pivot co-ordinate for the rotation (in canvas co-ordinates).
+     *//*
+    private void rotate(GraphicsContext gc, double angle, double px, double py) {
+        Rotate r = new Rotate(angle, px, py);
+        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+
+    }
+
+    *//**
+     * Draws an image on a graphics context.
+     * <p>
+     * The image is drawn at (tlpx, tlpy) rotated by angle pivoted around the point:
+     * (tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2)
+     *
+     * @param graCon the graphics context the image is to be drawn on.
+     * @param angle  the angle of rotation.
+     * @param tlpx   the top left x co-ordinate where the image will be plotted (in canvas co-ordinates).
+     * @param tlpy   the top left y co-ordinate where the image will be plotted (in canvas co-ordinates).
+     *//*
+    private void drawRotatedImage(GraphicsContext graCon, Image image, double angle, double tlpx, double tlpy) {
+        graCon.save(); // saves the current state on stack, including the current transform
+        rotate(graCon, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
+        graCon.drawImage(image, tlpx, tlpy);
+        graCon.restore(); // back to original state (before rotation)
+    }*/
 }

@@ -1,6 +1,6 @@
 package model;
 
-import pattern.ObservedObject;
+import model.pattern.ObservedObject;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class GameField extends ObservedObject implements Serializable {
     private volatile String cat = "C";
     private volatile String wall = "W";
     private volatile String drink = "D";
-    private volatile String character = "^";
+    private volatile String character = ">";
 
     // tip points to where the character is looking. Initially the character looks up (^) but depending on the
     // interaction with the user, the character can also look down (v),look to the right (>) and look the left (<)
@@ -145,7 +145,8 @@ public class GameField extends ObservedObject implements Serializable {
      * <p>
      * When this method is called, it first clones the current gamefield with all of its values. Afterwards it creates
      * a new gamefield array with the requested amount of column and rows. Lastly, it fills the newly created array
-     * with the values of the old array.
+     * with the values of the old array. If the newly created array is bigger than the old one, it overwrites all null
+     * values with the value "x", showing that there is no object on this field.
      *
      * @param rows    amount of the requested rows the array should depict.
      * @param columns amount of the requested columns the array should depict.
@@ -157,7 +158,7 @@ public class GameField extends ObservedObject implements Serializable {
         //TODO rows und columns überdenken
         row = rows;
         column = columns;
-        //new GameField(rows, columns);
+        //copying the values from the old array into the new one
         if (gameFieldArray.length < copy.length) {
             for (int i = 0; i < gameFieldArray.length; i++) {
                 for (int j = 0; j < gameFieldArray[0].length; j++) {
@@ -168,6 +169,15 @@ public class GameField extends ObservedObject implements Serializable {
             for (int i = 0; i < copy.length; i++) {
                 for (int j = 0; j < copy[0].length; j++) {
                     gameFieldArray[i][j] = copy[i][j];
+                }
+            }
+
+            //checks if there are any null values in the new array
+            for (int i = 0; i < gameFieldArray.length; i++) {
+                for (int j = 0; j < gameFieldArray[0].length; j++) {
+                    if (gameFieldArray[i][j] == null) {
+                        gameFieldArray[i][j] = "x";
+                    }
                 }
             }
             notifyRegisteredObservers(this);
