@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 import model.CharaWrapper;
 import model.GameCharacter;
 import model.GameField;
+import view.GameFieldPanelController;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;

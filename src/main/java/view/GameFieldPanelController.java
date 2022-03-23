@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 import model.GameCharacter;
 import model.GameField;

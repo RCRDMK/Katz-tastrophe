@@ -1,7 +1,6 @@
-package viewController;
+package view.viewController;
 
 import controller.FileController;
-import controller.GameFieldPanelController;
 import controller.SimulationController;
 import controller.XMLController;
 import javafx.application.Platform;
@@ -26,6 +25,7 @@ import model.GameField;
 import model.exceptions.*;
 import model.messages.*;
 import model.pattern.ObserverInterface;
+import view.GameFieldPanelController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
@@ -448,6 +448,7 @@ public class MainViewController implements ObserverInterface {
      */
     public void onSaveAsSerializeClicked() {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/programs/"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".rsm", "*.rsm"));
         File file = fileChooser.showSaveDialog(scrollPane.getScene().getWindow());
 

@@ -1,4 +1,4 @@
-package viewController;
+package view.viewController;
 
 import controller.FileController;
 import javafx.fxml.FXML;

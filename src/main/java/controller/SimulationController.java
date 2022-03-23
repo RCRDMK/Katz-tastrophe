@@ -1,12 +1,14 @@
 package controller;
 
+import javafx.application.Platform;
 import model.GameField;
 import model.messages.SimulationHasBeenPausedMessage;
 import model.messages.SimulationHasEndedMessage;
 import model.messages.SimulationHasResumedMessage;
 import model.messages.SimulationHasStartedMessage;
 import model.pattern.ObservedObject;
-import viewController.MainViewController;
+import view.GameFieldPanelController;
+import view.viewController.MainViewController;
 
 /**
  * This class is responsible for handling the control over threads which are running the main methods inside the
@@ -38,7 +40,7 @@ public class SimulationController extends ObservedObject {
      * @since 15.01.2022
      */
     public void simulationEnded() {
-        notifyRegisteredObservers(new SimulationHasEndedMessage());
+        Platform.runLater(() -> notifyRegisteredObservers(new SimulationHasEndedMessage()));
     }
 
     /**

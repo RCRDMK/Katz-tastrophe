@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="215.0" prefWidth="437.0"
-            xmlns="http://javafx.com/javafx/11.0.2" fx:controller="viewController.ChangeGameFieldViewController">
+            xmlns="http://javafx.com/javafx/11.0.2" fx:controller="view.viewController.ChangeGameFieldViewController">
     <children>
         <Button layoutX="124.0" layoutY="165.0" mnemonicParsing="false" text="Abbrechen" fx:id="changeViewCancel"
                 onAction="#onChangeViewCancelClicked"

@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import model.GameField;
 import model.exceptions.StoppedException;
 import model.pattern.ObserverInterface;
+import view.GameFieldPanelController;
 
 /**
  * This class is responsible running the main method inside the compiled classes as a thread.

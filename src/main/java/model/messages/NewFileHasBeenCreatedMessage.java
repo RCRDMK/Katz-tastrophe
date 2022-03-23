@@ -1,7 +1,7 @@
 package model.messages;
 
 import model.pattern.ObservedObject;
-import viewController.MainViewController;
+import view.viewController.MainViewController;
 
 /**
  * This message informs the MainViewController whenever a new file has been created by the user.

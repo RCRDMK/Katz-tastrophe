@@ -35,7 +35,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
 
     }
 
-    public void setGameCharacter(GameField gameField, GameCharacter gameCharacter) {
+    public synchronized void setGameCharacter(GameField gameField, GameCharacter gameCharacter) {
         this.gameField = gameField;
         this.handsFull = gameCharacter.handsFull;
         this.drinkInHand = gameCharacter.drinkInHand;
@@ -54,7 +54,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @param direction the new direction in which the character ought to look
      * @since 03.11.2021
      */
-    public void lookHere(String direction) throws InvalidDirectionException {
+    public synchronized void lookHere(String direction) throws InvalidDirectionException {
         switch (direction) {
             case "up":
                 gameField.setCharacter("^");
@@ -82,7 +82,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      *
      * @since 03.11.2021
      */
-    private void changeCharacterView() {
+    private synchronized void changeCharacterView() {
         for (int i = 0; i <= gameField.getRow() - 1; i++) {
             for (int j = 0; j <= gameField.getColumn() - 1; j++) {
                 if (gameField.getGameFieldArray()[i][j].equals("^") || gameField.getGameFieldArray()[i][j].equals("v") || gameField.getGameFieldArray()[i][j].equals("<") || gameField.getGameFieldArray()[i][j].equals(">")) {
@@ -103,7 +103,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @since 05.11.2021
      */
 
-    public void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
+    public synchronized void moveUp() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.getRow(); i++) {
             for (int j = 0; j < gameField.getColumn(); j++) {
                 if (gameField.getGameFieldArray()[i][j].equals("C^") || gameField.getGameFieldArray()[i][j].equals("Cv") || gameField.getGameFieldArray()[i][j].equals("C>") || gameField.getGameFieldArray()[i][j].equals("C<")) {
@@ -149,7 +149,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move downwards
      * @since 05.11.2021
      */
-    public void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
+    public synchronized void moveDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.getRow(); i++) {
             for (int j = 0; j < gameField.getColumn(); j++) {
                 if (gameField.getGameFieldArray()[i][j].equals("C^") || gameField.getGameFieldArray()[i][j].equals("Cv") || gameField.getGameFieldArray()[i][j].equals("C>") || gameField.getGameFieldArray()[i][j].equals("C<")) {
@@ -198,7 +198,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move to the right
      * @since 05.11.2021
      */
-    public void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
+    public synchronized void moveRight() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.getRow(); i++) {
             for (int j = 0; j < gameField.getColumn(); j++) {
                 if (gameField.getGameFieldArray()[i][j].equals("C^") || gameField.getGameFieldArray()[i][j].equals("Cv") || gameField.getGameFieldArray()[i][j].equals("C>") || gameField.getGameFieldArray()[i][j].equals("C<")) {
@@ -244,7 +244,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws EndOfGameFieldException If the character has reached the edge of the gamefield and should still move to the left
      * @since 05.11.2021
      */
-    public void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
+    public synchronized void moveLeft() throws WallInFrontException, CatInFrontException, DrinkInFrontException, EndOfGameFieldException {
         for (int i = 0; i < gameField.getRow(); i++) {
             for (int j = 0; j < gameField.getColumn(); j++) {
                 if (gameField.getGameFieldArray()[i][j].equals("C^") || gameField.getGameFieldArray()[i][j].equals("Cv") || gameField.getGameFieldArray()[i][j].equals("C>") || gameField.getGameFieldArray()[i][j].equals("C<")) {
@@ -292,7 +292,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws EndOfGameFieldException If the user wants to pick up a cat even though he already reached the end of the game field.
      * @since 05.11.2011
      */
-    public void takeCat() throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
+    public synchronized void takeCat() throws HandsNotEmptyException, CatInFrontException, EndOfGameFieldException {
         if (!handsFull) {
             boolean catWasInFront = false;
 
@@ -391,7 +391,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws EndOfGameFieldException If the user wants to pick up a drink even though he already reached the end of the game field.
      * @since 05.11.2011
      */
-    public void takeDrink() throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
+    public synchronized void takeDrink() throws HandsNotEmptyException, DrinkInFrontException, EndOfGameFieldException {
         if (!handsFull) {
             boolean drinkWasInFront = false;
 
@@ -490,7 +490,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws NoCatInHandException  if the user wants to put down the cat without even having picked up a cat first
      * @since 05.11.2021
      */
-    public void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException, EndOfGameFieldException {
+    public synchronized void putCatDown() throws WallInFrontException, CatInFrontException, DrinkInFrontException, NoCatInHandException, EndOfGameFieldException {
         try {
             if (catInHand) {
                 switch (gameField.getCharacter()) {
@@ -603,7 +603,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @throws NoDrinkInHandException if the user wants to put down the drink without even having picked up a drink first
      * @since 05.11.2021
      */
-    public void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException, EndOfGameFieldException {
+    public synchronized void putDrinkDown() throws WallInFrontException, CatInFrontException, NoDrinkInHandException, EndOfGameFieldException {
         try {
             if (drinkInHand) {
 
@@ -703,7 +703,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @return true if hands are free, false if the hands are full
      * @since 05.11.2021
      */
-    public boolean handsFree() {
+    public synchronized boolean handsFree() {
         if (!handsFull) {
             return true;
         }
@@ -716,7 +716,7 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @return true if there IS a cat, false if there is not
      * @since 05.11.2021
      */
-    public boolean catThere() {
+    public synchronized boolean catThere() {
 
         switch (gameField.getCharacter()) {
             case "^":
@@ -773,30 +773,30 @@ public class GameCharacter extends ObservedObject implements Serializable {
      * @return true if he can step over a cat, because his hands are free, false if he can't, because his hands are full
      * @since 05.11.2021
      */
-    public boolean stepOverCatPossible() {
+    public synchronized boolean stepOverCatPossible() {
         if (handsFull) {
             return false;
         }
         return true;
     }
 
-    public boolean isDrinkInHand() {
+    public synchronized boolean isDrinkInHand() {
         return drinkInHand;
     }
 
-    public boolean isCatInHand() {
+    public synchronized boolean isCatInHand() {
         return catInHand;
     }
 
-    public void setHandsFull(boolean handsFull) {
+    public synchronized void setHandsFull(boolean handsFull) {
         this.handsFull = handsFull;
     }
 
-    public void setDrinkInHand(boolean drinkInHand) {
+    public synchronized void setDrinkInHand(boolean drinkInHand) {
         this.drinkInHand = drinkInHand;
     }
 
-    public void setCatInHand(boolean catInHand) {
+    public synchronized void setCatInHand(boolean catInHand) {
         this.catInHand = catInHand;
     }
 }

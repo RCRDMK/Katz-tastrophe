@@ -8,7 +8,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400"
             minWidth="1150"
             prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2"
-            fx:controller="viewController.MainViewController">
+            fx:controller="view.viewController.MainViewController">
     <children>
 
         <fx:define>
