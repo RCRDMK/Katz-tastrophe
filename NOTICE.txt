@@ -1,0 +1,11 @@
+Except the cat, drink and character images, which are all self-drawn, all of the
+used images in this project are downloaded from the royalty-free webside flaticons.net.
+
+-flaticons.net last accessed 18.12.2021
+
+The soundfiles were recorded by myself, using my own voice. These don't fall under the GNU General Public License,
+as they don't contain any code. I hold complete and total copyright over these file and do not allow any unauthorized use,
+publication or duplication. If it comes to any of those acts, I reserve myself the right to pursue legal actions if necessary.
+
+If code was used, which wasn't written by me, it is indicated with a comment at the beginning of the method, in which
+the foreign code is being used.

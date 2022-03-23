@@ -1,3 +1,21 @@
+/*
+ * Katz-tastrophe - a miniature programming learn environment
+ * Copyright (C) 2022 RCRDMK
+ *
+ * This program (Katz-tastrophe) is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program (Katz-tastrophe) is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. See LICENSE File in the main directory. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package controller;
 
 import javafx.scene.control.Alert;
@@ -122,7 +140,6 @@ public class FileController {
      * @return value of the newly created game character
      * @since 15.12.2021
      */
-    //Vorlesungsfolie UE35-Tools-Compiler, Seite 4
     public CharaWrapper compileFileAndSetNewCharacter(String fileName, GameField gameField, GameCharacter gameCharacter, GameFieldPanelController gameFieldPanelController) {
         String file = userDirectory + programFolder + fileName + fileType;
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
