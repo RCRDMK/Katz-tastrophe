@@ -28,6 +28,8 @@ import model.GameField;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Main extends Application {
 
@@ -35,7 +37,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+
             FXMLLoader loader = new FXMLLoader(GameField.class.getClassLoader().getResource("fxml/MainView.fxml"));
+
+            if (Files.notExists(Path.of("programs"))) {
+                Files.createDirectory(Path.of("programs"));
+            }
 
             FileController fileController = new FileController();
             fileController.fileWhenFirstOpened();
@@ -53,11 +60,13 @@ public class Main extends Application {
             primaryStage.setMinHeight(450);
             primaryStage.setMinWidth(1150);
 
-        } catch (Throwable t) {
+
+
+        } catch (Exception e) {
             AlertController alertController = new AlertController();
             StringWriter errorMessage = new StringWriter();
 
-            t.printStackTrace(new PrintWriter(errorMessage));
+            e.printStackTrace(new PrintWriter(errorMessage));
             alertController.exceptionAlert(Alert.AlertType.ERROR, "Ein Fehler ist aufgetreten", String.valueOf(errorMessage));
         }
     }

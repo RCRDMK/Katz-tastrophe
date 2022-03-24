@@ -62,8 +62,6 @@ import java.nio.file.Path;
  */
 public class MainViewController implements ObserverInterface {
 
-    //TODO Es darf eine Instanz nur einmal offen sein und nicht fünf Fenster mit dem selben Namen
-
 
     private GameField gameField;
     private GameCharacter character;
@@ -83,15 +81,15 @@ public class MainViewController implements ObserverInterface {
      * Initializes this controller with all of its global variables.
      * <p>
      * When this method is called during the loading of this controller instance, it first sets the values for the variables
-     * necessary for running the application and registers observers at the necessary classes. Afterwards it checks if
-     * the programs folder exists. If not, it creates one. It then loads the file for the window and calls the method
-     * for the context menu. When the application has just started, it loads the default file. If the user closes this
-     * instance through the X in the top corner, it first saves the content in the textarea.
+     * necessary for running the application and registers observers at the necessary classes. It then loads the file
+     * for the window and calls the method for the context menu. When the application has just started, it loads the
+     * default file. If the user closes this instance through the X in the top corner, it first saves the content in
+     * the textarea.
      *
-     * @throws IOException
      * @since 18.11.2021
      */
-    public void initialize() throws IOException {
+    public void initialize() {
+
         gameFieldPanelController = new GameFieldPanelController(7, 7);
         scrollPane.setContent(gameFieldPanelController.getGameFieldPanel());
         character = gameFieldPanelController.getCharacter();
@@ -101,11 +99,9 @@ public class MainViewController implements ObserverInterface {
         gameField.addObserver(this);
         simulationController.addObserver(this);
 
-        if (Files.notExists(Path.of("programs"))) {
-            Files.createDirectory(Path.of("programs"));
-        }
 
-        Platform.runLater(() -> //TODO
+
+        Platform.runLater(() ->
                 scrollPane.getScene().getWindow().setOnCloseRequest(event -> fileController.saveFile(currentFileName, textInput.getText()))
         );
 
@@ -270,7 +266,6 @@ public class MainViewController implements ObserverInterface {
 
         MainViewController childMainViewController = loader.getController();
         if (currentFileName.equals(loadedFile)) {
-            //TODO Hier Stage nach vorne rücken
             primaryStage.toFront();
             //return;
         }
