@@ -1,5 +1,6 @@
 <h1 align="center">Katz-tastrophe - eine Miniatur Programmier Lernumgebung</h1>
 
+<p align = "center">
 <img src="github_images/logo.gif" alt="logo" />
 
 In Rahmen eines Universitätsmodul der Carl-von-Ossietzky Universität Oldenburg wurde dieses Programm im Wintersemester
