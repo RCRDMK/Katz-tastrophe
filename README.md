@@ -1,7 +1,7 @@
 <h1 align="center">Katz-tastrophe - eine Miniatur Programmier Lernumgebung</h1>
 
 <p align = "center">
-<img src="images_for_github_readme/logo.gif" alt="logo" />
+<img src="images_github/logo.gif" alt="logo" />
 
 In Rahmen eines Universitätsmodul der Carl-von-Ossietzky Universität Oldenburg wurde dieses Programm im Wintersemester
 2021/22 geschrieben. Ziel dieses Programmes ist es Programmierneulinge an das Konzept des objektorientierten Programmierens heranzuführen.
@@ -29,7 +29,7 @@ Diese Methode erfordert jedoch neben Java 11 und Maven zusätzlich noch eine Git
 
 ## Über das Projekt
 
-<img src="images_for_github_readme/Application_Window.png" alt="Screenshot of the application window" />
+<img src="images_github/Application_Window.png" alt="Screenshot of the application window" />
 
 In Katz-tastrophe versucht der Akteur Sebastian sich aus der Küche etwas zu trinken zu holen. Leider befinden
 sich auf den Weg dahin Katzen, welche nicht aus dem Weg gehen wollen. Der Spieler hat nun die Wahl entweder um die
