@@ -1,12 +1,32 @@
-# Katz-tastrophe - eine Miniatur Programmier Lernumgebung
+<h1 align="center">Katz-tastrophe - eine Miniatur Programmier Lernumgebung</h1>
 
 In Rahmen eines Universitätsmodul der Carl-von-Ossietzky Universität Oldenburg wurde dieses Programm im Wintersemester
-2021/22 geschrieben. Abgesehen von den Abhängigkeiten in der .pom Datei wurden keine anderen Programme oder Frameworks
-benutzt. Zum Ausführen wird lediglich Java 11 oder höher benötigt.
+2021/22 geschrieben. Ziel dieses Programmes ist es Programmierneulinge an das Konzept des objektorientierten Programmierens heranzuführen.
+Er kann sowohl die unten aufgeführten Befehle innerhalb einer Main-Methode eingeben und ausführen lassen, als auch außerhalb der Main-Methode
+neue Methoden schreiben und Variable definieren und diese dann in der Main-Methode aufrufen.
 
 Sofern nicht anders am Anfang einer Methode angemerkt, wurde sämtlicher Code von Grund auf selber geschrieben.
 
-# Über das Projekt
+## Voraussetzungen
+
+Es wurden keine anderen Programme oder Frameworks benutzt. Zum Ausführen wird somit lediglich Java 11 oder höher und Maven benötigt.
+
+## Setup über die Kommandozeile
+
+1. Sollte das Programm über die Kommandozeile ausgeführt werden sollen, so müssen folgende Kommandos eingegeben werden:
+
+   ```sh
+   $ git clone https://github.com/RCRDMK/Katz-tastrophe
+   $ cd Katz-tastrophe
+   $ mvn package
+   $ cd target
+   $ java -jar Katz-tastrophe-1.0.jar
+   
+Diese Methode erfordert jedoch neben Java 11 und Maven zusätzlich noch eine Git Installation.
+
+## Über das Projekt
+
+<img src="github_images/Application_Window.png" alt="Screenshot of the application window" />
 
 In Katz-tastrophe versucht der Akteur Sebastian sich aus der Küche etwas zu trinken zu holen. Leider befinden
 sich auf den Weg dahin Katzen, welche nicht aus dem Weg gehen wollen. Der Spieler hat nun die Wahl entweder um die
@@ -23,7 +43,7 @@ keinen Weg um die Katze herum, sondern nur über sie rüber, gibt, kann der Spie
 Quadrat um sich rum legen. Angelehnt an den Hamster-Simulator befindet sich der Akteur in einer Kachelwelt. Hindernisse
 auf die er trifft sind Wände, wobei Katzen und Trinken als passive Gegenstände realisiert wurden.
 
-# Befehle
+## Befehle
 
 void lookHere(String blickrichtung): Lässt den Akteur in die gewählte Richtung blicken, ohne dass er sich bewegt.
 Gültige Eingaben hier sind „up“, „down“, „left“ und „right“.
@@ -59,7 +79,7 @@ dort keine Katze wird False zurückgegeben und True wenn eine Katze vor ihm lieg
 Boolean stepOverCatPossible(): Überprüft, ob es möglich ist über Katze rüber zu steigen. True wird zurückgegeben, wenn
 es möglich ist und False wenn es nicht möglich ist.
 
-# Lizenz
+## Lizenz
 
 Der Code dieses Projektes untersteht der GNU General Public License. In der LICENSE Datei sind hier zu weitere
 Informationen zu finden.
