@@ -1,5 +1,7 @@
 <h1 align="center">Katz-tastrophe - eine Miniatur Programmier Lernumgebung</h1>
 
+<img src="github_images/logo.gif" alt="logo" />
+
 In Rahmen eines Universitätsmodul der Carl-von-Ossietzky Universität Oldenburg wurde dieses Programm im Wintersemester
 2021/22 geschrieben. Ziel dieses Programmes ist es Programmierneulinge an das Konzept des objektorientierten Programmierens heranzuführen.
 Er kann sowohl die unten aufgeführten Befehle innerhalb einer Main-Methode eingeben und ausführen lassen, als auch außerhalb der Main-Methode
